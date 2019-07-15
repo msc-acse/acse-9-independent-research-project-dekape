@@ -1,0 +1,7 @@
+pip>=9.0.1
+numpy>=1.14
+scipy
+pytest>=3.6
+matplotlib
+segyio
+
