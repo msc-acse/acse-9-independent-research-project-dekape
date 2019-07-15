@@ -233,8 +233,6 @@ def vpmodel(Model, cap=0., levels=200, vmin=1450, vmax=3200, cmap=plt.cm.jet, un
     dx = Model.dx
     name = Model.name
 
-    # a quick git test
-
     # Cap values
     data[np.where(np.logical_and(data >= (-1)*cap, data <= cap))] = 0.
 
