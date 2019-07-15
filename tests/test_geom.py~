@@ -1,5 +1,0 @@
-import context
-import fullwaveqc.geom
-
-def test_thisfunction():
-    assert (True)

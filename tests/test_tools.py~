@@ -1,4 +1,0 @@
-import fullwaveqc.tools as tools
-
-def test_thisfunction():
-    assert (True)

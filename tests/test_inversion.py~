@@ -1,4 +1,0 @@
-import fullwaveqc.inversion as inv
-
-def test_thisfunction():
-    assert (True)
