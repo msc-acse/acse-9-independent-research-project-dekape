@@ -14,13 +14,12 @@ def test_load_segy():
     # Test reading of Synthetics outputted by Fullwave3D
     segy_path = os.path.join(dir_path, "test_data/PARBASE25FOR2-Synthetic.sgy")
     segy = tools.load(segy_path, model=False, verbose=1)
-    segy = tools.load(segy_path, model=False, verbose=1)
     assert segy.name == "PARBASE25FOR2-Synthetic"
     assert (segy.src_pos == np.array([1000, 1025])).all()
     assert segy.nsrc == 2
     assert segy.nrec == [801, 801]
     assert len(segy.data) == 2
-    assert segy.dt == [2000, 2000]
+    assert segy.dt == [2., 2.]
 
     return
 

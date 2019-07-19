@@ -7,6 +7,7 @@ import matplotlib
 from scipy.stats import spearmanr
 import copy
 import fullwaveqc.tools as tools
+
 plt.rcParams.update({'font.size': 14})
 matplotlib.rcParams['animation.embed_limit'] = 2**128
 
@@ -62,10 +63,14 @@ class AnimateImshow():
 
 
 def amplitude(SegyData, shot=1, cap=0., levels=100, vmin=None, vmax=None, save=False, cmap=plt.cm.seismic,
-        save_path="./FIGURES/"):
+        xstart=0, xend=None, wstart=0, wend=None, save_path="./FIGURES/"):
 
     # Get data from SegyData object
-    data = SegyData.data[shot-1]
+    dt = SegyData.dt[shot-1]
+    wstart = int(wstart/dt)
+    if wend is not None:
+        wend = int(wend/dt)
+    data = SegyData.data[shot-1][xstart:xend, wstart:wend]
 
     # Cap amplitude values
     data[np.where(np.logical_and(data >= (-1) * cap, data <= cap))] = 0.
@@ -75,8 +80,14 @@ def amplitude(SegyData, shot=1, cap=0., levels=100, vmin=None, vmax=None, save=F
     figure.set_size_inches(18.5, 10.5)
 
     # Plotting and adjusting axis
-    x = np.arange(0, data.shape[0], 1)
-    y = np.arange(data.shape[1], 0, -1) * SegyData.dt[shot-1]
+    if xend is None:
+        xend = xend = data.shape[0]
+    x = np.arange(xstart, xend, 1)
+
+    if wend is None:
+        wend = data.shape[1]
+    y = np.linspace(wend, wstart, data.shape[1])  * dt
+
     MP = ax.contourf(x, y, np.rot90(data),
                      cmap=cmap, levels=levels, vmin=vmin, vmax=vmax)
     ax.invert_yaxis()
@@ -100,7 +111,7 @@ def amplitude(SegyData, shot=1, cap=0., levels=100, vmin=None, vmax=None, save=F
 
 
 def interamp(SegyData1, SegyData2, shot=1, shot2=None, n_blocks=2, cap=0., levels=100, vmin=None, vmax=None,
-             cmap=plt.cm.seismic, save=False, save_path="./FIGURES/" ):
+             cmap=plt.cm.seismic, wstart=0., wend=None, save=False, save_path="./FIGURES/" ):
 
     data1 = SegyData1.data[shot-1]
     if shot2 is not None:
@@ -123,12 +134,16 @@ def interamp(SegyData1, SegyData2, shot=1, shot2=None, n_blocks=2, cap=0., level
     InterData = copy.copy(SegyData1)
     InterData.data[shot-1] = data_inter
     InterData.name = SegyData1.name + "-INTERAMP"
-    amplitude(InterData, shot=shot, cap=cap, levels=levels, vmin=vmin, vmax=vmax, cmap=cmap, save=save, save_path=save_path)
+    amplitude(InterData, shot=shot, cap=cap, levels=levels, vmin=vmin, vmax=vmax, cmap=cmap, save=save,
+              wstart=wstart, wend=wend, save_path=save_path)
     return None
 
 
-def wiggle(SegyData, shot=1, scale=5, skip_trace=0, skip_time=0, delay_samples=0, save=False, save_path="./FIGURES/"):
+def wiggle(SegyData, shot=1, scale=5, skip_trace=0, skip_time=0, wstart=0., wend=None, xstart=0, xend=None,
+           delay_samples=0, save=False, save_path="./FIGURES/"):
+
     # Get data from SegyData object
+    dt = SegyData.dt[shot-1]
     data = SegyData.data[shot-1]
 
     # Stack delay to data
@@ -136,7 +151,7 @@ def wiggle(SegyData, shot=1, scale=5, skip_trace=0, skip_time=0, delay_samples=0
     data = np.hstack((delay, data))
 
     offsets = np.arange(0, data.shape[0], skip_trace+1)
-    times = np.arange(0, data.shape[1], skip_time + 1) * SegyData.dt[shot-1]
+    times = np.arange(0, data.shape[1], skip_time + 1)  * SegyData.dt[shot-1]
 
     figure, ax = plt.subplots(1, 1)
     figure.set_size_inches(18.5, 10.5)
@@ -151,6 +166,13 @@ def wiggle(SegyData, shot=1, scale=5, skip_trace=0, skip_time=0, delay_samples=0
     ax.set_ylabel("Time (ms)")
     ax.set_xlabel("Rec x")
 
+    if wend is None:
+        wend = times[-1]
+    if xend is None:
+        xend = x[-1]
+    ax.set_ylim(wend, wstart)
+    ax.set_xlim(xstart, xend)
+
     if save:
         plt.savefig(save_path + SegyData.name + "-WIGGLE.png", dpi=300)
     else:
@@ -160,7 +182,7 @@ def wiggle(SegyData, shot=1, scale=5, skip_trace=0, skip_time=0, delay_samples=0
 
 
 def interwiggle(SegyData1, SegyData2, shot=1, shot2=None, overlay=False, scale=5, skip_trace=20, skip_time=0, delay_samples=0,
-                             label1="Observed", label2="Predicted", save=False, save_path="./FIGURES/"):
+                wstart=0., wend=None, xstart=0, xend=None, label1="Observed", label2="Predicted", save=False, save_path="./FIGURES/"):
 
     data1 = SegyData1.data[shot-1]
     if shot2 is not None:
@@ -215,6 +237,8 @@ def interwiggle(SegyData1, SegyData2, shot=1, shot2=None, overlay=False, scale=5
     ax.set_title(SegyData1.name + "-INTERWIGGLE")
     ax.set_ylabel("Time (ms)")
     ax.set_xlabel("Rec x")
+    ax.set_ylim(wend, wstart)
+    ax.set_xlim(xstart, xend)
     ax.legend(custom_lines, [label1, label2], loc=7, bbox_to_anchor=(1.1, 0.5))
 
     if save:
@@ -334,17 +358,10 @@ def vpwell(Model, pos_x, TrueModel=None,  plot=True):
         return wells
 
 
-def xcorr(SegyData):
-    return
-
-
-def ddwi(SegyData):
-    return
-
 
 def animateinv(it, path, project_name):
     # Load starting model and get dimensions
-    start = tools.load("/geophysics2/dpelacani/PROJECTS/" + project_name + "/" + project_name + "-StartVp.sgy", model=True)[0][
+    start = tools.load(path + project_name + "/" + project_name + "-StartVp.sgy", model=True)[0][
         0]  # [:, 0, :]
 
     # [0] instead of [:, 0, :] for true and starting models
@@ -366,8 +383,6 @@ def animateinv(it, path, project_name):
     return None
 
 
-def smooth():
-    return
 
 
 
