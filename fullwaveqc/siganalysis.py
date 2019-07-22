@@ -240,8 +240,6 @@ def phasediff(PredData, ObsData, f=1, wstart=200, wend=1000, Nr_max=None, Ns_max
                                   between the observed and predicted datasets at the specified frequency
 
     """
-    # "For more accurate frequency increase fft_smooth or "
-    # "decrease the window size" )
 
     # Get number of sources and max number of receivers per source
     if Ns_max is None:
