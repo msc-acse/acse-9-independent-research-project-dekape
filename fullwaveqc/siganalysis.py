@@ -9,16 +9,27 @@ import sys
 
 
 def closest2pow(n):
+    """
+    Finds the first integer greater or equal to n that is a power of 2
+    """
     n2pow = int(2 ** np.ceil(np.log(n) / np.log(2.)))
     return n2pow
 
 
 def gausswindow(samples, wstart, wend, dt):
+    """
+    Create a gaussian function to window a signal
+    :param samples: (int) Total of points in the function
+    :param wstart: (int) Start time of the window (ms)
+    :param wend: (int) End time of the window (ms)
+    :param dt: (float) Time sampling of the signal(ms)
+    :return: (numpy.array) 1D array of a gaussian window of size (samples, 1)
+    """
     wend, wstart = wend/dt, wstart/dt
     std = 0.5 * (wend - wstart)
     mean = wstart + std
     x = np.arange(0, samples, 1)
-    w = np.exp(-0.5 * ((x - mean) / (std)) ** 2)
+    w = np.exp(-0.5 * ((x - mean) / std) ** 2)
     return w
 
 
@@ -26,12 +37,20 @@ def wavespec(Wavelet, ms=True, fmax=None, plot=False, fft_smooth=1):
     """
     Returns and plots the frequency spectrum of a source wavelet.
     :param Wavelet: SegyData object outputted from fullwaveqc.tools.load function
-    :param ms: (bool) Set to true if sampling rate in Wavelet object is
-    :param fmax: (float) Value of the highest frequency expected in the signal
-    :param plot: (bool) Will plot the wavelet in time and wave frequencies if set to True
-    :param n: (int) length of output axis from performing FFT. If less than signal size, signal will be cropped, if more, it
-    will be padded with zeros
-    :return:
+    :param ms:         (bool)  Set to true if sampling rate in Wavelet object is in miliseconds, otherwise assumed in seconds.
+                               Default: True
+    :param fmax:       (float) Value of the highest frequency expected in the signal
+                               Default: None
+    :param plot:       (bool)  Will plot the wavelet in time and wave frequencies if set to True
+                               Default: False
+    :param fft_smooth: (int)   Parameter used to multiply the number of samples inputted into the Fast Fourier Transform.
+                               Increase this factor for a smoother plot. The final number of sample points will be the
+                               nearest power of two of fft_smooth multiplied by the original number of time samples in the
+                               signal. Higher value increases computational time.
+                               Default: 1
+    :return: xf (np.array) 1D array containing the frequencies
+             yf (np.array) 1D array containing the power of the frequencies in dB
+             phase (np.array) 1D array containing the unwrapped phases at each frequency
     """
     # Obtaining information from the wavelet
     N = Wavelet.samples[0]
@@ -56,7 +75,6 @@ def wavespec(Wavelet, ms=True, fmax=None, plot=False, fft_smooth=1):
 
     # Create and shift the frequnecy domain
     xf = np.linspace(0.0, 1.0 / (2.0 * dt), N // 2)
-    # xf = fftfreq(N//2, d = 2*dt)
 
     # Get phase the normalise amplitudes to get energy spectrum
     phase = np.arctan(yf.imag / yf.real)
@@ -88,7 +106,7 @@ def wavespec(Wavelet, ms=True, fmax=None, plot=False, fft_smooth=1):
             idx = -1
         ax[1].plot(xf[:idx], yf[:idx], '.-')
         ax[1].grid()
-        ax[1].set(title="Wavelet - Frequency Domain", xlabel="Frequency (Hz)", ylabel="Normalised Amplitude (dB)")
+        ax[1].set(title="Wavelet - Frequency Domain", xlabel="Frequency (Hz)", ylabel="Power(dB)")
         ax[1].set_ylim(-80, 1)
 
 
@@ -102,6 +120,27 @@ def wavespec(Wavelet, ms=True, fmax=None, plot=False, fft_smooth=1):
 
 
 def dataspec(SegyData, ms=True, shot=1, fmax=None, fft_smooth=1, plot=False):
+    """
+    Returns and plots the frequency spectrum of a single shot of a dataset. Does so by stacking the frequencies of each
+    individual trace.
+    :param SegyData: SegyData object outputted from fullwaveqc.tools.load function
+    :param ms:         (bool)  Set to true if sampling rate in Wavelet object is in miliseconds, otherwise assumed in seconds.
+                               Default: True
+    :param shot        (int)   Shot number to compute the frequency spectrum
+                               Default: 1
+    :param fmax:       (float) Value of the highest frequency expected in the signal
+                               Default: None
+    :param plot:       (bool)  Will plot the spectrum and phases of the dataset in the frequency if set to True
+                               Default: False
+    :param fft_smooth: (int)   Parameter used to multiply the number of samples inputted into the Fast Fourier Transform.
+                               Increase this factor for a smoother plot. The final number of sample points will be the
+                               nearest power of two of fft_smooth multiplied by the original number of time samples in the
+                               signal. Higher value increases computational time.
+                               Default: 1
+    :return: xf (np.array) 1D array containing the frequencies
+             yf (np.array) 1D array containing the power of the frequencies in dB
+             phase (np.array) 1D array containing the unwrapped phases at each frequency
+    """
 
     # Get shot information and adjust dt
     nx, nt = np.shape(SegyData.data[shot-1])
@@ -150,7 +189,7 @@ def dataspec(SegyData, ms=True, shot=1, fmax=None, fft_smooth=1, plot=False):
 
         ax[0].plot(xf[:idx], yf[:idx], '.-')
         ax[0].grid()
-        ax[0].set(title="Data - Frequency Domain", xlabel="Frequency (Hz)", ylabel="Normalised Amplitude (dB)")
+        ax[0].set(title="Data - Frequency Domain", xlabel="Frequency (Hz)", ylabel="Power (dB)")
         ax[0].set_ylim(-80, 1)
 
         ax[1].plot(xf[:idx], phase[:idx], '.-')
@@ -163,7 +202,44 @@ def dataspec(SegyData, ms=True, shot=1, fmax=None, fft_smooth=1, plot=False):
     return xf, yf, phase
 
 
-def phasediff(PredData, ObsData, f=1, wstart=200, wend=1000, Nr_max=None, Ns_max=None, ms=True, fft_smooth = 1, plot=False, verbose=1):
+def phasediff(PredData, ObsData, f=1, wstart=200, wend=1000, Nr_max=None, Ns_max=None, ms=True, fft_smooth = 1,
+              plot=False, verbose=1):
+    """
+    Computes and plots the phase difference between an observed and predicted dataset, at a single specified frequency,
+    for all receivers and shots
+    :param PredData:   SegyData object outputted from fullwaveqc.tools.load function
+    :param ObsData:    SegyData object outputted from fullwaveqc.tools.load function
+    :param f:          (float)    Frequency in Hz at which the phase difference should be calculated
+                                   Default: 1
+    :param wstart:     (int)      Time sample to which start the window for the phase difference computation
+                                  Default: 200
+    :param wend:       (int)      Time sample to which end the window for the phase difference computation
+                                  Default: 1000
+    :param Nr_max:     (int)      Maximum number of receivers to which calculate the phase difference. If None is given,
+                                  then number of receivers is inferred from the datasets
+                                  Default: None
+    :param Ns_max:     (int)      Maximum number of sources/shots to which calculate the phase difference. If None is given,
+                                  then number of sources is inferred from the datasets
+                                  Default: None
+    :param ms:         (bool)     Set to true if sampling rate in Wavelet object is in miliseconds, otherwise assumed in
+                                  seconds.
+                                  Default: True
+    :param fft_smooth: (int)      Parameter used to multiply the number of samples inputted into the Fast Fourier Transform.
+                                  Increase this factor for a smoother plot. The final number of sample points will be the
+                                  nearest power of two of fft_smooth multiplied by the original number of time samples in the
+                                  signal. Higher value increases computational time.
+                                  Default: 1
+    :param plot:       (bool)     Will plot the phase difference if set to True
+                                  Default: False
+    :param verbose:    (bool)     If set to True will verbose the main steps of the function calculation
+    :return:           (np.array) phase_pred  2D array of size (Ns_max, Nr_max) with the unwrapped phases of the
+                                  predicted dataset at the specified frequency
+                       (np.array) phase_obs  2D array of size (Ns_max, Nr_max) with the unwrapped phases of the
+                                  observed dataset at the specified frequency
+                       (np.array) phase_diff  2D array of size (Ns_max, Nr_max) with the unwrapped phase differences
+                                  between the observed and predicted datasets at the specified frequency
+
+    """
     # "For more accurate frequency increase fft_smooth or "
     # "decrease the window size" )
 
@@ -260,7 +336,7 @@ def phasediff(PredData, ObsData, f=1, wstart=200, wend=1000, Nr_max=None, Ns_max
     if verbose:
         print(str(datetime.datetime.now()) + "                   \t All phases calculated successfully")
 
-    # Unwrap phase and Compute phase difference
+    # Unwrap phase in space and Compute phase difference
     phase_obs = np.unwrap(2*phase_obs, axis=1)/2
     phase_pred = np.unwrap(2*phase_pred, axis=1)/2
     phase_diff = (phase_obs - phase_pred)

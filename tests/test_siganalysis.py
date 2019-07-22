@@ -22,7 +22,7 @@ def test_phasediff():
         segy2.data[i] = 2 * d
 
     # Compute the phase difference between the original and the copy
-    phasediff = sig.phasediff(segy, segy2, f=3., wstart=200, wend=1000, fft_smooth=1, plot=False)
+    phasediff = sig.phasediff(segy, segy2, f=3., wstart=200, wend=1000, fft_smooth=1, plot=False)[2]
 
     # Assert that the phase different is zero for all shots and all traces
     assert ((phasediff == np.zeros([2, 801])).all())
