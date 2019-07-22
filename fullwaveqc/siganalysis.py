@@ -371,6 +371,15 @@ def phasediff(PredData, ObsData, f=1, wstart=200, wend=1000, Nr_max=None, Ns_max
 
 
 def bandpass(trace, flow, fhigh, forder, dt):
+    """
+    Band passes a trace using a Butter filter.
+    :param trace: (np.array) 1D array containing the signal in time domain
+    :param flow:  (float)    low frquency to band pass
+    :param fhigh: (float)    high frequency to band pass
+    :param forder:(int)      order of band pass filter, determines the steepnes of the transition band
+    :param dt:    (float)    Time sampling of the signal
+    :return:
+    """
     # set up parameters for bandpass filtering
     nyq = 0.5 / dt # nyquist
     low = flow / nyq
@@ -399,3 +408,4 @@ def bandpass(trace, flow, fhigh, forder, dt):
 
 def xcorr(SegyData):
     return
+

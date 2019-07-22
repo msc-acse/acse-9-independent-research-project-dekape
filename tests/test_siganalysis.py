@@ -5,11 +5,15 @@ import fullwaveqc.tools as tools
 import copy
 import numpy as np
 
+
 def test_thisfunction():
     assert (True)
 
 
 def test_phasediff():
+    """
+    Sanity test for the phase difference function
+    """
     dir_path = os.path.abspath(os.path.dirname(__file__))
 
     # Load a set of synthetics
@@ -22,8 +26,49 @@ def test_phasediff():
         segy2.data[i] = 2 * d
 
     # Compute the phase difference between the original and the copy
-    phasediff = sig.phasediff(segy, segy2, f=3., wstart=200, wend=1000, fft_smooth=1, plot=False)[2]
+    phasediff = sig.phasediff(segy, segy2, f=3., wstart=200, wend=1000, fft_smooth=1, plot=False, verbose=False)[2]
 
     # Assert that the phase different is zero for all shots and all traces
     assert ((phasediff == np.zeros([2, 801])).all())
     return
+
+
+def test_phasediff2():
+
+    return
+
+
+def test_wavespec():
+    dir_path = os.path.abspath(os.path.dirname(__file__))
+
+    # Load wavelet and perform signal analysis
+    wavelet_path = os.path.join(dir_path, "test_data/PARBASE25FOR2-RawSign.sgy")
+    wavelet = tools.load(wavelet_path, model=False)
+    wavelet.dt = [1.]     # fix sampling rate and number of samples
+    wavelet.samples = [401]
+    wavelet_test = sig.wavespec(wavelet, ms=True, fft_smooth=5, fmax=15, plot=False)
+
+    # Load true wavelet spectra
+    wavelet_path = os.path.join(dir_path, "test_data/wavelet_test.npy")
+    wavelet_true = np.load(wavelet_path)
+    assert ((wavelet_test[0] == wavelet_true[0]).all())
+    assert ((wavelet_test[1] == wavelet_true[1]).all())
+    assert ((wavelet_test[2] == wavelet_true[2]).all())
+    return
+
+
+def test_dataspec():
+    dir_path = os.path.abspath(os.path.dirname(__file__))
+    OBS_PATH = os.path.join(dir_path, "test_data/ucalc_shot_1.sgy")
+    OBS = tools.load(OBS_PATH, model=False, verbose=1)
+    OBS.dt = [4]       # fix sampling rate and number of samples
+    OBS.samples = [1501]
+    dataspec1 = sig.dataspec(OBS, ms=True, fft_smooth=5, fmax=15, plot=False)
+
+    # load true spec
+    data_path = os.path.join(dir_path, "test_data/dataspec_test.npy")
+    dataspec_true = np.load(data_path)
+
+    assert((dataspec1[0] == dataspec_true[0]).all())
+    assert((dataspec1[1] == dataspec_true[1]).all())
+    return None

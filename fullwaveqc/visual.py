@@ -8,6 +8,7 @@ from scipy.stats import spearmanr
 import copy
 import fullwaveqc.tools as tools
 
+# Setting matplotlib plotting parameters
 plt.rcParams.update({'font.size': 14})
 matplotlib.rcParams['animation.embed_limit'] = 2**128
 
@@ -350,7 +351,8 @@ def vpwell(Model, pos_x, TrueModel=None,  plot=True):
             ax.legend(loc="best")
             ax.invert_yaxis()
 
-    if plot: plt.show()
+    if plot:
+        plt.show()
 
     if obs is not None:
         return wells, true_wells, rmses
