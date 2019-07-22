@@ -50,7 +50,7 @@ def test_wavespec():
 
     # Load true wavelet spectra
     wavelet_path = os.path.join(dir_path, "test_data/wavelet_test.npy")
-    wavelet_true = np.load(wavelet_path)
+    wavelet_true = np.load(wavelet_path, allow_pickle=True)
     assert ((wavelet_test[0] == wavelet_true[0]).all())
     assert ((wavelet_test[1] == wavelet_true[1]).all())
     assert ((wavelet_test[2] == wavelet_true[2]).all())
@@ -67,7 +67,7 @@ def test_dataspec():
 
     # load true spec
     data_path = os.path.join(dir_path, "test_data/dataspec_test.npy")
-    dataspec_true = np.load(data_path)
+    dataspec_true = np.load(data_path, allow_pickle=True)
 
     assert((dataspec1[0] == dataspec_true[0]).all())
     assert((dataspec1[1] == dataspec_true[1]).all())
