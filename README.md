@@ -14,4 +14,6 @@ test:
 
 .PHONY: init test
 
+compare to true data --> find observed file from fullwave, guarantees same shapes
+check attr for models and data not created by fullwave. can access attr easily to change them
 

@@ -24,10 +24,7 @@ class SegyData:
         self.dsrc    = None
         self.drec    = None
 
-    def getattr(self, *kwargs):
-        return
-
-    def getattrall(self):
+    def attr(self):
         v = vars(self)
         return v
 
@@ -49,7 +46,7 @@ class Model:
         return
 
 
-    def getattrall(self):
+    def attr(self):
         v = vars(self)
         return v
 
@@ -125,7 +122,7 @@ def load(filepath, model, scale=1, verbose=1, resample=0):
             segy.rec_z.append(np.array(rec_z_all)[index])
             segy.src_z.append(np.array(src_z_all)[index][0])
             segy.samples.append(np.array(samples_all)[index][0])
-            segy.dt.append(np.array(dt_all)[index][0])
+            segy.dt.append(np.array(dt_all)[index][0]/1000.)
 
 
         if verbose:
@@ -186,3 +183,11 @@ def ampnorm(SegyData, values=[None, None], update=False, shotiter=True):
         SegyData.data = data
 
     return data
+
+
+def ddwi(SegyData):
+    return
+
+
+def smooth():
+    return
