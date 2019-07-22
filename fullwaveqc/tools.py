@@ -3,6 +3,7 @@ import segyio
 from shutil import copyfile
 import datetime
 import copy
+import warnings
 
 
 class SegyData:
@@ -24,8 +25,14 @@ class SegyData:
         self.dsrc    = None
         self.drec    = None
 
-    def attr(self):
+    def attr(self, attr_name=None):
         v = vars(self)
+        if attr_name is not None:
+            try:
+                v = v[attr_name]
+            except KeyError:
+                v = None
+                warnings.warn("Attribute \"%s\" not found. Returning None" % attr_name)
         return v
 
 
@@ -46,8 +53,14 @@ class Model:
         return
 
 
-    def attr(self):
+    def attr(self, attr_name=None):
         v = vars(self)
+        if attr_name is not None:
+            try:
+                v = v[attr_name]
+            except KeyError:
+                v = None
+                warnings.warn("Attribute \"%s\" not found. Returning None" % attr_name)
         return v
 
 
