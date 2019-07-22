@@ -52,9 +52,9 @@ def test_wavespec():
     wavelet_path = os.path.join(dir_path, "test_data/wavelet_test.npy")
     wavelet_true = np.load(wavelet_path)
 
-    assert (np.allclose(wavelet_test[0], wavelet_true[0], rtol=1e-3, atol=1e-5))
-    assert (np.allclose(wavelet_test[1], wavelet_true[1], rtol=1e-3, atol=1e-5))
-    assert (np.allclose(wavelet_test[2], wavelet_true[2], rtol=1e-3, atol=1e-5))
+    assert (np.allclose(wavelet_test[0].astype(np.float64), wavelet_true[0]))
+    assert (np.allclose(wavelet_test[1].astype(np.float64), wavelet_true[1]))
+    assert (np.allclose(wavelet_test[2].astype(np.float64), wavelet_true[2]))
 
     return
 
