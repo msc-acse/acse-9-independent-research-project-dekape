@@ -11,25 +11,26 @@ def functional(filepath, name=None, plot=True, save=False, save_path="./FIGURES/
         name = str(filepath).split("/")[-1].split('.')[0]
 
     # Create list to store functional values
-    functional = []
+    func = []
 
     # Read file and search for line with "global functional" in it
     with open(filepath) as joblog:
         for line in joblog:
             if "global functional" in line:
-                functional.append(float(line.split()[5]))
+                func.append(float(line.split()[5]))
 
-    functional = np.array(functional)
-    iter_all = np.arange(0, len(functional), 1)
+    func = np.array(func)
+    iter_all = np.arange(0, len(func), 1) + 1
 
     if plot:
         figure, ax = plt.subplots(1, 1)
-        figure.set_size_inches(10.5, 10.5)
-        ax.loglog(iter_all, functional, 'k-')
+        figure.set_size_inches(9.5, 9.5)
+        ax.plot(iter_all, func, 'k-')
+        # ax.set_yscale('log')
         ax.set_xlabel("Iterations")
         ax.set_ylabel("Global Functional Value")
         ax.set_title(name + "-Convergence")
-        ax.grid(True, which="minor", axis='both')
+        ax.grid(True)
 
     if save:
         plt.savefig(save_path + name + "-CONVERGENCE.png", dpi=300)
@@ -37,7 +38,7 @@ def functional(filepath, name=None, plot=True, save=False, save_path="./FIGURES/
     else:
         plt.show()
 
-    return iter_all, functional
+    return iter_all, func
 
 
 def gradient():
@@ -71,12 +72,16 @@ def steplen(filepath, name=None, plot=True, save=False, save_path="./FIGURES/"):
 
 
     steplenarr = np.array(steplenarr)
-    iter_all = np.arange(0, len(steplenarr), 1)
+    iter_all = np.arange(0, len(steplenarr), 1) + 1
+
+    # Get all <= 0 values
+    id_neg = np.where(steplenarr <= 0.)
 
     if plot:
         figure, ax = plt.subplots(1, 1)
-        figure.set_size_inches(10.5, 10.5)
-        ax.plot(iter_all, steplenarr, 'k.-')
+        figure.set_size_inches(9.5, 9.5)
+        ax.plot(iter_all, steplenarr, 'ko-')
+        ax.plot(iter_all[id_neg], steplenarr[id_neg], 'ro')
         ax.set_xlabel("Iterations")
         ax.set_ylabel("Global Step Length")
         ax.set_title(name + "-Step Length")

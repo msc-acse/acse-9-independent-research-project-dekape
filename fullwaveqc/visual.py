@@ -132,7 +132,7 @@ def interamp(SegyData1, SegyData2, shot=1, shot2=None, n_blocks=2, cap=0., level
         data_inter[init + block_len:block_len * (i + 2), :] = data2[init + block_len:block_len * (i + 2), :]
         init = init + 2 * block_len
 
-    InterData = copy.copy(SegyData1)
+    InterData = copy.deepcopy(SegyData1)
     InterData.data[shot-1] = data_inter
     InterData.name = SegyData1.name + "-INTERAMP"
     amplitude(InterData, shot=shot, cap=cap, levels=levels, vmin=vmin, vmax=vmax, cmap=cmap, save=save,
@@ -166,6 +166,7 @@ def wiggle(SegyData, shot=1, scale=5, skip_trace=0, skip_time=0, wstart=0., wend
     ax.set_title(SegyData.name + " Shot {}".format(shot))
     ax.set_ylabel("Time (ms)")
     ax.set_xlabel("Rec x")
+    ax.grid(True, axis='y')
 
     if wend is None:
         wend = times[-1]
@@ -220,7 +221,6 @@ def interwiggle(SegyData1, SegyData2, shot=1, shot2=None, overlay=False, scale=5
 
             x1 = scale * data1[i] + i
             ax.plot(x1, times, '-k')
-            ax.fill_betweenx(times, i, x1, where=(x1 > i), color='k')
 
     # Interleave traces
     else:
@@ -240,6 +240,7 @@ def interwiggle(SegyData1, SegyData2, shot=1, shot2=None, overlay=False, scale=5
     ax.set_xlabel("Rec x")
     ax.set_ylim(wend, wstart)
     ax.set_xlim(xstart, xend)
+    ax.grid(True, axis='y')
     ax.legend(custom_lines, [label1, label2], loc=7, bbox_to_anchor=(1.1, 0.5))
 
     if save:

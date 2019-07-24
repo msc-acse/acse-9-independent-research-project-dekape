@@ -4,6 +4,10 @@ from shutil import copyfile
 import datetime
 import copy
 import warnings
+import sys
+from scipy.ndimage import gaussian_filter
+from scipy.signal import butter, lfilter
+from scipy.signal import freqz
 
 
 class SegyData:
@@ -175,32 +179,213 @@ def load(filepath, model, scale=1, verbose=1, resample=0):
         return model
 
 
-def ampnorm(SegyData, values=[None, None], update=False, shotiter=True):
+# def ampnorm(trace, values=[None, None], update=False, shotiter=True):
+#
+#     data = copy.deepcopy(trace)
+#
+#     if not shotiter:
+#         if (not values[0]) and (not values[1]):
+#             data = (data - np.mean(data)) / np.std(data)
+#         else:
+#             data = (data - values[0])/ np.std(values[1])
+#
+#     else:
+#         # for i in range(0, len(data)):
+#         i = 0
+#         if (not values[0]) and (not values[1]):
+#             data[i] = (data[i] - np.mean(data[i])) / np.std(data[i])
+#         else:
+#             data[i] = (data[i] - values[0]) / np.std(values[1])
+#
+#     # if update:
+#     #     SegyData.data = data
+#
+#     return data
 
-    data = copy.deepcopy(SegyData.data)
 
-    if not shotiter:
-        if (not values[0]) and (not values[1]):
-            data = (data - np.mean(data)) / np.std(data)
-        else:
-            data = (data - values[0])/ np.std(values[1])
+def ampnorm(Obs, Pred, ref_trace=0, verbose=1):
+    PredNorm = copy.deepcopy(Pred)
+    for i, d in enumerate(PredNorm.data):
+        ratio = np.max(Obs.data[i][ref_trace]) / np.max(Pred.data[i][ref_trace])
+        for j, trace in enumerate(d):
+            PredNorm.data[i][j] = (PredNorm.data[i][j] * ratio)
+        if verbose:
+            sys.stdout.write(str(datetime.datetime.now()) + " \t Normalising shot %g\r" % i)
+    print(str(datetime.datetime.now()) + " \t All shots normalised")
+    return PredNorm
 
+
+def rm_empty_traces(filename, scale=1, verbose=1):
+
+    dstpath = filename[:-4]+"-CLEAN.sgy"
+
+    if verbose:
+        print(datetime.datetime.now(), " \t Opening file %s..."%filename)
+    with segyio.open(filename, mode='r', ignore_geometry=True) as segyfile:
+        if verbose:
+            print(datetime.datetime.now(), " \t Reading trace data...")
+        data = np.asarray([trace * 1.0 for trace in segyfile.trace])*scale # data in format (number of traces, number of samples)
+
+        if verbose:
+            print(datetime.datetime.now(), " \t Reading headers...")
+        header = []
+        for i in range(0, data.shape[0]):
+            header.append(segyfile.header[i])  # list of dictionaries
+
+        if verbose:
+            print(datetime.datetime.now(), " \t Collection segy header parameters...")
+        newspec = segyio.spec()
+        newspec.ilines = segyfile.ilines
+        newspec.xlines = segyfile.ilines
+        newspec.samples = segyfile.samples
+        newspec.sorting = segyfile.sorting
+        newspec.format = segyfile.format
+
+    if verbose:
+        print(datetime.datetime.now(), " \t Cleaning traces and headers ...")
+    newdata = data[~np.all(data == 0, axis=1)]
+    newheader = []
+    for i in range(0, data.shape[0]):
+        if not (data[i, :] == 0).all():
+            newheader.append(header[i])
+    assert newdata.shape[0] == len(newheader)
+
+    if verbose:
+        print(datetime.datetime.now(), " \t Removed %g empty traces!" % (data.shape[0] - newdata.shape[0]))
+    newspec.tracecount = newdata.shape[0]
+
+    if verbose:
+        print(datetime.datetime.now(), " \t Writing trace and headers to new file at %s..." % dstpath)
+    with segyio.create(dstpath, newspec) as newsegy:
+        newsegy.trace[:] = newdata
+        for i in range(0, newdata.shape[0]):
+            newsegy.header[i] = newheader[i]
+
+    if verbose: print(datetime.datetime.now(), " \t Clean file created successfully!")
+
+    return None
+
+
+def bandpass(trace, flow, fhigh, forder, dt):
+    """
+    Band passes a trace using a Butter filter.
+    :param trace: (np.array) 1D array containing the signal in time domain
+    :param flow:  (float)    low frquency to band pass
+    :param fhigh: (float)    high frequency to band pass
+    :param forder:(int)      order of band pass filter, determines the steepnes of the transition band
+    :param dt:    (float)    Time sampling of the signal
+    :return:
+    """
+    # set up parameters for bandpass filtering
+    nyq = 0.5 / dt # nyquist
+    low = flow / nyq
+    high = fhigh / nyq
+    b, a = butter(forder, [low, high], btype='band')
+
+    w, h = freqz(b, a, worN=2000)
+
+    if max(abs(h)>1.01):
+        print('!!!  Filter has values > 1. Will cause problems !!!')
+        print('Try reducing hte filter order')
+
+    # determine if we are dealing with a trace or gather
+    traceShape = np.shape(trace)
+    nt = traceShape[0]
+    if len(traceShape) == 2:
+        nz = traceShape[1]
+        filtered = np.zeros(shape=[nt,nz])
+        for i in range(nz):
+            filtered[:,i] = lfilter(b, a, trace[:,i])
+    else: # only 1 trace
+        filtered = lfilter(b, a, trace)
+
+    return filtered
+
+
+def ddwi(mon_filepath, MonObs, BaseObs, BasePred, normalise=True, verbose=1, save=False, save_path="./", name=None):
+    """
+    normalises by shot
+    same number of samples
+    error handling: check dst path is valid
+    optimise: stacking
+    """
+    if name is None:
+        dstpath = save_path + "DDWI-DATASET.sgy"
     else:
-        for i in range(0, len(data)):
-            if (not values[0]) and (not values[1]):
-                data[i] = (data[i] - np.mean(data[i])) / np.std(data[i])
-            else:
-                data[i] = (data[i] - values[0]) / np.std(values[1])
+        dstpath = save_path + name
 
-    if update:
-        SegyData.data = data
+    # Read monitor file and store SEG-Y information
+    if verbose:
+        print(datetime.datetime.now(), " \t Opening file %s..."%mon_filepath)
+    with segyio.open(mon_filepath, mode='r', ignore_geometry=True) as segyfile:
+        if verbose:
+            print(datetime.datetime.now(), " \t Reading trace data...")
+        data = np.asarray([trace * 1.0 for trace in segyfile.trace]) # data in format (number of traces, number of samples)
 
-    return data
+        if verbose:
+            print(datetime.datetime.now(), " \t Reading headers...")
+        header = []
+        for i in range(0, data.shape[0]):
+            header.append(segyfile.header[i])  # list of dictionaries
+
+        if verbose:
+            print(datetime.datetime.now(), " \t Collection segy header parameters...")
+        newspec = segyio.spec()
+        newspec.ilines = segyfile.ilines
+        newspec.xlines = segyfile.ilines
+        newspec.samples = segyfile.samples
+        newspec.sorting = segyfile.sorting
+        newspec.format = segyfile.format
+
+    # Normalise traces
+    if normalise:
+        if verbose:
+            print(datetime.datetime.now(), " \t Normalising traces ...")
+        BasePred = ampnorm(BaseObs, BasePred)
+
+    # Compute double difference dataset
+    if verbose:
+        print(datetime.datetime.now(), " \t Computing double difference ...")
+    MON_DIFF = copy.deepcopy(MonObs)
+    for i, d in enumerate(MON_DIFF.data):
+        MON_DIFF.data[i] = BasePred.data[i] + (MonObs.data[i] - BaseObs.data[i])
+
+    if verbose:
+        print(datetime.datetime.now(), " \t Double difference dataset calculated successfully!")
+
+    if save:
+        if verbose:
+            print(datetime.datetime.now(), " \t Initiating saving...")
+        # Stack data
+        if verbose:
+            print(datetime.datetime.now(), " \t Stacking data ...")
+        newdata = copy.deepcopy(MON_DIFF.data[0])
+        for i in range(1, len(MON_DIFF.data)):
+            newdata = np.vstack((newdata, MON_DIFF.data[i]))
+        assert (newdata.shape == data.shape)
+
+        # Copy over trace headers
+        if verbose:
+            print(datetime.datetime.now(), " \t Updating traces ...")
+        newheader = header
 
 
-def ddwi(SegyData):
-    return
+        # Write to new file
+        if verbose:
+            print(datetime.datetime.now(), " \t Writing trace and headers to new file at %s..." % dstpath)
+        with segyio.create(dstpath, newspec) as newsegy:
+            newsegy.trace[:] = newdata
+            for i in range(0, newdata.shape[0]):
+                newsegy.header[i] = newheader[i]
+
+        if verbose:
+            print(datetime.datetime.now(), " \t Double difference dataset saved!")
+
+    return MON_DIFF
 
 
-def smooth():
-    return
+def smooth_model(Model, strength=[1, 1], save=False, save_path="./", name=None):
+    SmoothModel = copy.deepcopy(Model)
+    SmoothModel.data = gaussian_filter(SmoothModel.data, strength, mode="reflect")
+    SmoothModel.name=SmoothModel.name + "-smooth"
+    return SmoothModel
