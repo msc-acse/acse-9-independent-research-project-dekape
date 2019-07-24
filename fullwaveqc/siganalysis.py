@@ -1,8 +1,6 @@
 import numpy as np
 import datetime
 from scipy.fftpack import fft
-from scipy.signal import butter, lfilter
-from scipy.signal import freqz
 import matplotlib.pyplot as plt
 import warnings
 import sys
@@ -106,7 +104,7 @@ def wavespec(Wavelet, ms=True, fmax=None, plot=False, fft_smooth=1):
             idx = -1
         ax[1].plot(xf[:idx], yf[:idx], '.-')
         ax[1].grid()
-        ax[1].set(title="Wavelet - Frequency Domain", xlabel="Frequency (Hz)", ylabel="Power(dB)")
+        ax[1].set(title="Wavelet - Frequency Domain", xlabel="Frequency (Hz)", ylabel="Amplitude(dB)")
         ax[1].set_ylim(-80, 1)
 
 
@@ -189,11 +187,11 @@ def dataspec(SegyData, ms=True, shot=1, fmax=None, fft_smooth=1, plot=False):
 
         ax[0].plot(xf[:idx], yf[:idx], '.-')
         ax[0].grid()
-        ax[0].set(title="Data - Frequency Domain", xlabel="Frequency (Hz)", ylabel="Power (dB)")
+        ax[0].set(title=SegyData.name + "-Shot %g - Frequency Domain" % shot, xlabel="Frequency (Hz)", ylabel="Amplitude (dB)")
         ax[0].set_ylim(-80, 1)
 
         ax[1].plot(xf[:idx], phase[:idx], '.-')
-        ax[1].set(title="Data - Frequency Domain", xlabel="Frequency (Hz)", ylabel="Phase (rad)")
+        ax[1].set(title=SegyData.name + "-Shot %g - Frequency Domain" % shot, xlabel="Frequency (Hz)", ylabel="Phase (rad)")
         ax[1].grid()
 
         plt.tight_layout(pad=0.4, w_pad=0.5, h_pad=1.0)
@@ -264,6 +262,9 @@ def phasediff(PredData, ObsData, f=1, wstart=200, wend=1000, Nr_max=None, Ns_max
         if ms:
             dt = dt / 1000.
         fs = 1. / dt
+
+        if wend <= 0:
+            wend = PredData.samples[i]
 
         # Get number of samples for FFT -- multiples of 2 are significantly faster
         Nt = PredData.samples[i]
@@ -337,7 +338,7 @@ def phasediff(PredData, ObsData, f=1, wstart=200, wend=1000, Nr_max=None, Ns_max
     # Unwrap phase in space and Compute phase difference
     phase_obs = np.unwrap(2*phase_obs, axis=1)/2
     phase_pred = np.unwrap(2*phase_pred, axis=1)/2
-    phase_diff = (phase_obs - phase_pred)
+    phase_diff = (phase_obs - phase_pred) * 180./np.pi
 
     # Plot
     if plot:
@@ -350,60 +351,131 @@ def phasediff(PredData, ObsData, f=1, wstart=200, wend=1000, Nr_max=None, Ns_max
         cmap = "RdYlGn"
         figure, ax = plt.subplots(1, 1)
         figure.set_size_inches(7.5, 7.5)
-        MP = ax.contourf(phase_diff, cmap=cmap, levels=360, vmin=-1.6, vmax=1.6)
+        MP = ax.contourf(phase_diff, cmap=cmap, levels=360, vmin=-180., vmax=180.)
         #rec_pos_all, np.array(PredData.src_pos),
         ax.set(xlabel="Rec x", ylabel="Src x")
-        ax.set_title("phase_difference f=%.2f Hz %g ms - %g ms"%(f, wstart, wend), pad=40)
+        ax.set_title(PredData.name + " f=%.2f Hz %g ms - %g ms"%(f, wstart, wend), pad=40)
         ax.invert_yaxis()
         ax.tick_params(labeltop=True, labelright=False, labelbottom=True, labelleft=True)
 
         # Format limits of colorbar
         m = plt.cm.ScalarMappable(cmap=cmap)
         m.set_array(phase_diff)
-        m.set_clim(-1.6, 1.6)
+        m.set_clim(-180., 180.)
         cbar = plt.colorbar(m)
-        cbar.set_label("Unwrapped Phase (rad)")
+        cbar.set_label(r"$\Delta \phi$ (°)")
 
         plt.show()
     return phase_pred, phase_obs, phase_diff
 
 
-def bandpass(trace, flow, fhigh, forder, dt):
+def xcorr(PredData, ObsData, wstart=0, wend=-1, Nr_max=None, Ns_max=None, ms=True, plot=False, verbose=1):
     """
-    Band passes a trace using a Butter filter.
-    :param trace: (np.array) 1D array containing the signal in time domain
-    :param flow:  (float)    low frquency to band pass
-    :param fhigh: (float)    high frequency to band pass
-    :param forder:(int)      order of band pass filter, determines the steepnes of the transition band
-    :param dt:    (float)    Time sampling of the signal
-    :return:
+    Computes and plots the cross-correlation between an observed and predicted dataset using numpy.correlate.
+    Traces are normalised to unit length for comparison
+    :param PredData:   SegyData object outputted from fullwaveqc.tools.load function
+    :param ObsData:    SegyData object outputted from fullwaveqc.tools.load function
+    :param wstart:     (int)      Time sample to which start the window for the phase difference computation
+                                  Default: 200
+    :param wend:       (int)      Time sample to which end the window for the phase difference computation
+                                  Default: 1000
+    :param Nr_max:     (int)      Maximum number of receivers to which calculate the phase difference. If None is given,
+                                  then number of receivers is inferred from the datasets
+                                  Default: None
+    :param Ns_max:     (int)      Maximum number of sources/shots to which calculate the phase difference. If None is given,
+                                  then number of sources is inferred from the datasets
+                                  Default: None
+    :param ms:         (bool)     Set to true if sampling rate in Wavelet object is in miliseconds, otherwise assumed in
+                                  seconds.
+                                  Default: True
+    :param plot:       (bool)     Will plot the phase difference if set to True
+                                  Default: False
+    :param verbose:    (bool)     If set to True will verbose the main steps of the function calculation
+    :return:           (np.array) phase_pred  2D array of size (Ns_max, Nr_max) with the unwrapped phases of the
+                                  predicted dataset at the specified frequency
+                       (np.array) phase_obs  2D array of size (Ns_max, Nr_max) with the unwrapped phases of the
+                                  observed dataset at the specified frequency
+                       (np.array) phase_diff  2D array of size (Ns_max, Nr_max) with the unwrapped phase differences
+                                  between the observed and predicted datasets at the specified frequency
+
     """
-    # set up parameters for bandpass filtering
-    nyq = 0.5 / dt # nyquist
-    low = flow / nyq
-    high = fhigh / nyq
-    b, a = butter(forder, [low, high], btype='band')
 
-    w, h = freqz(b, a, worN=2000)
+    # Get number of sources and max number of receivers per source
+    if Ns_max is None:
+        Ns = PredData.nsrc
+    else:
+        Ns = Ns_max
+    if Nr_max is None:
+        Nr_max = np.max(np.array(PredData.nrec))
+    else:
+        Nr_max = Nr_max
 
-    if max(abs(h)>1.01):
-        print('!!!  Filter has values > 1. Will cause problems !!!')
-        print('Try reducing hte filter order')
+    # Reserve space to store correlation values
+    xcorr = np.zeros((Ns, Nr_max))
 
-    # determine if we are dealing with a trace or gather
-    traceShape = np.shape(trace)
-    nt = traceShape[0]
-    if len(traceShape) == 2:
-        nz = traceShape[1]
-        filtered = np.zeros(shape=[nt,nz])
-        for i in range(nz):
-            filtered[:,i] = lfilter(b, a, trace[:,i])
-    else: # only 1 trace
-        filtered = lfilter(b, a, trace)
+    # Loop through each shot -- try and except
+    for i in range(0, Ns):
 
-    return filtered
+        # Get time sampling from data and compute sampling frequency for FFT
+        dt = PredData.dt[i]
+        if ms:
+            dt = dt / 1000.
 
+        if wend <= 0:
+            wend = PredData.samples[i]
 
-def xcorr(SegyData):
-    return
+        # Create Gaussian window
+        w = gausswindow(PredData.samples[i], wstart, wend, dt)
+
+        # Find array index in frequency domain closest to frequency of interest
+        if verbose:
+            sys.stdout.write(str(datetime.datetime.now()) + " \t Cross correlating traces of shot %g ...\r" % i)
+
+        try:
+            # Loop through each receiver -- try and except
+            for j in range(0, Nr_max):
+                # compute phase for predicted dataset
+                try:
+                    # multiply pred and obs trace by gauss window
+                    pred_trace = (w * PredData.data[i][j])
+                    obs_trace = (w * ObsData.data[i][j])
+
+                    # cross correlate at zero lag with traces normalised to unit length
+                    xcorr[i][j] = np.correlate(pred_trace/np.linalg.norm(pred_trace),
+                                               obs_trace/np.linalg.norm(obs_trace))
+
+                except RuntimeError:
+                    if verbose:
+                        print("All zero predicted signal encountered at trace %g of shot %g" % (j, i))
+                except IndexError:
+                    warnings.warn("Predicted trace %g of shot %g not well defined" % (j, i))
+        except IndexError:
+            warnings.warn("Shot %g not well defined"%i)
+
+    if verbose:
+        print(str(datetime.datetime.now()) + "                   \t All cross-correlations calculated successfully")
+
+    # Plot
+    if plot:
+        cmap = "PiYG"
+        # cmap = "hsv"
+        figure, ax = plt.subplots(1, 1)
+        figure.set_size_inches(7.5, 7.5)
+        MP = ax.contourf(xcorr, cmap=cmap, levels=360, vmin=-1., vmax=1.)
+
+        ax.set(xlabel="Rec x", ylabel="Src x")
+        ax.set_title(PredData.name + " Zero Lag X-Correlation %g ms - %g ms"%(wstart, wend), pad=40)
+        ax.invert_yaxis()
+        ax.tick_params(labeltop=True, labelright=False, labelbottom=True, labelleft=True)
+
+        # Format limits of colorbar
+        m = plt.cm.ScalarMappable(cmap=cmap)
+        m.set_array(xcorr)
+        m.set_clim(-1., 1)
+        cbar = plt.colorbar(m)
+        cbar.set_label(r"Zero Lag Cross Correlation")
+
+        plt.show()
+    return xcorr
+
 
