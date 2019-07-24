@@ -7,6 +7,8 @@ import matplotlib
 from scipy.stats import spearmanr
 import copy
 import fullwaveqc.tools as tools
+import sys
+import datetime
 
 # Setting matplotlib plotting parameters
 plt.rcParams.update({'font.size': 14})
@@ -14,10 +16,10 @@ matplotlib.rcParams['animation.embed_limit'] = 2**128
 
 
 class AnimateImshow():
-    def __init__(self, arrays, dt=1):
+    def __init__(self, arrays, dt=1, vmin=None, vmax=None, cmap=plt.cm.jet):
         """
         Array is a list of 2d arrays or a 3d array with time on axis=0.
-        Note in jupyter the animation needs to be done"
+
         """
         # setup data
         self.arr = arrays
@@ -25,10 +27,12 @@ class AnimateImshow():
         self.dt = dt
 
         # setup the figure
-        self.fig = plt.figure(figsize=(20, 20))
-        self.im = plt.imshow(arrays[0], animated=True, cmap=plt.cm.jet, vmin=1400, vmax=4000)
+        self.fig = plt.figure()
+        self.fig.set_size_inches(18.5, 10.5)
+        self.im = plt.imshow(arrays[0], animated=True, cmap=cmap, vmin=vmin, vmax=vmax)
         self.ax = plt.gca()
         self.ax.invert_yaxis()
+        self.ax.axis("off")
         self.text = self.ax.text(0.1, 0.1, 'Time: 0', color='w')
 
         # settings
@@ -361,27 +365,35 @@ def vpwell(Model, pos_x, TrueModel=None,  plot=True):
         return wells
 
 
+def animateinv(it_max, path, project_name, dx=1,
+               vmin=None, vmax=None, cmap=plt.cm.jet, save=False, save_path="./", verbose=0):
 
-def animateinv(it, path, project_name):
     # Load starting model and get dimensions
-    start = tools.load(path + project_name + "/" + project_name + "-StartVp.sgy", model=True)[0][
-        0]  # [:, 0, :]
+    start = tools.load(path + project_name + "-StartVp.sgy", model=True, verbose=0).data
 
-    # [0] instead of [:, 0, :] for true and starting models
-    ani_data = np.zeros((it + 1, start.shape[1], start.shape[0]))
+    # Create space to store animation frames
+    ani_data = np.zeros((it_max + 1, start.shape[0], start.shape[1]))
 
     # Add starting model as first animation shot, then load upcoming models
-    ani_data[0] = np.rot90(start)
-    for i in range(1, it + 1):
-        ani_data[i] = np.rot90(tools.load("/geophysics2/dpelacani/PROJECTS/" + project_name + "/" + project_name + \
-                                         "-CP" + format(i, "05") + "-Vp.sgy", verbose=0)[0][:, 0, :])
-    obj = AnimateImshow(ani_data)  # setup the animation
+    ani_data[0] = start
+    for i in range(1, it_max + 1):
+        try:
+            if verbose:
+                sys.stdout.write(str(datetime.datetime.now()) + " \t Loading model %g ...\r" % i)
+            ani_data[i] = tools.load(path + project_name + "-CP" + format(i, "05") + "-Vp.sgy", model=True, verbose=0).data
+        except :
+            print(str(datetime.datetime.now()) + " \t Could not load model %g" % i)
+
+    if verbose:
+        sys.stdout.write(str(datetime.datetime.now()) + " \t Creating animation...")
+    obj = AnimateImshow(ani_data, vmin=vmin, vmax=vmax, cmap=cmap)  # setup the animation
     obj.title = project_name
     obj.xlabel = "x-grid"
     obj.ylabel = "z-grid"
     obj.delay = 100
     obj.run(html=True)  # run it
-    obj.save_html("./FIGURES/" + project_name + "-ITER" + format(it, "05") + ".html")
+    if save:
+        obj.save_html(save_path + project_name + "-ITER" + format(it_max, "05") + ".html")
 
     return None
 
