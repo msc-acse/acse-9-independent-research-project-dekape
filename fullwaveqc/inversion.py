@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import warnings
 
+
 def functional(filepath, name=None, plot=True, save=False, save_path="./FIGURES/"):
 
     # If name not given, get it from filename
@@ -39,10 +40,6 @@ def functional(filepath, name=None, plot=True, save=False, save_path="./FIGURES/
         plt.show()
 
     return iter_all, func
-
-
-def gradient():
-    return
 
 
 def steplen(filepath, name=None, plot=True, save=False, save_path="./FIGURES/"):
@@ -94,3 +91,7 @@ def steplen(filepath, name=None, plot=True, save=False, save_path="./FIGURES/"):
         plt.show()
 
     return iter_all, steplen
+
+
+def gradient():
+    return
