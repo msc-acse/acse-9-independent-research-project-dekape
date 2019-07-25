@@ -35,11 +35,6 @@ def test_phasediff():
     return
 
 
-def test_phasediff2():
-
-    return
-
-
 def test_wavespec():
     dir_path = os.path.abspath(os.path.dirname(__file__))
 
@@ -54,9 +49,8 @@ def test_wavespec():
     wavelet_path = os.path.join(dir_path, "test_data/wavelet_test.npy")
     wavelet_true = np.load(wavelet_path)
 
-    assert (np.allclose(wavelet_test[0].astype(np.float64), wavelet_true[0]))
-    # assert (np.allclose(wavelet_test[1].astype(np.float64), wavelet_true[1]))
-    # assert (np.allclose(wavelet_test[2].astype(np.float64), wavelet_true[2]))
+    for i in range(0, len(wavelet_test)):
+        assert(np.allclose(wavelet_test[i], wavelet_true[i]))
 
     return
 
