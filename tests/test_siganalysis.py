@@ -47,7 +47,7 @@ def test_wavespec():
 
     # Load true wavelet spectra
     wavelet_path = os.path.join(dir_path, "test_data/wavelet_test.npy")
-    wavelet_true = np.load(wavelet_path)
+    wavelet_true = np.load(wavelet_path, allow_pickle=True)
 
     for i in range(0, len(wavelet_test)):
         assert(np.allclose(wavelet_test[i], wavelet_true[i].astype("float32")))
