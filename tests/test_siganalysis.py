@@ -50,7 +50,7 @@ def test_wavespec():
     wavelet_true = np.load(wavelet_path)
 
     for i in range(0, len(wavelet_test)):
-        assert(np.allclose(wavelet_test[i], wavelet_true[i]))
+        assert(np.allclose(wavelet_test[i], wavelet_true[i].astype("float32")))
 
     return
 
