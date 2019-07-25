@@ -1,9 +1,11 @@
+#!/usr/bin/env python
+
 import numpy as np
 import matplotlib.pyplot as plt
 import warnings
 
 
-def functional(filepath, name=None, plot=True, save=False, save_path="./FIGURES/"):
+def functional(filepath, name=None, plot=True, save=False, save_path="./"):
 
     # If name not given, get it from filename
     if name is not None:
@@ -42,7 +44,7 @@ def functional(filepath, name=None, plot=True, save=False, save_path="./FIGURES/
     return iter_all, func
 
 
-def steplen(filepath, name=None, plot=True, save=False, save_path="./FIGURES/"):
+def steplen(filepath, name=None, plot=True, save=False, save_path="./"):
 
     # If name not given, get it from filename
     if name is not None:
@@ -67,7 +69,6 @@ def steplen(filepath, name=None, plot=True, save=False, save_path="./FIGURES/"):
                     except ValueError:
                         warnings.warn("Not able to read step length in line %g" % count)
 
-
     steplenarr = np.array(steplenarr)
     iter_all = np.arange(0, len(steplenarr), 1) + 1
 
@@ -90,7 +91,7 @@ def steplen(filepath, name=None, plot=True, save=False, save_path="./FIGURES/"):
     else:
         plt.show()
 
-    return iter_all, steplen
+    return iter_all, steplenarr
 
 
 def gradient():

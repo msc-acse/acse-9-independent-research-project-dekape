@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import context
 import fullwaveqc.inversion as inv
 import numpy as np
@@ -21,6 +23,8 @@ def test_functional():
 def test_steplen():
     dir_path = os.path.abspath(os.path.dirname(__file__))
     job_path = os.path.join(dir_path, "test_data/PARBASE25_8-job001.log")
-    iter, slen = inv.functional(job_path, plot=False)
-    # assert (iter == np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])).all()
+    iter, slen = inv.steplen(job_path, plot=False)
+    assert (iter == np.array([1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13])).all()
+    assert (np.allclose(slen, np.array([6.27,  2.152, -1.833,  6.97, -1.678,  7.408, -2.136,  9.502,
+        0.2,  6.58, -1.868,  3.464, -1.204])))
     return

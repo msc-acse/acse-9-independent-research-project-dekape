@@ -1,7 +1,10 @@
+#!/usr/bin/env python
+
 import context
 import fullwaveqc.tools as tools
 import os
 import numpy as np
+import copy
 
 
 def test_thisfunction():
@@ -37,3 +40,42 @@ def test_load_vpmodel():
     assert (model.data.shape == (201, 661))
 
     return
+
+
+def test_ampnorm():
+    # sanity check
+    dir_path = os.path.abspath(os.path.dirname(__file__))
+    pred_path = os.path.join(dir_path, "test_data/PARBASE25FOR2-Synthetic.sgy")
+    Pred = tools.load(pred_path, model=False, verbose=0)
+    PredNorm = tools.ampnorm(Pred, Pred, ref_trace=0, verbose=0)
+    assert (np.allclose(PredNorm.data, Pred.data))
+
+
+def test_ampnorm2():
+    # test normalisation of peak value of reference trace
+    dir_path = os.path.abspath(os.path.dirname(__file__))
+    pred_path = os.path.join(dir_path, "test_data/PARBASE25FOR2-Synthetic.sgy")
+    Pred = tools.load(pred_path, model=False, verbose=0)
+
+    Obs = copy.deepcopy(Pred)
+    for i in range(0, len(Obs.data)):
+        Obs.data[i] = Obs.data[i]*15
+
+    ref = 0
+    PredNorm = tools.ampnorm(Obs, Pred, ref_trace=ref, verbose=0)
+    for i in range(0, len(PredNorm.data)):
+        # compare the max value of reference trace of each shot
+        assert (np.isclose(np.max(PredNorm.data[i][ref]), np.max(Obs.data[i][ref])))
+    return None
+
+
+def test_ddwi():
+    dir_path = os.path.abspath(os.path.dirname(__file__))
+    pred_path = os.path.join(dir_path, "test_data/PARBASE25FOR2-Synthetic.sgy")
+    Pred = tools.load(pred_path, model=False, verbose=0)
+    Diff = tools.ddwi(Pred, Pred, Pred, normalise=True, name="DIFF", mon_filepath=None, save=False,
+                      save_path="./", verbose=0)
+    for i in range(0, len(Diff.data)):
+        assert (np.allclose(Diff.data[i], Pred.data[i]))
+    return None
+

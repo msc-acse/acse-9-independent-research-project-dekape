@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import context
 import fullwaveqc.siganalysis as sig
 import os

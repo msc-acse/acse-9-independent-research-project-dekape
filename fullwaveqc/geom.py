@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import numpy as np
 import matplotlib.pyplot as plt
 import sys
@@ -37,9 +39,8 @@ def surveygeom(rcvgeopath, srcgeopath, src_list=[], runfilepath=None, plot=False
     srcx, srcy = [], []
     with open(srcgeopath) as srcgeo:
         for i, line in enumerate(srcgeo):
-            if i!=0:
+            if i != 0:
                 srcx.append(float(line.split()[1]))
-    src = np.array(srcx)
 
     # Store receiver positions
     if verbose:
@@ -47,14 +48,14 @@ def surveygeom(rcvgeopath, srcgeopath, src_list=[], runfilepath=None, plot=False
     rcvx, rcvy = [], []
     with open(rcvgeopath) as rcvgeo:
         for i, line in enumerate(rcvgeo):
-            if i!=0:
+            if i != 0:
                 rcvx.append(float(line.split()[1]))
     rcvx = np.array(rcvx)
 
+    # Rearrange receivers list by source, by identifying high jumps in position
     if verbose:
         sys.stdout.write(str(datetime.datetime.now()) + " \t Rearranging receiver by sources ...\r")
     rcvx_2 = []
-    # Rearrange receivers list by source
     src_index = [0]
     for i in range(1, np.size(rcvx)):
         if rcvx[i-1] > rcvx[i]:
@@ -64,25 +65,38 @@ def surveygeom(rcvgeopath, srcgeopath, src_list=[], runfilepath=None, plot=False
         rcvx_2.append(np.array(rcvx[src_index[i]: src_index[i+1]]))
 
     if verbose:
-        sys.stdout.write("                                                                            ")
+        sys.stdout.write(str(datetime.datetime.now()) + " \t                          Plotting ...     ")
 
-    # If list of sources not given, create list with all sources
+    # Filtering sources and receivers to src_list for plotting and returning
+    src_ret = []
+    rcv_ret = []
+
+    # If list of sources not given, create list with all sources, and store all sources and receivers to return
     if len(src_list) == 0:
         src_list = [i for i in range(1, len(srcx) + 1)]
+        src_ret = srcx
+        rcv_ret = rcvx_2
+    else:
+        for i in src_list:
+            # Dealing with negative numbers in the list
+            if i > 0:
+                i -= 1
+            if i < 0:
+                i = len(srcx) + i
+            src_ret.append(srcx[i])
+            rcv_ret.append(rcvx_2[i])
 
     # Plot every source in list
     if plot:
         figure, ax = plt.subplots(1, 1)
         figure.set_size_inches(15.5, 7.5)
-        for i in src_list:
-            # Dealing with negative numbers in the list
-            if i > 0:
-                i -=1
-            if i < 0:
-                i = len(srcx) + i
-
-            ax.scatter(srcx[i], i + 1, c="y", label="Source", marker="*", s=155)
-            ax.scatter(rcvx_2[i], np.zeros_like(rcvx_2[i]) + i + 1, c="r", label="Receiver", marker=11, s=40)
+        for i in range(0, len(src_ret)):
+            if src_list[i] < 0:
+                src_pos = len(srcx) + src_list[i]
+            else:
+                src_pos = src_list[i]
+            ax.scatter(src_ret[i], src_pos + 1, c="y", label="Source", marker="*", s=155)
+            ax.scatter(rcv_ret[i], np.zeros_like(rcv_ret[i]) + src_pos + 1, c="r", label="Receiver", marker=11, s=40)
 
         ax.set_xlim(0, )
         ax.set(xlabel="Lateral offset (m)", ylabel="Shot Number")
@@ -96,4 +110,4 @@ def surveygeom(rcvgeopath, srcgeopath, src_list=[], runfilepath=None, plot=False
 
         plt.show()
 
-    return srcx, rcvx_2
+    return src_ret, rcv_ret

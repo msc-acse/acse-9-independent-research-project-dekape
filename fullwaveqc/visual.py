@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
@@ -255,7 +257,7 @@ def interwiggle(SegyData1, SegyData2, shot=1, shot2=None, overlay=False, scale=5
     return None
 
 
-def vpmodel(Model, cap=0., levels=200, vmin=1450, vmax=3200, cmap=plt.cm.jet, units="m/s",
+def vpmodel(Model, cap=0., levels=200, vmin=None, vmax=None, cmap=plt.cm.jet, units="m/s",
             save=False, save_path="./FIGURES/"):
 
     # Get data from Model
@@ -300,44 +302,44 @@ def vpmodel(Model, cap=0., levels=200, vmin=1450, vmax=3200, cmap=plt.cm.jet, un
 def vpwell(Model, pos_x, TrueModel=None,  plot=True):
 
     # Get model data
-    pred = np.rot90(np.rot90(Model.data.T))
+    pred = np.flipud(Model.data)
+    # print(pred)
 
     # Get true model
     if TrueModel is not None:
-        obs = np.rot90(np.rot90(TrueModel.data.T))
+        obs = np.flipud(TrueModel.data)
     else:
         obs = None
 
+    # Create list to store retrieved well data
     n = len(pos_x)
     wells = []
     true_wells = []
     rmses = []
+    ypreds = []
+    ytrues = []
 
-
-    figure, axs = plt.subplots(1, n)
-    figure.set_size_inches(9*n, 20)
-    for i, ax in enumerate(axs):
+    # For each well positiong
+    for i in range(0, n):
         # Get well data for predicted model
         grid_pos = int(pos_x[i]/Model.dx)
-        well = pred[grid_pos, :]
+        well = pred[:, grid_pos]
         wells.append(well)
 
         # Get Well data for observed model
         if obs is not None:
             true_grid_pos = int(pos_x[i]/TrueModel.dx)
-            true_well = obs[true_grid_pos, :]
+            true_well = obs[:, true_grid_pos]
             true_wells.append(true_well)
 
-        # If not axis given for plot, create figure
-        if (ax is None) and plot:
-            figure, ax = plt.subplots(1, 1)
-            figure.set_size_inches(8, 20)
-
+        # Get y axis of predicted signal for interpolation
         ypred = np.arange(0, well.shape[0], 1) * Model.dx
+        ypreds.append(ypred)
 
         # Calculate RMSE, interpolate predicted data first
         if obs is not None:
             ytrue = np.arange(0, true_well.shape[0], 1) * TrueModel.dx
+            ytrues.append(ytrue)
             well_interp = np.interp(ytrue, ypred, well)
             rho, p = spearmanr(true_well, well_interp)
             rmse = np.sqrt(np.mean((well_interp - true_well)**2))
@@ -345,18 +347,23 @@ def vpwell(Model, pos_x, TrueModel=None,  plot=True):
         else:
             rmse=0.0
 
-        # Plot axis
-        if plot:
+    if plot:
+        figure, axs = plt.subplots(1, n)
+        figure.set_size_inches(9 * n, 20)
+        for i in range(0, n):
+            if n > 1:
+                ax = axs[i]
+            else:
+                ax = axs
+
+            ax.plot(wells[i], ypreds[i], 'b', label="Predicted")
             if obs is not None:
-                ax.plot(true_well, ytrue, 'k', label="Observed")
-            ax.plot(well, ypred , 'r', label="Predicted")
-            ax.set_title(Model.name+r" x=%i, RMSE=%.4f" % (pos_x[i], rmse))
+                ax.plot(true_wells[i], ytrues[i], 'k', label="Observed")
+                ax.legend(loc="best")
+            ax.set_title(Model.name+r" x=%i, RMSE=%.4f" % (pos_x[i], rmses[i]))
             ax.set_ylabel("Depth")
             ax.set_xlabel("Vp")
-            ax.legend(loc="best")
             ax.invert_yaxis()
-
-    if plot:
         plt.show()
 
     if obs is not None:
