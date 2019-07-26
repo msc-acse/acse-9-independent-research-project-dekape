@@ -96,4 +96,13 @@ def test_dataspec():
     return None
 
 
+def test_gausswindow():
+    w = sig.gausswindow(samples=11, wstart=2, wend=5, dt=2)
+    arr = np.array([6.57285286e-02, 6.06530660e-01, 9.45959469e-01, 2.49352209e-01,
+           1.11089965e-02, 8.36483472e-05, 1.06453714e-07, 2.28973485e-11,
+           8.32396968e-16, 5.11442373e-21, 5.31109225e-27])
+    assert(np.allclose(w, arr))
+    return None
+
+
 
