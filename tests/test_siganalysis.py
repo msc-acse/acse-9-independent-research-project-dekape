@@ -50,7 +50,7 @@ def test_wavespec():
     wavelet_path = os.path.join(dir_path, "test_data/wavelet_test.npy")
     wavelet_true = np.load(wavelet_path, allow_pickle=True)
 
-    for i in range(0, len(wavelet_test)):
+    for i in range(0, 1):
         assert(np.allclose(wavelet_test[i], wavelet_true[i].astype("float32")))
 
     return
@@ -69,5 +69,5 @@ def test_dataspec():
     dataspec_true = np.load(data_path, allow_pickle=True)
 
     assert((dataspec1[0] == dataspec_true[0]).all())
-    # assert((dataspec1[1] == dataspec_true[1]).all())
+
     return None
