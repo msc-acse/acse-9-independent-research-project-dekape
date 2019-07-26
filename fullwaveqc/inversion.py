@@ -5,7 +5,16 @@ import matplotlib.pyplot as plt
 import warnings
 
 
-def functional(filepath, name=None, plot=True, save=False, save_path="./"):
+def functional(filepath, name=None, plot=False):
+    """
+    Retrieves and plots the global functional value of an inversion run with Fullwave3D as  recorded in the job log
+    file,
+    :param  filepath:    (str)      path to <PROJECT_NAME>_job,log file
+    :param  name:        (str)      name of the project. If not given, will be inferred from filename. Default: None
+    :param  plot:        (bool)     if true will produce a plot of the functional values vs iterations. Default: False
+    :return iter_all     (np.array) array of iteration numbers of the run of size (number_of_iterations, 1)
+    :return func         (np.array) array of functional of size (number_of_iterations, 1)
+    """
 
     # If name not given, get it from filename
     if name is not None:
@@ -34,17 +43,21 @@ def functional(filepath, name=None, plot=True, save=False, save_path="./"):
         ax.set_ylabel("Global Functional Value")
         ax.set_title(name + "-Convergence")
         ax.grid(True)
-
-    if save:
-        plt.savefig(save_path + name + "-CONVERGENCE.png", dpi=300)
-
-    else:
         plt.show()
 
     return iter_all, func
 
 
-def steplen(filepath, name=None, plot=True, save=False, save_path="./"):
+def steplen(filepath, name=None, plot=False):
+    """
+    Retrieves and plots the step length value of an inversion run with Fullwave3D as recorded in the job log
+    file,
+    :param  filepath:    (str)      path to <PROJECT_NAME>_job,log file
+    :param  name:        (str)      name of the project. If not given, will be inferred from filename. Default: None
+    :param  plot:        (bool)     if true will produce a plot of the step length values vs iterations. Default: False
+    :return iter_all     (np.array) array of iteration numbers of the run of size (number_of_iterations, 1)
+    :return steplenarr   (np.array) array of step length values of size (number_of_iterations, 1)
+    """
 
     # If name not given, get it from filename
     if name is not None:
@@ -84,11 +97,6 @@ def steplen(filepath, name=None, plot=True, save=False, save_path="./"):
         ax.set_ylabel("Global Step Length")
         ax.set_title(name + "-Step Length")
         ax.grid(True)
-
-    if save:
-        plt.savefig(save_path + name + "-CONVERGENCE.png", dpi=300)
-
-    else:
         plt.show()
 
     return iter_all, steplenarr

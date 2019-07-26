@@ -110,11 +110,16 @@ def test_gausswindow():
 
 
 def test_closest2pow():
-    warnings.filterwarnings("ignore")
-    list1 = np.array([i for i in range(0, 100, 10)])
-    list_pow = np.array([0, 16, 32, 32, 64, 64, 64, 128, 128, 128])
+    list1 = np.array([i for i in range(1, 101, 10)])
+    list_pow = np.array([1, 16, 32, 32, 64, 64, 64, 128, 128, 128])
     list_calc = np.array([sig.closest2pow(i) for i in list1])
     assert np.allclose(list_calc, list_pow)
-    assert sig.closest2pow(-1) == None
+
+    # Check value error is thrown for negative numbers
+    try:
+        sig.closest2pow(-1)
+    except ValueError:
+        assert True
+
     return
 
