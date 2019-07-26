@@ -12,8 +12,15 @@ def closest2pow(n):
     """
     Finds the first integer greater or equal to n that is a power of 2
     """
-    n2pow = int(2 ** np.ceil(np.log(n) / np.log(2.)))
-    return n2pow
+    try:
+        n2pow = int(2 ** np.ceil(np.log(n) / np.log(2.)))
+        return n2pow
+    except (ValueError, RuntimeWarning):
+        if n == 0:
+            return 0
+        else:
+            warnings.warn("Can only compute the closest power of two of positive numbers")
+            return None
 
 
 def gausswindow(samples, wstart, wend, dt):

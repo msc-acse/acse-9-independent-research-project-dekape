@@ -6,6 +6,7 @@ import os
 import fullwaveqc.tools as tools
 import copy
 import numpy as np
+import warnings
 
 
 def test_thisfunction():
@@ -98,11 +99,22 @@ def test_dataspec():
 
 def test_gausswindow():
     w = sig.gausswindow(samples=11, wstart=2, wend=5, dt=2)
+
     arr = np.array([6.57285286e-02, 6.06530660e-01, 9.45959469e-01, 2.49352209e-01,
            1.11089965e-02, 8.36483472e-05, 1.06453714e-07, 2.28973485e-11,
            8.32396968e-16, 5.11442373e-21, 5.31109225e-27])
+
     assert(np.allclose(w, arr))
+
     return None
 
 
+def test_closest2pow():
+    warnings.filterwarnings("ignore")
+    list1 = np.array([i for i in range(0, 100, 10)])
+    list_pow = np.array([0, 16, 32, 32, 64, 64, 64, 128, 128, 128])
+    list_calc = np.array([sig.closest2pow(i) for i in list1])
+    assert np.allclose(list_calc, list_pow)
+    assert sig.closest2pow(-1) == None
+    return
 
