@@ -44,7 +44,6 @@ def test_wavespec():
     wavelet.dt = [1.]     # fix sampling rate and number of samples
     wavelet.samples = [401]
     wavelet_test = sig.wavespec(wavelet, ms=True, fft_smooth=5, fmax=15, plot=False)
-    np.save(os.path.join(dir_path, "test_data/wavelet_test.npy"), wavelet_test, allow_pickle=True)
 
     # Load true wavelet spectra
     wavelet_path = os.path.join(dir_path, "test_data/wavelet_test.npy")
