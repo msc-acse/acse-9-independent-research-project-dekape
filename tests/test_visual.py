@@ -6,7 +6,7 @@ import numpy as np
 import os
 
 def test_thisfunction():
-    assert (True)
+    assert 1
 
 
 def test_vpwell():
