@@ -73,13 +73,14 @@ class Model:
 
 def load(filepath, model, scale=1, verbose=1):
     """
-        Loads a segy file into a SegyData or Model class, used for the other functionalities of the fullwaveqc package.
-        Accepts 2D segy files and of the same sampling interval for all shots and segy model files with square cells
+    Loads a segy file into a SegyData or Model class, used for the other functionalities of the fullwaveqc package.
+    Accepts 2D segy files and of the same sampling interval for all shots and segy model files with square cells
+
     :param    filepath: (str)   path to segy file. Must end in .sgy
     :param    model:    (bool)  Set true to load a Model and false to load a SegyData object
     :param    scale:    (float) Value to multiply the data content of the files. Default 1
     :param    verbose:  (bool)  Set to true in order to verbose the steps of this loading function. Default True
-    :return:  fullwaveqc.tools.SegyData or fullwave,tools.Model object
+    :return::  fullwaveqc.tools.SegyData or fullwave,tools.Model object
     """
 
     if not model:
@@ -169,10 +170,11 @@ def load(filepath, model, scale=1, verbose=1):
 def rm_empty_traces(filename, scale=1, verbose=1):
     """
     Removes all-zero traces of a segy file and saves the copy of the clean file in the same directory
+
     :param    filename: (str)   path to segy file, must end in .sgy
     :param    scale:    (float) Value to multiply the data content of the files. Default 1
     :param    verbose:  (bool)  Set to true in order to verbose the steps of this loading function. Default True
-    :return:  None
+    :return::  None
     """
 
     #
@@ -250,7 +252,7 @@ def ddwi(MonObs, BaseObs, BasePred, normalise=True, name=None, mon_filepath=None
     :param  save:          (bool)       Set to true if the DDWI dataset is to be saved in .sgy format. Default False
     :param  save_path:     (str)        Path to folder where DDWI must be saved. Default "./"
     :param  verbose:       (bool)       Set to true in order to verbose the steps of this function. Default 1
-    :return MON_DIFF       (SegyData)   object outputted from fullwaveqc.tools.load function with the DDWI monitor data
+    :return: MON_DIFF       (SegyData)   object outputted from fullwaveqc.tools.load function with the DDWI monitor data
     """
 
     # error handling: check dst path is valid
@@ -342,12 +344,13 @@ def ddwi(MonObs, BaseObs, BasePred, normalise=True, name=None, mon_filepath=None
 def bandpass(trace, flow, fhigh, forder, dt):
     """
     Band passes a trace using a Butter filter.
+
     :param  trace:     (np.array) 1D array containing the signal in time domain
     :param  flow:      (float)    low frquency to band pass
     :param  fhigh:     (float)    high frequency to band pass
     :param  forder:    (int)      order of band pass filter, determines the steepnes of the transition band
     :param  dt:        (float)    Time sampling of the signal
-    :return filtered   (np.array) 1D array of same size as trace, with the filtered signal
+    :return: filtered   (np.array) 1D array of same size as trace, with the filtered signal
     """
     # set up parameters for bandpass filtering
     nyq = 0.5 / dt  # nyquist frequency
@@ -378,6 +381,7 @@ def ampnorm(Obs, Pred, ref_trace=0, verbose=1):
     """
     Normalises the amplitude of a predicted dataset with an observed dataset by matching the values of their maximum
     amplitudes of a reference trace.
+
     :param  Obs:         (SegyData)   object outputted from fullwaveqc.tools.load function for the observed data
     :param  Pred:        (SegyData)   object outputted from fullwaveqc.tools.load function for the predicted data.
                                       Requires same number of samples, sampling interval, shots and receiver positions
@@ -385,7 +389,7 @@ def ampnorm(Obs, Pred, ref_trace=0, verbose=1):
     :param  ref_trace:   (int)        trace number to each normalise each shot. For streamer data, this value should be
                                       0 in order to normalise it to the first arrival trace. Default 0
     :param  verbose:     (bool)       Set to true to verbose the steps of this function. Default 1
-    :return PredNorm     (SegyData)   object outputted from fullwaveqc.tools.load function with the normalise predicted
+    :return: PredNorm     (SegyData)   object outputted from fullwaveqc.tools.load function with the normalise predicted
                                       data
     """
     PredNorm = copy.deepcopy(Pred)
@@ -402,13 +406,14 @@ def ampnorm(Obs, Pred, ref_trace=0, verbose=1):
 def smooth_model(Model, strength=[1, 1], name=None, save=False, save_path="./"):
     """
     Smoothes a model using scipy's gaussian filter in "reflect" mode.
+
     :param  Model:       (Model)           object outputted from fullwaveqc.tools.load function for a model
     :param  strength:    (list of floats)  [horizontal_smoothing_factor, vertical_smoothing_factor]. Default [1,1]
     :param  save:        (bool)            set to true in order to save the model in .sgy format. Default False
     :param  save_path:   (str)             path to save the .sgy smoothed model. Default "./"
     :param  name:        (str)             name of the new smoothed model. If None it will be inferred from Model.
                                            Default None
-    :return SmoothModel: (Model)           object as outputted from fullwaveqc.tools.load function containing the
+    :return: SmoothModel: (Model)           object as outputted from fullwaveqc.tools.load function containing the
                                            smoothed model
     """
     SmoothModel = copy.deepcopy(Model)
