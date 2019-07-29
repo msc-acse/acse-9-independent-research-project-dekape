@@ -11,8 +11,9 @@ import sys
 def closest2pow(n):
     """
     Finds the first integer greater or equal to n that is a power of 2
+    
     :param   n          (float) any positive number
-    :return  n2pow      (int) the first integer greater or equal to n that is an exact power of two
+    :return:  n2pow      (int) the first integer greater or equal to n that is an exact power of two
     :raises  ValueError if n is less or equal to zero
     """
     if n <= 0:
@@ -25,11 +26,12 @@ def closest2pow(n):
 def gausswindow(samples, wstart, wend, dt):
     """
     Create a gaussian function to window a signal
+
     :param   samples: (int) Total of points in the function
     :param   wstart:  (int) Start time of the window (ms)
     :param   wend:    (int) End time of the window (ms)
     :param   dt:      (float) Time sampling of the signal(ms)
-    :return  w        (numpy.array) 1D array of a gaussian window of size (samples, 1)
+    :return:  w        (numpy.array) 1D array of a gaussian window of size (samples, 1)
     """
     # Transform window to index points
     wend, wstart = wend/dt, wstart/dt
@@ -48,6 +50,7 @@ def gausswindow(samples, wstart, wend, dt):
 def wavespec(Wavelet, ms=True, fmax=None, plot=False, fft_smooth=1):
     """
     Returns and plots the frequency spectrum of a source wavelet.
+
     :param  Wavelet:    (SegyData)   object outputted from fullwaveqc.tools.load function
     :param  ms:         (bool)       Set to true if sampling rate in Wavelet object is in miliseconds, otherwise assumed
                                      in seconds. Default: True
@@ -60,9 +63,9 @@ def wavespec(Wavelet, ms=True, fmax=None, plot=False, fft_smooth=1):
                                      points will be the nearest power of two of fft_smooth multiplied by the original
                                      number of time samples in the signal. Higher value increases computational time.
                                      Default: 1
-    :return xf          (np.array)   1D array containing the frequencies
-    :return yf          (np.array)   1D array containing the power of the frequencies in dB
-    :return phase       (np.array)   1D array containing the unwrapped phases at each frequency
+    :return: xf          (np.array)   1D array containing the frequencies
+    :return: yf          (np.array)   1D array containing the power of the frequencies in dB
+    :return: phase       (np.array)   1D array containing the unwrapped phases at each frequency
     """
     # Obtaining information from the wavelet
     n = Wavelet.samples[0]
@@ -134,6 +137,7 @@ def dataspec(SegyData, ms=True, shot=1, fmax=None, fft_smooth=1, plot=False):
     """
     Returns and plots the frequency spectrum of a single shot of a dataset. Does so by stacking the frequencies of each
     individual trace.
+
     :param  SegyData:   (SegyData)  object outputted from fullwaveqc.tools.load function
     :param  ms:         (bool)      Set to true if sampling rate in Wavelet object is in milliseconds, otherwise assumed
                                     in seconds. Default: True
@@ -146,9 +150,9 @@ def dataspec(SegyData, ms=True, shot=1, fmax=None, fft_smooth=1, plot=False):
                                     points will be the nearest power of two of fft_smooth multiplied by the original
                                     number of time samples in the signal. Higher value increases computational time.
                                     Default: 1
-    :return xf          (np.array)  1D array containing the frequencies
-    :return yf          (np.array)  1D array containing the power of the frequencies in dB
-    :return phase       (np.array)  1D array containing the unwrapped phases at each frequency
+    :return: xf          (np.array)  1D array containing the frequencies
+    :return: yf          (np.array)  1D array containing the power of the frequencies in dB
+    :return: phase       (np.array)  1D array containing the unwrapped phases at each frequency
     """
 
     # Get shot information and adjust dt
@@ -217,6 +221,7 @@ def phasediff(PredData, ObsData, f=1, wstart=200, wend=1000, nr_max=None, ns_max
     """
     Computes and plots the phase difference between an observed and predicted dataset, at a single specified frequency,
     for all receivers and shots
+
     :param  PredData:   (SegyData)  object outputted from fullwaveqc.tools.load function
     :param  ObsData:    (SegyData)  object outputted from fullwaveqc.tools.load function
     :param  f:          (float)     Frequency in Hz at which the phase difference should be calculated
@@ -242,7 +247,7 @@ def phasediff(PredData, ObsData, f=1, wstart=200, wend=1000, nr_max=None, ns_max
     :param  plot:       (bool)      Will plot the phase difference if set to True
                                     Default: False
     :param  verbose:    (bool)      If set to True will verbose the main steps of the function calculation. Default 1
-    :return phase_pred  (np.array)  phase_pred  2D array of size (ns_max, nr_max) with the unwrapped phases of the
+    :return: phase_pred  (np.array)  phase_pred  2D array of size (ns_max, nr_max) with the unwrapped phases of the
                                     predicted dataset at the specified frequency
             phase_obs   (np.array)  phase_obs  2D array of size (ns_max, nr_max) with the unwrapped phases of the
                                     observed dataset at the specified frequency
@@ -382,6 +387,7 @@ def xcorr(PredData, ObsData, wstart=0, wend=-1, nr_max=None, ns_max=None, ms=Tru
     """
     Computes and plots the cross-correlation between an observed and predicted dataset using numpy.correlate.
     Traces are normalised to unit length for comparison
+
     :param  PredData:   (SegyData) object outputted from fullwaveqc.tools.load function
     :param  ObsData:    (SegyData) object outputted from fullwaveqc.tools.load function
     :param  wstart:     (int)      Time sample to which start the window for the phase difference computation
@@ -400,7 +406,7 @@ def xcorr(PredData, ObsData, wstart=0, wend=-1, nr_max=None, ns_max=None, ms=Tru
     :param  plot:       (bool)     Will plot the phase difference if set to True
                                    Default: False
     :param  verbose:    (bool)     If set to True will verbose the main steps of the function calculation. Default 1
-    :return xcorr_arr   (np.array) 2D array of size (ns_max, nr_max) with the unwrapped phases of the
+    :return: xcorr_arr   (np.array) 2D array of size (ns_max, nr_max) with the unwrapped phases of the
                                    predicted dataset at the specified frequency
                        (np.array)  phase_obs  2D array of size (ns_max, nr_max) with the unwrapped phases of the
                                    observed dataset at the specified frequency

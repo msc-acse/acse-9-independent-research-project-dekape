@@ -1,0 +1,33 @@
+(0-1)  Title / Introduction to Presentation
+(1-2)  Dedicatorias - Total, supervisor
+(2-5)  Motivations
+	- timelapse
+	- Fullwave3D at Total (why switch)
+(5-6)  Presentation Outline
+(6-11) FWI background
+	- do it for someone who's not familiar with inversion or with seismic data
+	- What is seismics?
+	- Why seismics? What are we trying to achieve in O&G -- with examples
+	- The need of inversion to recover model of subsurface properties
+	- Inversion theory
+	- FWI theory -- workflow
+(11-12) Applications of FWI
+(12-14) Introduction to Fullwave3D
+(14-19) Timelapse theory
+(19-23) The limitations of FWI
+(23-26) Motivations for QC
+	- Important to look at your data
+	- Finite difference convergence -- numerical stability and dispersion
+	- Identifying and mitigating cycle skipping phenomena
+	- Targeted to this project -- limited timeframe -- but able to expand (more features and 3D)
+	- Useful for Total, and anyone who plans to use fullwave3D in the future
+(26-28) FullwaveQC
+	- Present package
+(28-30) Present Data
+(30-32) Present Data + FullwaveQC + Fullwave3D joint workflow
+(32-35) Present Results without QC
+(35-38) Present Results with QC
+(38-40) Present Results from Diva (reference Total)
+(40-43) Conclusions
+(43-45) Review
+

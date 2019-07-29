@@ -74,6 +74,7 @@ def amplitude(SegyData, shot=1, cap=0., levels=100, vmin=None, vmax=None, cmap=p
     """
     Plots the amplitude map of a SegyData object in timesamples vs receiver index.
     Uses properties of matplotlib.contourf.
+
     :param  SegyData:  (SegyData)   object outputted from fullwaveqc.tools.load function for the segy data
     :param  shot:      (int)        shot number to visualise. Count starts from 1. Default 1
     :param  cap:       (float)      absolute value of amplitudes to cap, shown as 0. Default 0.
@@ -87,7 +88,7 @@ def amplitude(SegyData, shot=1, cap=0., levels=100, vmin=None, vmax=None, cmap=p
     :param  wend:      (int)        last timesample in time units to plot. Default None
     :param  save:      (bool)       set to true in order to save the plot in png 300dpi. Default False
     :param  save_path: (str)        path to save the plot. Default "./"
-    :return None
+    :return: None
     """
 
     # Get data from SegyData object
@@ -139,6 +140,7 @@ def interamp(SegyData1, SegyData2, shot=1, shot2=None, n_blocks=2, cap=0., level
     """
     Plots the interleaving amplitude map of a SegyData1 and SegyData2 objects in timesamples vs receiver index.
     Uses properties of matplotlib.contourf.
+
     :param SegyData1:      (SegyData)   object outputted from fullwaveqc.tools.load function for the segy data
     :param SegyData2:      (SegyData)   object outputted from fullwaveqc.tools.load function for the segy data
                                         Requires same number of samples, sampling interval, shots and receiver
@@ -156,7 +158,7 @@ def interamp(SegyData1, SegyData2, shot=1, shot2=None, n_blocks=2, cap=0., level
     :param  wend:          (int)        last timesample in time units to plot. Default None
     :param  save:          (bool)       set to true in order to save the plot in png 300dpi. Default False
     :param  save_path:     (str)        path to save the plot. Default "./"
-    :return None
+    :return: None
     :return:
     """
 
@@ -190,6 +192,7 @@ def wiggle(SegyData, shot=1, scale=5, skip_trace=0, skip_time=0, wstart=0., wend
            delay_samples=0, save=False, save_path="./"):
     """
      Plots the wiggle trace map of a SegyData object in timesamples vs receiver index.
+
     :param  SegyData:      (SegyData)   object outputted from fullwaveqc.tools.load function for the segy data
     :param  shot:          (int)        shot number to visualise. Count starts from 1. Default 1
     :param  scale:         (float)      value to scale the amplitude of the wiggles for visualisation only. Default 1
@@ -203,7 +206,7 @@ def wiggle(SegyData, shot=1, scale=5, skip_trace=0, skip_time=0, wstart=0., wend
                                         beginning. Default 0
     :param  save:          (bool)       set to true in order to save the plot in png 300dpi. Default False
     :param  save_path:     (str)        path to save the plot. Default "./"
-    :return  None
+    :return:  None
     """
 
     # Get data from SegyData object
@@ -250,6 +253,7 @@ def interwiggle(SegyData1, SegyData2, shot=1, shot2=None, overlay=False, scale=5
                 save=False, save_path="./"):
     """
     Plots the interleaving wiggle trace map of a SegyData1 and SegyData2 objects in timesamples vs receiver index.
+
     :param   SegyData1:       (SegyData)   object outputted from fullwaveqc.tools.load function for the segy data
     :param   SegyData2:       (SegyData)   object outputted from fullwaveqc.tools.load function for the segy data
     :param   shot:            (int)        shot number to visualise SegyData1. Default 1
@@ -270,7 +274,7 @@ def interwiggle(SegyData1, SegyData2, shot=1, shot2=None, overlay=False, scale=5
     :param   label2:          (str)        Label for SegyData2. Default SegyData2
     :param   save:            (bool)       set to true in order to save the plot in png 300dpi. Default False
     :param   save_path:       (str)        path to save the plot. Default "./"
-    :return  None
+    :return:  None
     """
     data1 = SegyData1.data[shot-1]
     if shot2 is not None:
@@ -394,6 +398,7 @@ def vpmodel(Model, cap=0., levels=200, vmin=None, vmax=None, cmap=plt.cm.jet, un
 def vpwell(Model, pos_x, TrueModel=None,  plot=True):
     """
     Retrieves the Vp well profile from a Model at specified locations
+
     :param Model:      (Model)        object outputted from fullwaveqc.tools.load function for a model
     :param pos_x:      (list of ints) lateral distances to which retrieve the well data
     :param TrueModel:  (Model)        object outputted from fullwaveqc.tools.load function for the true model.
@@ -478,6 +483,7 @@ def animateinv(it_max, path, project_name, vmin=None, vmax=None, cmap=plt.cm.jet
     """
     Animates the evolution of an inversion progression outputted by Fullwave3D. Files searched for must be named:
     <project_name>-CPxxxxx-Vp.sgy and be all located in the same path folder.
+
     :param  it_max:        (int)        max amount of iterations to be analysed
     :param  path:          (str)        path to folder where .sgy model files are located
     :param  project_name:  (str)        name of the project -- must match exactly
