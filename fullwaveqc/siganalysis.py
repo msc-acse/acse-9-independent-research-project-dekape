@@ -11,7 +11,7 @@ import sys
 def closest2pow(n):
     """
     Finds the first integer greater or equal to n that is a power of 2
-    
+
     :param   n          (float) any positive number
     :return:  n2pow      (int) the first integer greater or equal to n that is an exact power of two
     :raises  ValueError if n is less or equal to zero
@@ -77,7 +77,7 @@ def wavespec(Wavelet, ms=True, fmax=None, plot=False, fft_smooth=1):
 
     # Compute sampling frequency
     fs = 1./dt
-    print(datetime.datetime.now(), " \t Sampling Frequency = %.4f Hz" % fs)
+    sys.stdout.write(str(datetime.datetime.now()) + " \t Sampling Frequency = %.4f Hz" % fs)
 
     # Perform fft and create frequency domain
     n = closest2pow(fft_smooth * n)
@@ -113,6 +113,7 @@ def wavespec(Wavelet, ms=True, fmax=None, plot=False, fft_smooth=1):
         ax[0].plot(time, signal)
         ax[0].grid()
         ax[0].set(title="Wavelet - Time Domain", xlabel="Time(s)", ylabel="Amplitude")
+        # ax[0].set_xlim(0, time[np.where(signal > 0)[0][-1]])
 
         # Plot frequency domain
         if fmax is not None:
@@ -161,7 +162,7 @@ def dataspec(SegyData, ms=True, shot=1, fmax=None, fft_smooth=1, plot=False):
     if ms:
         dt = dt/1000.
     fs = 1. / dt
-    print(datetime.datetime.now(), " \t Sampling Frequency = %.4f Hz" % fs)
+    sys.stdout.write(str(datetime.datetime.now()) + " \t Sampling Frequency = %.4f Hz" % fs)
 
     # whole of f domain points (larger than nt for smoothed plot)
     nt = closest2pow(fft_smooth * nt)
@@ -348,7 +349,7 @@ def phasediff(PredData, ObsData, f=1, wstart=200, wend=1000, nr_max=None, ns_max
             warnings.warn("Shot %g not well defined" % i)
 
     if verbose:
-        print(str(datetime.datetime.now()) + "                   \t All phases calculated successfully")
+        sys.stdout.write(str(datetime.datetime.now()) + "                   \t All phases calculated successfully")
 
     # Unwrap phase in space and Compute phase difference
     phase_obs = np.unwrap(2*phase_obs, axis=1)/2
@@ -461,14 +462,15 @@ def xcorr(PredData, ObsData, wstart=0, wend=-1, nr_max=None, ns_max=None, ms=Tru
 
                 except RuntimeError:
                     if verbose:
-                        print("All zero predicted signal encountered at trace %g of shot %g" % (j, i))
+                        sys.stdout.write("All zero predicted signal encountered at trace %g of shot %g" % (j, i))
                 except IndexError:
                     warnings.warn("Predicted trace %g of shot %g not well defined" % (j, i))
         except IndexError:
             warnings.warn("Shot %g not well defined" % i)
 
     if verbose:
-        print(str(datetime.datetime.now()) + "                   \t All cross-correlations calculated successfully")
+        sys.stdout.write(str(datetime.datetime.now()) + "                   \t All cross-correlations calculated "
+                                                        "successfully")
 
     # Plot
     if plot:

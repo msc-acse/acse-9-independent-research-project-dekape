@@ -136,7 +136,7 @@ def amplitude(SegyData, shot=1, cap=0., levels=100, vmin=None, vmax=None, cmap=p
 
 
 def interamp(SegyData1, SegyData2, shot=1, shot2=None, n_blocks=2, cap=0., levels=100, vmin=None, vmax=None,
-             cmap=plt.cm.seismic, wstart=0, wend=None, save=False, save_path="./"):
+             cmap=plt.cm.seismic, wstart=0, wend=None, xstart=0, xend=None, save=False, save_path="./"):
     """
     Plots the interleaving amplitude map of a SegyData1 and SegyData2 objects in timesamples vs receiver index.
     Uses properties of matplotlib.contourf.
@@ -182,9 +182,9 @@ def interamp(SegyData1, SegyData2, shot=1, shot2=None, n_blocks=2, cap=0., level
 
     InterData = copy.deepcopy(SegyData1)
     InterData.data[shot-1] = data_inter
-    InterData.name = SegyData1.name + "-INTERAMP"
+    InterData.name = SegyData2.name + "-" + SegyData1.name + "-INTERAMP"
     amplitude(InterData, shot=shot, cap=cap, levels=levels, vmin=vmin, vmax=vmax, cmap=cmap, save=save,
-              wstart=wstart, wend=wend, save_path=save_path)
+              wstart=wstart, wend=wend, xstart=xstart, xend=xend, save_path=save_path)
     return None
 
 
@@ -203,7 +203,7 @@ def wiggle(SegyData, shot=1, scale=5, skip_trace=0, skip_time=0, wstart=0., wend
     :param  wstart:        (int)        first timesample in time units to plot. Default 0
     :param  wend:          (int)        last timesample in time units to plot. Default None
     :param  delay_samples: (int)        number of time samples to delay the signal. Will pad the signal with 0s at the
-                                        beginning. Default 0
+                                        beginning. Default 0.
     :param  save:          (bool)       set to true in order to save the plot in png 300dpi. Default False
     :param  save_path:     (str)        path to save the plot. Default "./"
     :return:  None
@@ -248,7 +248,7 @@ def wiggle(SegyData, shot=1, scale=5, skip_trace=0, skip_time=0, wstart=0., wend
     return None
 
 
-def interwiggle(SegyData1, SegyData2, shot=1, shot2=None, overlay=False, scale=5, skip_trace=20, skip_time=0,
+def interwiggle(SegyData1, SegyData2, shot=1, shot2=None, overlay=0, scale=5, skip_trace=20, skip_time=0,
                 delay_samples=0, wstart=0, wend=None, xstart=0, xend=None, label1="SegyData1", label2="SegyData2",
                 save=False, save_path="./"):
     """
@@ -259,8 +259,9 @@ def interwiggle(SegyData1, SegyData2, shot=1, shot2=None, overlay=False, scale=5
     :param   shot:            (int)        shot number to visualise SegyData1. Default 1
     :param   shot2:           (int)        shot number to visualise SegyData2. Count starts from 1. If None, will
                                            be read the same as 'shot'. Default None
-    :param   overlay:         (bool)       If true, traces will be overlaid in different colours instead of being
-                                           displayed side by side. Default False
+    :param   overlay:         (int)        If +ve, traces will be overlaid in different colours instead of being
+                                           displayed side by side. Overlay=1 overlays with all filled colors, overlay=2
+                                           overlays with SegyData2 as filled colors and SegyData1 as conotur. Default 0
     :param   scale:           (float)      value to scale the amplitude of the wiggles for visualisation only. Default 1
     :param   skip_trace:      (int)        Number of traces to skip. Default 0.
     :param   skip_time:       (int)        Number of time samples to skip. Default 0
@@ -308,9 +309,13 @@ def interwiggle(SegyData1, SegyData2, shot=1, shot2=None, overlay=False, scale=5
             ax.plot(x2, times, '-w', linewidth=0)
             ax.fill_betweenx(times, i, x2, where=(x2 > i), color='r')
             ax.fill_betweenx(times, i, x2, where=(x2 < i), color='b')
+            ax.fill_betweenx(times, i, x2, where=(x2 < i), color='b')
 
             x1 = scale * data1[i] + i
             ax.plot(x1, times, '-k')
+            if overlay == 1:
+                ax.fill_betweenx(times, i, x1, where=(x1 > i), color='k')
+                ax.fill_betweenx(times, i, x1, where=(x1 < i), color='k')
 
     # Interleave traces
     else:
@@ -325,7 +330,7 @@ def interwiggle(SegyData1, SegyData2, shot=1, shot2=None, overlay=False, scale=5
 
     custom_lines = [Line2D([0], [0], color="k", lw=1),
                     Line2D([0], [0], color="r", lw=1)]
-    ax.set_title(SegyData1.name + "-INTERWIGGLE")
+    ax.set_title(SegyData2.name + "-" + SegyData1.name + "-INTERWIGGLE")
     ax.set_ylabel("Time (ms)")
     ax.set_xlabel("Rec x")
     ax.set_ylim(wend, wstart)
@@ -369,7 +374,7 @@ def vpmodel(Model, cap=0., levels=200, vmin=None, vmax=None, cmap=plt.cm.jet, un
 
     # Plot figure
     figure, ax = plt.subplots(1, 1)
-    figure.set_size_inches(18.5, 10.5)
+    figure.set_size_inches(16.5, 9.5)
 
     # Contour plot and formatting axis
     x = np.arange(0, data.shape[1], 1)*dx
@@ -410,7 +415,6 @@ def vpwell(Model, pos_x, TrueModel=None,  plot=True):
 
     # Get model data
     pred = np.flipud(Model.data)
-    # print(pred)
 
     # Get true model
     if TrueModel is not None:
@@ -510,11 +514,12 @@ def animateinv(it_max, path, project_name, vmin=None, vmax=None, cmap=plt.cm.jet
                 sys.stdout.write(str(datetime.datetime.now()) + " \t Loading model %g ...\r" % i)
             ani_data[i] = tools.load(path + project_name + "-CP" + format(i, "05") + "-Vp.sgy",
                                      model=True, verbose=0).data
-        except IndexError:
-            print(str(datetime.datetime.now()) + " \t Could not load model %g" % i)
+        except (IndexError, FileNotFoundError):
+            pass
+            # sys.stdout.write(str(datetime.datetime.now()) + " \t Could not load model %g" % i)
 
     if verbose:
-        sys.stdout.write(str(datetime.datetime.now()) + " \t Creating animation...")
+        sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Creating animation...")
     obj = AnimateImshow(ani_data, vmin=vmin, vmax=vmax, cmap=cmap)  # setup the animation
     obj.title = project_name
     obj.xlabel = "x-grid"

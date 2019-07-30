@@ -56,7 +56,8 @@ def steplen(filepath, name=None, plot=False):
 
     :param  filepath:    (str)      path to <PROJECT_NAME>_job,log file
     :param  name:        (str)      name of the project. If not given, will be inferred from filename. Default: None
-    :param  plot:        (bool)     if true will produce a plot of the step length values vs iterations. Default: False
+    :param  plot:        (bool)     if true will produce a plot of the step length values vs iterations. And highlight
+                                    in red all negative step length values. Default: False
     :return: iter_all     (np.array) array of iteration numbers of the run of size (number_of_iterations, 1)
     :return: steplenarr   (np.array) array of step length values of size (number_of_iterations, 1)
     """

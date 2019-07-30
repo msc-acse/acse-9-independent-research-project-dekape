@@ -11,7 +11,6 @@
 	- The need of inversion to recover model of subsurface properties
 	- Inversion theory
 	- FWI theory -- workflow
-	- Forward modelling and discretisation of the wave equation
 (11-12) Applications of FWI
 (12-14) Introduction to Fullwave3D
 (14-19) Timelapse theory
@@ -23,16 +22,7 @@
 	- Targeted to this project -- limited timeframe -- but able to expand (more features and 3D)
 	- Useful for Total, and anyone who plans to use fullwave3D in the future
 (26-28) FullwaveQC
-	- Present package and limitations
-	- Not well tested -- synthetic streamer data, same freq cont blocks
-	- Very much version dependent on Fullwave3D and SegyPrep
-	- No 3D
-	- Some functions could be faster
-	- Same number of samples for every shot
-	- Same rec and source spacing for every shot
-	- Amplitude normalisation function --very simple
-	- Could provide a weiner filter for source wavelet matching
-	- Join segy / Split segy functionalities
+	- Present package
 (28-30) Present Data
 (30-32) Present Data + FullwaveQC + Fullwave3D joint workflow
 (32-35) Present Results without QC
@@ -40,7 +30,4 @@
 (38-40) Present Results from Diva (reference Total)
 (40-43) Conclusions
 (43-45) Review
-BACKUPSLIDES:
-- Wavelet -- prev and after
-- Previous runs and descriptions from spreadsheet
-- Improvements to FullwaveQC
+
