@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+# Deborah Pelacani Cruz
+# https://github.com/dekape
 
 import context
 import fullwaveqc.siganalysis as sig
@@ -6,7 +8,6 @@ import os
 import fullwaveqc.tools as tools
 import copy
 import numpy as np
-import warnings
 
 
 def test_thisfunction():

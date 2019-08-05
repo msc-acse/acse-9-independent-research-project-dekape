@@ -1,3 +1,6 @@
+# Deborah Pelacani Cruz
+# https://github.com/dekape
+
 import setuptools
 
 with open("README.md", "r") as fh:

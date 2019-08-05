@@ -1,4 +1,7 @@
 #!/usr/bin/env python
+# Deborah Pelacani Cruz
+# https://github.com/dekape
+
 
 import fullwaveqc.visual as visual
 import fullwaveqc.tools as tools
