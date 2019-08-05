@@ -25,7 +25,8 @@ def closest2pow(n):
 
 def gausswindow(samples, wstart, wend, dt):
     """
-    Create a gaussian function to window a signal
+    Create a gaussian function to window a signal. Half the window width is equivalent to two standard deviations of
+    the gaussian function.
 
     :param   samples: (int) Total of points in the function
     :param   wstart:  (int) Start time of the window (ms)
@@ -37,7 +38,7 @@ def gausswindow(samples, wstart, wend, dt):
     wend, wstart = wend/dt, wstart/dt
 
     # Compute width and centering of the window
-    std = 0.5 * (wend - wstart)
+    std = 0.5 * (wend - wstart) / 2
     mean = wstart + std
 
     # Create samples array and gaussian function
@@ -77,7 +78,7 @@ def wavespec(Wavelet, ms=True, fmax=None, plot=False, fft_smooth=1):
 
     # Compute sampling frequency
     fs = 1./dt
-    sys.stdout.write(str(datetime.datetime.now()) + " \t Sampling Frequency = %.4f Hz" % fs)
+    sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Sampling Frequency = %.4f Hz" % fs)
 
     # Perform fft and create frequency domain
     n = closest2pow(fft_smooth * n)
@@ -224,7 +225,8 @@ def phasediff(PredData, ObsData, f=1, wstart=200, wend=1000, nr_max=None, ns_max
     for all receivers and shots
 
     :param  PredData:   (SegyData)  object outputted from fullwaveqc.tools.load function
-    :param  ObsData:    (SegyData)  object outputted from fullwaveqc.tools.load function
+    :param  ObsData:    (SegyData)  object outputted from fullwaveqc.tools.load function. Should have the same time
+                                    sampling as PredData
     :param  f:          (float)     Frequency in Hz at which the phase difference should be calculated
                                     Default: 1
     :param  wstart:     (int)       Time sample to which start the window for the phase difference computation
@@ -286,7 +288,7 @@ def phasediff(PredData, ObsData, f=1, wstart=200, wend=1000, nr_max=None, ns_max
         nt = closest2pow(fft_smooth * nt)
 
         # Create Gaussian window
-        w = gausswindow(PredData.samples[i], wstart, wend, dt)
+        w = gausswindow(PredData.samples[i], wstart, wend, PredData.dt[i])
 
         # Create and shift the frequency domain
         xf = np.linspace(0.0, 1.0 / (2.0 * dt), nt // 2)
@@ -432,7 +434,7 @@ def xcorr(PredData, ObsData, wstart=0, wend=-1, nr_max=None, ns_max=None, ms=Tru
     # Loop through each shot -- try and except
     for i in range(0, ns):
 
-        # Get time sampling from data and compute sampling frequency for FFT
+        # Get time sampling from data, dt must be in seconds
         dt = PredData.dt[i]
         if ms:
             dt = dt / 1000.
@@ -441,7 +443,8 @@ def xcorr(PredData, ObsData, wstart=0, wend=-1, nr_max=None, ns_max=None, ms=Tru
             wend = PredData.samples[i]
 
         # Create Gaussian window
-        w = gausswindow(PredData.samples[i], wstart, wend, dt)
+        # print(PredData.dt[i])
+        w = gausswindow(PredData.samples[i], wstart, wend, PredData.dt[i])
 
         # Find array index in frequency domain closest to frequency of interest
         if verbose:
@@ -452,13 +455,14 @@ def xcorr(PredData, ObsData, wstart=0, wend=-1, nr_max=None, ns_max=None, ms=Tru
             for j in range(0, nr_max):
                 # compute phase for predicted dataset
                 try:
-                    # multiply pred and obs trace by gauss window
+                    # multiply normalised (to unit length) pred and obs trace by gauss window
                     pred_trace = (w * PredData.data[i][j])
                     obs_trace = (w * ObsData.data[i][j])
 
                     # cross correlate at zero lag with traces normalised to unit length
-                    xcorr_arr[i][j] = np.correlate(pred_trace/np.linalg.norm(pred_trace),
-                                                   obs_trace/np.linalg.norm(obs_trace))
+                    # xcorr_arr[i][j] = np.correlate(pred_trace, obs_trace)
+                    xcorr_arr[i][j] = np.sum(pred_trace * obs_trace) / \
+                                      np.sqrt(np.sum(pred_trace**2)*np.sum(obs_trace**2))
 
                 except RuntimeError:
                     if verbose:
@@ -477,7 +481,7 @@ def xcorr(PredData, ObsData, wstart=0, wend=-1, nr_max=None, ns_max=None, ms=Tru
         cmap = "PiYG"
         figure, ax = plt.subplots(1, 1)
         figure.set_size_inches(7.5, 7.5)
-        ax.contourf(xcorr_arr, cmap=cmap, levels=360, vmin=-1., vmax=1.)
+        ax.contourf(xcorr_arr, cmap=cmap, levels=360, vmin=-1, vmax=1)
 
         ax.set(xlabel="Rec x", ylabel="Src x")
         ax.set_title(PredData.name + " Zero Lag X-Correlation %g ms - %g ms" % (wstart, wend), pad=40)
@@ -487,7 +491,7 @@ def xcorr(PredData, ObsData, wstart=0, wend=-1, nr_max=None, ns_max=None, ms=Tru
         # Format limits of colour bar
         m = plt.cm.ScalarMappable(cmap=cmap)
         m.set_array(xcorr_arr)
-        m.set_clim(-1., 1)
+        m.set_clim(-1, 1)
         cbar = plt.colorbar(m)
         cbar.set_label(r"Zero Lag Cross Correlation")
 

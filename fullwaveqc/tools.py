@@ -93,7 +93,7 @@ def load(filepath, model, name=None, scale=1, verbose=1):
         # Open datafile with segyio
         if verbose:
             sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Opening file %s..." % filepath)
-        with segyio.open(filepath, mode='r+', ignore_geometry=True) as segyfile:
+        with segyio.open(filepath, mode='r', ignore_geometry=True) as segyfile:
             if verbose:
                 sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Loading data...")
             data = np.asarray([trace * 1.0 for trace in segyfile.trace]) * scale
@@ -166,7 +166,7 @@ def load(filepath, model, name=None, scale=1, verbose=1):
         model.nz = data.shape[0]
         model.dx = src_all[1] - src_all[0]
         if model.dx <= 0:
-            warnings.warn("Zero or negative model spacing. Seems the file has not been loaded correctly."
+            warnings.warn("Zero or negative model spacing. File might not have been loaded correctly."
                           "Check manually!")
         if verbose:
             sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Successfully loaded model of size %g x %g!"
@@ -278,7 +278,6 @@ def ddwi(MonObs, BaseObs, BasePred, normalise=True, name=None, mon_filepath=None
     if verbose:
         sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Computing double difference ...")
     MON_DIFF = copy.deepcopy(MonObs)
-
     for i, d in enumerate(MON_DIFF.data):
         MON_DIFF.data[i] = BasePred.data[i] + (MonObs.data[i] - BaseObs.data[i])
     if verbose:
@@ -289,62 +288,45 @@ def ddwi(MonObs, BaseObs, BasePred, normalise=True, name=None, mon_filepath=None
         MON_DIFF.name = "DDWI-DATASET"
     else:
         MON_DIFF.name = name
+    MON_DIFF.filepath = None
 
     if save:
         if mon_filepath is None:
             raise NameError
 
-        dstpath = save_path + name
+        dstpath = save_path + name + ".sgy"
 
-        # Read monitor file and store SEG-Y information
-        if verbose:
-            sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Opening file %s..." % mon_filepath)
-        with segyio.open(mon_filepath, mode='r', ignore_geometry=True) as segyfile:
+        with segyio.open(mon_filepath, ignore_geometry=True) as src:
             if verbose:
-                sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Reading trace data...")
-            data = np.asarray(
-                [trace * 1.0 for trace in segyfile.trace])  # data in format (number of traces, number of samples)
+                sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Reading file %s..." % mon_filepath)
+            spec = segyio.spec()
+            spec.sorting = src.sorting
+            spec.format = src.format
+            spec.samples = src.samples
+            spec.ilines = src.ilines
+            spec.xlines = src.xlines
+            spec.sorting = src.sorting
+            spec.tracecount = src.tracecount
 
+            # Create new file and copy all but trace data
             if verbose:
-                sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Reading headers...")
-            header = []
-            for i in range(0, data.shape[0]):
-                header.append(segyfile.header[i])  # list of dictionaries
+                sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Creating new file  at %s..." % dstpath)
+            with segyio.create(dstpath, spec) as dst:
+                dst.text[0] = src.text[0]
+                dst.bin = src.bin
+                dst.header = src.header
 
-            if verbose:
-                sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Collection segy header parameters...")
-            newspec = segyio.spec()
-            newspec.ilines = segyfile.ilines
-            newspec.xlines = segyfile.ilines
-            newspec.samples = segyfile.samples
-            newspec.sorting = segyfile.sorting
-            newspec.format = segyfile.format
+                # Stack data
+                if verbose:
+                    sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Stacking data ...")
+                data = copy.deepcopy(MON_DIFF.data[0])
+                for i in range(1, len(MON_DIFF.data)):
+                    data = np.vstack((data, MON_DIFF.data[i]))
 
-        if verbose:
-            sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Initiating saving...")
-
-        # Stack data
-        if verbose:
-            sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Stacking data ...")
-        newdata = copy.deepcopy(MON_DIFF.data[0])
-        for i in range(1, len(MON_DIFF.data)):
-            newdata = np.vstack((newdata, MON_DIFF.data[i]))
-        assert (newdata.shape == data.shape)
-
-        # Copy over trace headers
-        if verbose:
-            sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Updating traces ...")
-        newheader = header
-        newspec.tracecount = newdata.shape[0]
-
-        # Write to new file
-        if verbose:
-            sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Writing trace and headers to new file %s..." % dstpath)
-        with segyio.create(dstpath, newspec) as newsegy:
-            newsegy.trace[:] = newdata
-            for i in range(0, newdata.shape[0]):
-                newsegy.header[i] = newheader[i]
-
+                # Update traces
+                if verbose:
+                    sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Updating traces ...")
+                dst.trace[:] = data
         if verbose:
             sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Double difference dataset saved!")
 
@@ -413,13 +395,17 @@ def ampnorm(Obs, Pred, ref_trace=0, verbose=1):
     return PredNorm
 
 
-def smooth_model(Model, strength=[1, 1], name=None, save=False, save_path="./"):
+def smooth_model(Model, strength=[1, 1], slowness=False, name=None, save=False, save_path="./", verbose=1):
     """
     Smoothes a model using scipy's gaussian filter in "reflect" mode.
 
-    :param  Model:       (Model)           object outputted from fullwaveqc.tools.load function for a model
+    :param  Model:       (Model)           object outputted from fullwaveqc.tools.load function for a model. Must have
+                                           a valid filepath attribute.
     :param  strength:    (list of floats)  [horizontal_smoothing_factor, vertical_smoothing_factor]. Default [1,1]
-    :param  save:        (bool)            set to true in order to save the model in .sgy format. Default False
+    :param  slowness     (bool)            if True will smooth the slowness instead of velocities. Slowness defined
+                                           as the reciprocal value of velocity and is commonly preferred in smoothing.
+    :param  save:        (bool)            set to true in order to save the model in .sgy format. Requires that Model
+                                           has a valid filepath attribute. Default False
     :param  save_path:   (str)             path to save the .sgy smoothed model. Default "./"
     :param  name:        (str)             name of the new smoothed model. If None it will be inferred from Model.
                                            Default None
@@ -427,43 +413,53 @@ def smooth_model(Model, strength=[1, 1], name=None, save=False, save_path="./"):
                                            smoothed model
     """
     SmoothModel = copy.deepcopy(Model)
+    if slowness:
+        SmoothModel.data = 1. / SmoothModel.data
     SmoothModel.data = gaussian_filter(SmoothModel.data, strength, mode="reflect")
+    if slowness:
+        SmoothModel.data = 1. / SmoothModel.data
+
     if name is None:
         SmoothModel.name = SmoothModel.name + "-smooth"
     else:
         SmoothModel.name = name
 
     if save:
-        sys.stdout.write("Feature not yet implemented!")
+        dstpath = save_path + SmoothModel.name + ".sgy"
+
+        with segyio.open(Model.filepath, ignore_geometry=True) as src:
+            if verbose:
+                sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Reading file %s..." % Model.filepath)
+            spec = segyio.spec()
+            spec.sorting = src.sorting
+            spec.format = src.format
+            spec.samples = src.samples
+            spec.ilines = src.ilines
+            spec.xlines = src.xlines
+            spec.sorting = src.sorting
+            spec.tracecount = src.tracecount
+
+            # Create new file and copy all but trace data
+            if verbose:
+                sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Creating new file  at %s..." % dstpath)
+            with segyio.create(dstpath, spec) as dst:
+                dst.text[0] = src.text[0]
+                dst.bin = src.bin
+                dst.header = src.header
+
+                # Stack data
+                if verbose:
+                    sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Stacking data ...")
+                data = copy.deepcopy(SmoothModel.data[0])
+                for i in range(1, len(SmoothModel.data)):
+                    data = np.vstack((data, SmoothModel.data[i]))
+                data = np.fliplr(data.T)
+
+                # Update traces
+                if verbose:
+                    sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Updating model ...")
+                dst.trace[:] = data
+        if verbose:
+            sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Smoothed model saved!")
+
     return SmoothModel
-
-
-# def save(Obj, save_path, verbose=1):
-#
-#     if Obj._type == "data":
-#         newdata = copy.deepcopy(Obj.data[0])
-#         for i in range(1, len(Obj.data)):
-#             newdata = np.vstack((newdata, Obj.data[i]))
-#
-#         samples = np.arange(0, Obj.samples[0], 1) * Obj.dt[0]
-#         for i in range(1, len(Obj.samples)):
-#             samples = np.hstack((samples, np.arange(0, Obj.samples[i] - 1, 1) * Obj.dt[i] + samples[-1] + Obj.dt[i]))
-#
-#         # create segyio spec object
-#         newspec = segyio.spec()
-#         newspec.ilines = None
-#         newspec.xlines = None
-#         newspec.samples = samples
-#         newspec.sorting = None
-#         newspec.tracecount = newdata.shape[0]
-#         newspec.format = 5  # "4-byte IEEE float"
-#         sys.stdout.write(newspec.tracecount)
-#
-#         with segyio.create(save_path, newspec) as newsegy:
-#             newsegy.trace[:] = newdata
-#
-#     else:
-#         a = 1
-#
-#     return None
-

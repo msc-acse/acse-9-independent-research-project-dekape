@@ -510,13 +510,12 @@ def animateinv(it_max, path, project_name, vmin=None, vmax=None, cmap=plt.cm.jet
     ani_data[0] = start
     for i in range(1, it_max + 1):
         try:
-            if verbose:
-                sys.stdout.write(str(datetime.datetime.now()) + " \t Loading model %g ...\r" % i)
             ani_data[i] = tools.load(path + project_name + "-CP" + format(i, "05") + "-Vp.sgy",
                                      model=True, verbose=0).data
+            if verbose:
+                sys.stdout.write(str(datetime.datetime.now()) + " \t Loading model %g ...\r" % i)
         except (IndexError, FileNotFoundError):
-            pass
-            # sys.stdout.write(str(datetime.datetime.now()) + " \t Could not load model %g" % i)
+            sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Unable to load model %g \r" % i)
 
     if verbose:
         sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Creating animation...")
