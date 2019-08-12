@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # Deborah Pelacani Cruz
 # https://github.com/dekape
-
 import numpy as np
 import datetime
 from scipy.fftpack import fft
@@ -27,8 +26,8 @@ def closest2pow(n):
 
 def gausswindow(samples, wstart, wend, dt):
     """
-    Create a gaussian function to window a signal. Half the window width is equivalent to two standard deviations of
-    the gaussian function.
+    Create a gaussian function to window a signal. Standard deviation of the gaussian function is equivalent to one
+    quarter the window width
 
     :param   samples: (int) Total of points in the function
     :param   wstart:  (int) Start time of the window (ms)
@@ -40,8 +39,9 @@ def gausswindow(samples, wstart, wend, dt):
     wend, wstart = wend/dt, wstart/dt
 
     # Compute width and centering of the window
-    std = 0.5 * (wend - wstart) / 2
-    mean = wstart + std
+    fac = 2
+    std = 0.5 * (wend - wstart) / fac
+    mean = wstart + fac*std
 
     # Create samples array and gaussian function
     x = np.arange(0, samples, 1)
@@ -115,7 +115,7 @@ def wavespec(Wavelet, ms=True, fmax=None, plot=False, fft_smooth=1):
         # Plot time domain
         ax[0].plot(time, signal)
         ax[0].grid()
-        ax[0].set(title="Wavelet - Time Domain", xlabel="Time(s)", ylabel="Amplitude")
+        ax[0].set(title=Wavelet.name, xlabel="Time(s)", ylabel="Amplitude")
         # ax[0].set_xlim(0, time[np.where(signal > 0)[0][-1]])
 
         # Plot frequency domain
@@ -125,11 +125,11 @@ def wavespec(Wavelet, ms=True, fmax=None, plot=False, fft_smooth=1):
             idx = -1
         ax[1].plot(xf[:idx], yf[:idx], '.-')
         ax[1].grid()
-        ax[1].set(title="Wavelet - Frequency Domain", xlabel="Frequency (Hz)", ylabel="Amplitude(dB)")
+        ax[1].set(title=Wavelet.name, xlabel="Frequency (Hz)", ylabel="Amplitude(dB)")
         ax[1].set_ylim(-80, 1)
 
         ax[2].plot(xf[:idx], phase[:idx], '.-')
-        ax[2].set(title="Wavelet - Frequency Domain", xlabel="Frequency (Hz)", ylabel="Phase (rad)")
+        ax[2].set(title=Wavelet.name, xlabel="Frequency (Hz)", ylabel="Phase (rad)")
         ax[2].grid()
         plt.tight_layout(pad=0.4, w_pad=0.5, h_pad=1.0)
         plt.show()
@@ -220,11 +220,12 @@ def dataspec(SegyData, ms=True, shot=1, fmax=None, fft_smooth=1, plot=False):
     return xf, yf, phase
 
 
-def phasediff(PredData, ObsData, f=1, wstart=200, wend=1000, nr_max=None, ns_max=None, ms=True, fft_smooth=1,
-              plot=False, verbose=1):
+def phasediff(PredData, ObsData, f=1, wstart=200, wend=1000, nr_min=0, nr_max=None, ns_min=0, ns_max=None, ms=True,
+              fft_smooth=3, scale=1, unwrap=True, plot=False, verbose=1):
     """
     Computes and plots the phase difference between an observed and predicted dataset, at a single specified frequency,
-    for all receivers and shots
+    for all receivers and shots. Will present undesired unwrapping effects in the presence of noise or low-amplitude
+    signal. Calculates phase_observed - phase_predicted.
 
     :param  PredData:   (SegyData)  object outputted from fullwaveqc.tools.load function
     :param  ObsData:    (SegyData)  object outputted from fullwaveqc.tools.load function. Should have the same time
@@ -233,7 +234,8 @@ def phasediff(PredData, ObsData, f=1, wstart=200, wend=1000, nr_max=None, ns_max
                                     Default: 1
     :param  wstart:     (int)       Time sample to which start the window for the phase difference computation
                                     Default: 200
-    :param  wend:       (int)       Time sample to which end the window for the phase difference computation
+    :param  wend:       (int)       Time sample to which end the window for the phase difference computation.
+                                    If negative will take the entire shot window.
                                     Default: 1000
     :param  nr_max:     (int)       Maximum number of receivers to which calculate the phase difference. If None is
                                     given, then number of receivers is inferred from the datasets.
@@ -248,7 +250,8 @@ def phasediff(PredData, ObsData, f=1, wstart=200, wend=1000, nr_max=None, ns_max
                                     Transform. Increase this factor for a smoother plot. The final number of sample 
                                     points will be the nearest power of two of fft_smooth multiplied by the original 
                                     number of time samples in the signal. Higher value increases computational time.
-                                    Default: 1
+                                    Recommended minimum of 2 for stable calculations
+                                    Default: 3
     :param  plot:       (bool)      Will plot the phase difference if set to True
                                     Default: False
     :param  verbose:    (bool)      If set to True will verbose the main steps of the function calculation. Default 1
@@ -263,27 +266,24 @@ def phasediff(PredData, ObsData, f=1, wstart=200, wend=1000, nr_max=None, ns_max
 
     # Get number of sources and max number of receivers per source
     if ns_max is None:
-        ns = PredData.nsrc
-    else:
-        ns = ns_max
+        ns_max = PredData.nsrc
+
     if nr_max is None:
         nr_max = np.max(np.array(PredData.nrec))
-    else:
-        nr_max = nr_max
 
     # Reserve space to store phases
-    phase_pred = np.zeros((ns, nr_max))
-    phase_obs = np.zeros((ns, nr_max))
+    phase_pred = np.zeros((ns_max-ns_min, nr_max-nr_min))
+    phase_obs = np.zeros((ns_max-ns_min, nr_max-nr_min))
 
     # Loop through each shot -- try and except
-    for i in range(0, ns):
+    for i in range(ns_min, ns_max):
         # Get time sampling from data and compute sampling frequency for FFT
         dt = PredData.dt[i]
         if ms:
             dt = dt / 1000.
 
         if wend <= 0:
-            wend = PredData.samples[i]
+            wend = PredData.samples[i] * PredData.dt[i]
 
         # Get number of samples for FFT -- multiples of 2 are significantly faster
         nt = PredData.samples[i]
@@ -294,6 +294,7 @@ def phasediff(PredData, ObsData, f=1, wstart=200, wend=1000, nr_max=None, ns_max
 
         # Create and shift the frequency domain
         xf = np.linspace(0.0, 1.0 / (2.0 * dt), nt // 2)
+        # print(xf)
 
         # Find array index in frequency domain closest to frequency of interest
         idf = (np.abs(xf - f)).argmin()
@@ -303,14 +304,17 @@ def phasediff(PredData, ObsData, f=1, wstart=200, wend=1000, nr_max=None, ns_max
 
         try:
             # Loop through each receiver -- try and except
-            for j in range(0, nr_max):
+            for j in range(nr_min, nr_max):
                 # compute phase for predicted dataset
                 try:
                     # multiply pred and obs trace by gauss window
-                    pred_trace = (w * PredData.data[i][j])
+                    pred_trace = (w * PredData.data[i][j] * scale)
+                    obs_trace = (w * ObsData.data[i][j] * scale)
 
                     # do fft for pred and obs separately, slice it to match frequency domain xf
                     pred_fft = fft(pred_trace, n=nt)[0:nt // 2]
+                    obs_fft = fft(obs_trace, n=nt)[0:nt // 2]
+
 
                     # compute and unwrap phase
                     if pred_fft.real[idf] == 0:
@@ -320,20 +324,7 @@ def phasediff(PredData, ObsData, f=1, wstart=200, wend=1000, nr_max=None, ns_max
                         phase_p = np.unwrap(2 * phase_p) / 2
 
                         # store phase for pred and obs at single frequency
-                        phase_pred[i, j] = phase_p[idf]
-
-                except RuntimeError:
-                    if verbose:
-                        warnings.warn("All zero predicted signal encountered at trace %g of shot %g" % (j, i))
-                    phase_pred[i, j] = 0.
-                except IndexError:
-                    warnings.warn("Predicted trace %g of shot %g not well defined" % (j, i))
-                try:
-                    # multiply trace by gauss window
-                    obs_trace = (w * ObsData.data[i][j])
-
-                    # do fft  slice it to match frequency domain xf
-                    obs_fft = fft(obs_trace, n=nt)[0:nt // 2]
+                        phase_pred[i-ns_min, j-nr_min] = phase_p[idf]
 
                     # compute and unwrap phase
                     if obs_fft.real[idf] == 0:
@@ -341,36 +332,35 @@ def phasediff(PredData, ObsData, f=1, wstart=200, wend=1000, nr_max=None, ns_max
                     else:
                         phase_o = np.arctan(obs_fft.imag / obs_fft.real)
                         phase_o = np.unwrap(2 * phase_o) / 2
+
                         # store phase for pred and obs at single frequency
-                        phase_obs[i, j] = phase_o[idf]
-                except RuntimeError:
-                    if verbose:
-                        warnings.warn("All zero observed signal encountered at trace %g of shot %g" % (j, i))
-                    phase_obs[i, j] = 0.
-                except IndexError:
-                    warnings.warn("Observed trace %g of shot %g not well defined" % (j, i))
+                        phase_obs[i-ns_min, j-nr_min] = phase_o[idf]
+
+                except (RuntimeError, IndexError):
+                    pass  # value phase differences to zero
         except IndexError:
-            warnings.warn("Shot %g not well defined" % i)
+            pass
 
     if verbose:
         sys.stdout.write(str(datetime.datetime.now()) + "                   \t All phases calculated successfully")
 
     # Unwrap phase in space and Compute phase difference
-    phase_obs = np.unwrap(2*phase_obs, axis=1)/2
-    phase_pred = np.unwrap(2*phase_pred, axis=1)/2
-    phase_diff = (phase_obs - phase_pred) * 180./np.pi
+    if unwrap:
+        # unwrap in receiver domain
+        phase_obs = np.unwrap(2*phase_obs, axis=1, discont=np.pi)/2
+        phase_pred = np.unwrap(2*phase_pred, axis=1, discont=np.pi)/2
+    phase_diff = phase_obs - phase_pred
+
 
     # Plot
     if plot:
-        # Get unique receiver positions
-        rec_pos_all = []
-        for x in PredData.rec_pos:
-            rec_pos_all.append(list(x))
+        s = np.arange(0, ns_max - ns_min, 1) + ns_min
+        r = np.arange(0, nr_max - nr_min, 1) + nr_min
 
         cmap = "RdYlGn"
         figure, ax = plt.subplots(1, 1)
         figure.set_size_inches(7.5, 7.5)
-        ax.contourf(phase_diff, cmap=cmap, levels=360, vmin=-180., vmax=180.)
+        ax.contourf(r, s, phase_diff * 180/np.pi, cmap=cmap, levels=360, vmin=-180., vmax=180.)
 
         ax.set(xlabel="Rec x", ylabel="Src x")
         ax.set_title(PredData.name + " f=%.2f Hz %g ms - %g ms" % (f, wstart, wend), pad=40)
@@ -388,7 +378,8 @@ def phasediff(PredData, ObsData, f=1, wstart=200, wend=1000, nr_max=None, ns_max
     return phase_pred, phase_obs, phase_diff
 
 
-def xcorr(PredData, ObsData, wstart=0, wend=-1, nr_max=None, ns_max=None, ms=True, plot=False, verbose=1):
+def xcorr(PredData, ObsData, wstart=0, wend=-1, nr_min=0, nr_max=None, ns_min=0, ns_max=None, ms=True, plot=False,
+          verbose=1):
     """
     Computes and plots the cross-correlation between an observed and predicted dataset using numpy.correlate.
     Traces are normalised to unit length for comparison
@@ -397,7 +388,8 @@ def xcorr(PredData, ObsData, wstart=0, wend=-1, nr_max=None, ns_max=None, ms=Tru
     :param  ObsData:    (SegyData) object outputted from fullwaveqc.tools.load function
     :param  wstart:     (int)      Time sample to which start the window for the phase difference computation
                                    Default: 200
-    :param  wend:       (int)      Time sample to which end the window for the phase difference computation
+    :param  wend:       (int)      Time sample to which end the window for the phase difference computation.
+                                   If negative will use the entire shot window.
                                    Default: 1000
     :param  nr_max:     (int)      Maximum number of receivers to which calculate the phase difference. If None is given
                                    then max number of receivers is inferred from the PredData and ObsData
@@ -422,30 +414,20 @@ def xcorr(PredData, ObsData, wstart=0, wend=-1, nr_max=None, ns_max=None, ms=Tru
 
     # Get number of sources and max number of receivers per source
     if ns_max is None:
-        ns = PredData.nsrc
-    else:
-        ns = ns_max
+        ns_max = PredData.nsrc
     if nr_max is None:
         nr_max = np.max(np.array(PredData.nrec))
-    else:
-        nr_max = nr_max
 
     # Reserve space to store correlation values
-    xcorr_arr = np.zeros((ns, nr_max))
+    xcorr_arr = np.zeros((ns_max - ns_min, nr_max - nr_min))
 
     # Loop through each shot -- try and except
-    for i in range(0, ns):
-
-        # Get time sampling from data, dt must be in seconds
-        dt = PredData.dt[i]
-        if ms:
-            dt = dt / 1000.
+    for i in range(ns_min, ns_max):
 
         if wend <= 0:
-            wend = PredData.samples[i]
+            wend = PredData.samples[i] * PredData.dt[i]
 
         # Create Gaussian window
-        # print(PredData.dt[i])
         w = gausswindow(PredData.samples[i], wstart, wend, PredData.dt[i])
 
         # Find array index in frequency domain closest to frequency of interest
@@ -454,16 +436,15 @@ def xcorr(PredData, ObsData, wstart=0, wend=-1, nr_max=None, ns_max=None, ms=Tru
 
         try:
             # Loop through each receiver -- try and except
-            for j in range(0, nr_max):
+            for j in range(nr_min, nr_max):
                 # compute phase for predicted dataset
                 try:
                     # multiply normalised (to unit length) pred and obs trace by gauss window
                     pred_trace = (w * PredData.data[i][j])
                     obs_trace = (w * ObsData.data[i][j])
 
-                    # cross correlate at zero lag with traces normalised to unit length
-                    # xcorr_arr[i][j] = np.correlate(pred_trace, obs_trace)
-                    xcorr_arr[i][j] = np.sum(pred_trace * obs_trace) / \
+                    # cross correlate at zero lag and normalise to [-1, 1] range
+                    xcorr_arr[i-ns_min][j-nr_min] = np.sum(pred_trace * obs_trace) / \
                                       np.sqrt(np.sum(pred_trace**2)*np.sum(obs_trace**2))
 
                 except RuntimeError:
@@ -480,10 +461,13 @@ def xcorr(PredData, ObsData, wstart=0, wend=-1, nr_max=None, ns_max=None, ms=Tru
 
     # Plot
     if plot:
+        s = np.arange(0, ns_max - ns_min, 1) + ns_min
+        r = np.arange(0, nr_max - nr_min, 1) + nr_min
+
         cmap = "PiYG"
         figure, ax = plt.subplots(1, 1)
         figure.set_size_inches(7.5, 7.5)
-        ax.contourf(xcorr_arr, cmap=cmap, levels=360, vmin=-1, vmax=1)
+        ax.contourf(r, s, xcorr_arr, cmap=cmap, levels=360, vmin=-1, vmax=1)
 
         ax.set(xlabel="Rec x", ylabel="Src x")
         ax.set_title(PredData.name + " Zero Lag X-Correlation %g ms - %g ms" % (wstart, wend), pad=40)

@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # Deborah Pelacani Cruz
 # https://github.com/dekape
-
 import numpy as np
 import segyio
 import datetime
@@ -247,6 +246,8 @@ def ddwi(MonObs, BaseObs, BasePred, normalise=True, name=None, mon_filepath=None
     The DDWI monitor dataset is given by: u_mon = d_mon - d_base + u_base
     Where d_mon and d_base are the observed monitor and baseline datasets, respectively, and u_base is the dataset from
     a predicted baseline inversion model.
+    Note: If data delay has been applied to BaseObs and MonObs, the resulting ddwi dataset will already have the data
+    delay applied.
 
     :param  MonObs:        (SegyData)   object outputted from fullwaveqc.tools.load function for the true monitor data
     :param  BaseObs:       (SegyData)   object outputted from fullwaveqc.tools.load function for the true baseline data.
@@ -274,6 +275,8 @@ def ddwi(MonObs, BaseObs, BasePred, normalise=True, name=None, mon_filepath=None
     if normalise:
         if verbose:
             sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Normalising traces ...")
+        # BaseObs = ampnorm(BasePred, BaseObs, verbose=verbose)
+        # MonObs = ampnorm(BasePred, MonObs, verbose=verbose)
         BasePred = ampnorm(BaseObs, BasePred, verbose=verbose)
 
     # Compute double difference dataset
@@ -397,7 +400,7 @@ def ampnorm(Obs, Pred, ref_trace=0, verbose=1):
     return PredNorm
 
 
-def smooth_model(Model, strength=[1, 1], slowness=False, name=None, save=False, save_path="./", verbose=1):
+def smooth_model(Model, strength=[1, 1], w=[None, None, None, None], slowness=True, name=None, save=False, save_path="./", verbose=1):
     """
     Smoothes a model using scipy's gaussian filter in "reflect" mode.
 
@@ -407,17 +410,20 @@ def smooth_model(Model, strength=[1, 1], slowness=False, name=None, save=False, 
     :param  slowness     (bool)            if True will smooth the slowness instead of velocities. Slowness defined
                                            as the reciprocal value of velocity and is commonly preferred in smoothing.
     :param  save:        (bool)            set to true in order to save the model in .sgy format. Requires that Model
-                                           has a valid filepath attribute. Default False
+                                           has a valid filepath attribute. Default True
     :param  save_path:   (str)             path to save the .sgy smoothed model. Default "./"
     :param  name:        (str)             name of the new smoothed model. If None it will be inferred from Model.
                                            Default None
     :return: SmoothModel: (Model)           object as outputted from fullwaveqc.tools.load function containing the
                                            smoothed model
     """
+
     SmoothModel = copy.deepcopy(Model)
     if slowness:
         SmoothModel.data = 1. / SmoothModel.data
-    SmoothModel.data = gaussian_filter(SmoothModel.data, strength, mode="reflect")
+    SmoothModel.data = np.flipud(SmoothModel.data)
+    SmoothModel.data[w[0]:w[1], w[2]:w[3]] = gaussian_filter(SmoothModel.data[w[0]:w[1], w[2]:w[3]], strength, mode="reflect")
+    SmoothModel.data = np.flipud(SmoothModel.data)
     if slowness:
         SmoothModel.data = 1. / SmoothModel.data
 

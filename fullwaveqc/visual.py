@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # Deborah Pelacani Cruz
 # https://github.com/dekape
-
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D

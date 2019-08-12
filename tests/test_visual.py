@@ -1,12 +1,11 @@
 #!/usr/bin/env python
 # Deborah Pelacani Cruz
 # https://github.com/dekape
-
-
 import fullwaveqc.visual as visual
 import fullwaveqc.tools as tools
 import numpy as np
 import os
+
 
 def test_thisfunction():
     assert 1
