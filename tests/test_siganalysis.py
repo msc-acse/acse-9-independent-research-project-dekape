@@ -1,12 +1,12 @@
 #!/usr/bin/env python
-
+# Deborah Pelacani Cruz
+# https://github.com/dekape
 import context
 import fullwaveqc.siganalysis as sig
 import os
 import fullwaveqc.tools as tools
 import copy
 import numpy as np
-import warnings
 
 
 def test_thisfunction():
@@ -92,19 +92,22 @@ def test_dataspec():
     data_path = os.path.join(dir_path, "test_data/dataspec_test.npy")
     dataspec_true = np.load(data_path, allow_pickle=True)
 
-    assert((dataspec1[0] == dataspec_true[0]).all())
+    for i in range(0, 1):
+        assert(np.allclose(dataspec1[i], dataspec_true[i].astype("float32")))
 
     return None
 
 
 def test_gausswindow():
-    w = sig.gausswindow(samples=11, wstart=2, wend=5, dt=2)
+    w = sig.gausswindow(samples=11, wstart=2, wend=5, dt=1)
+    w2 = sig.gausswindow(samples=11, wstart=2000, wend=5000, dt=1000)
 
-    arr = np.array([6.57285286e-02, 6.06530660e-01, 9.45959469e-01, 2.49352209e-01,
-           1.11089965e-02, 8.36483472e-05, 1.06453714e-07, 2.28973485e-11,
-           8.32396968e-16, 5.11442373e-21, 5.31109225e-27])
+    arr = np.array([1.86644691e-05, 3.86592014e-03, 1.35335283e-01, 8.00737403e-01,
+       8.00737403e-01, 1.35335283e-01, 3.86592014e-03, 1.86644691e-05,
+       1.52299797e-08, 2.10040929e-12, 4.89586526e-17])
 
     assert(np.allclose(w, arr))
+    assert (np.allclose(w, w2))
 
     return None
 
@@ -118,6 +121,7 @@ def test_closest2pow():
     # Check value error is thrown for negative numbers
     try:
         sig.closest2pow(-1)
+        assert False
     except ValueError:
         assert True
 

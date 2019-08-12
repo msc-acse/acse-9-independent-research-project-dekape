@@ -1,5 +1,6 @@
 #!/usr/bin/env python
-
+# Deborah Pelacani Cruz
+# https://github.com/dekape
 import context
 import fullwaveqc.geom as geom
 import os
@@ -31,4 +32,5 @@ def test_surveygeom():
 
     for i in range(0, len(g[1])):
         assert(np.allclose(g[1][i], g2[1][i]))
+
     return

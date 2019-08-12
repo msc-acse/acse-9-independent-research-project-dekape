@@ -1,3 +1,5 @@
+# Deborah Pelacani Cruz
+# https://github.com/dekape
 import setuptools
 
 with open("README.md", "r") as fh:
@@ -8,7 +10,7 @@ setuptools.setup(
     version="1.0.0",
     author="Deborah Pelacani Cruz",
     author_email="deborah.pelacani@gmail.com",
-    description="A package for quality checking the inputs and outputs of Fullwave3D",
+    description="A package for quality checking the inputs and outputs of Fullwave3D Rev689",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="Nonefull",

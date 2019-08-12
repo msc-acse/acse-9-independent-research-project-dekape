@@ -1,5 +1,6 @@
 #!/usr/bin/env python
-
+# Deborah Pelacani Cruz
+# https://github.com/dekape
 import context
 import fullwaveqc.tools as tools
 import os
