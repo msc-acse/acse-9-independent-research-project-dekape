@@ -92,7 +92,8 @@ def test_dataspec():
     data_path = os.path.join(dir_path, "test_data/dataspec_test.npy")
     dataspec_true = np.load(data_path, allow_pickle=True)
 
-    assert((dataspec1[0] == dataspec_true[0]).all())
+    for i in range(0, 1):
+        assert(np.allclose(dataspec1[i], dataspec_true[i].astype("float32")))
 
     return None
 
