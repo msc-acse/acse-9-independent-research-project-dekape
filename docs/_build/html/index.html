@@ -32,6 +32,18 @@
             
   <div class="section" id="module-fullwaveqc.tools">
 <span id="fullwaveqc-documentation"></span><h1>FullwaveQC Documentation<a class="headerlink" href="#module-fullwaveqc.tools" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="fullwaveqc.tools.Model">
+<em class="property">class </em><code class="sig-prename descclassname">fullwaveqc.tools.</code><code class="sig-name descname">Model</code><span class="sig-paren">(</span><em class="sig-param">filepath</em>, <em class="sig-param">name=None</em><span class="sig-paren">)</span><a class="headerlink" href="#fullwaveqc.tools.Model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class to store properties of SEG-Y 2D model files. Should be called only by the fullwaveqc.tools.load function.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="fullwaveqc.tools.SegyData">
+<em class="property">class </em><code class="sig-prename descclassname">fullwaveqc.tools.</code><code class="sig-name descname">SegyData</code><span class="sig-paren">(</span><em class="sig-param">filepath</em>, <em class="sig-param">name=None</em><span class="sig-paren">)</span><a class="headerlink" href="#fullwaveqc.tools.SegyData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class to store properties of SEG-Y data files. Should be called only by the fullwaveqc.tools.load function.</p>
+</dd></dl>
+
 <dl class="function">
 <dt id="fullwaveqc.tools.ampnorm">
 <code class="sig-prename descclassname">fullwaveqc.tools.</code><code class="sig-name descname">ampnorm</code><span class="sig-paren">(</span><em class="sig-param">Obs</em>, <em class="sig-param">Pred</em>, <em class="sig-param">ref_trace=0</em>, <em class="sig-param">verbose=1</em><span class="sig-paren">)</span><a class="headerlink" href="#fullwaveqc.tools.ampnorm" title="Permalink to this definition">¶</a></dt>
@@ -40,18 +52,20 @@ amplitudes of a reference trace.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>Obs</strong> – (SegyData)   object outputted from fullwaveqc.tools.load function for the observed data</p></li>
-<li><p><strong>Pred</strong> – (SegyData)   object outputted from fullwaveqc.tools.load function for the predicted data.
+<li><p><strong>Obs</strong> (<a class="reference internal" href="#fullwaveqc.tools.SegyData" title="fullwaveqc.tools.SegyData"><em>fullwaveqc.tools.SegyData</em></a>) – Object outputted from fullwaveqc.tools.load function for the observed data</p></li>
+<li><p><strong>Pred</strong> (<a class="reference internal" href="#fullwaveqc.tools.SegyData" title="fullwaveqc.tools.SegyData"><em>fullwaveqc.tools.SegyData</em></a>) – object outputted from fullwaveqc.tools.load function for the predicted data.
 Requires same number of samples, sampling interval, shots and receiver positions
 as Obs</p></li>
-<li><p><strong>ref_trace</strong> – (int)        trace number to each normalise each shot. For streamer data, this value should be
-0 in order to normalise it to the first arrival trace. Default 0</p></li>
-<li><p><strong>verbose</strong> – (bool)       Set to true to verbose the steps of this function. Default 1</p></li>
+<li><p><strong>ref_trace</strong> (<em>int</em><em>, </em><em>optional</em>) – Trace number to normalise each shot. For streamer data, this value should be
+0 in order to normalise the shot to the first arrival of the first trace. Default 0</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) – Set to true to verbose the steps of this function. Default 1</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>PredNorm     (SegyData)   object outputted from fullwaveqc.tools.load function with the normalise predicted
-data</p>
+<dd class="field-even"><p><strong>PredNorm</strong> – Object outputted from fullwaveqc.tools.load function with the normalise predicted data</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#fullwaveqc.tools.SegyData" title="fullwaveqc.tools.SegyData">fullwaveqc.tools.SegyData</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -63,15 +77,18 @@ data</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>trace</strong> – (np.array) 1D array containing the signal in time domain</p></li>
-<li><p><strong>flow</strong> – (float)    low frquency to band pass</p></li>
-<li><p><strong>fhigh</strong> – (float)    high frequency to band pass</p></li>
-<li><p><strong>forder</strong> – (int)      order of band pass filter, determines the steepnes of the transition band</p></li>
-<li><p><strong>dt</strong> – (float)    Time sampling of the signal</p></li>
+<li><p><strong>trace</strong> (<em>numpy.array</em>) – 1D array containing the signal in time domain</p></li>
+<li><p><strong>flow</strong> (<em>float</em>) – Low frquency to band pass (Hz)</p></li>
+<li><p><strong>fhigh</strong> (<em>float</em>) – High frquency to band pass (Hz)</p></li>
+<li><p><strong>forder</strong> (<em>float</em>) – Order of band pass filter, determines the steepnes of the transition band</p></li>
+<li><p><strong>dt</strong> (<em>float</em>) – Time sampling of the signal</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>filtered   (np.array) 1D array of same size as trace, with the filtered signal</p>
+<dd class="field-even"><p><strong>filtered</strong> – 1D array of same size as trace, with the filtered signal</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy.array</p>
 </dd>
 </dl>
 </dd></dl>
@@ -82,50 +99,65 @@ data</p>
 <dd><p>Creates the monitor dataset used as the observed dataset for the Double Difference Waveform Inversion.
 The DDWI monitor dataset is given by: u_mon = d_mon - d_base + u_base
 Where d_mon and d_base are the observed monitor and baseline datasets, respectively, and u_base is the dataset from
-a predicted baseline inversion model.</p>
+a predicted baseline inversion model.
+Note: If data delay has been applied to BaseObs and MonObs, the resulting ddwi dataset will already have the data
+delay applied.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>MonObs</strong> – (SegyData)   object outputted from fullwaveqc.tools.load function for the true monitor data</p></li>
-<li><p><strong>BaseObs</strong> – (SegyData)   object outputted from fullwaveqc.tools.load function for the true baseline data.
-Requires same number of samples, sampling interval, shots and receiver positions
+<li><p><strong>MonObs</strong> (<a class="reference internal" href="#fullwaveqc.tools.SegyData" title="fullwaveqc.tools.SegyData"><em>fullwaveqc.tools.SegyData</em></a>) – Object outputted from fullwaveqc.tools.load function for the true monitor data</p></li>
+<li><p><strong>BaseObs</strong> (<a class="reference internal" href="#fullwaveqc.tools.SegyData" title="fullwaveqc.tools.SegyData"><em>fullwaveqc.tools.SegyData</em></a>) – Object outputted from fullwaveqc.tools.load function for the true baseline data.
+Requires same number of samples, sampling interval, shots and receiver position
 as MonObs</p></li>
-<li><p><strong>BasePred</strong> – (SegyData)   object outputted from fullwaveqc.tools.load function for the predicted baseline
-data. Requires same number of samples, sampling interval, shots and receiver
-positions as MonObs.</p></li>
-<li><p><strong>normalise</strong> – (bool)       if true will normalise the amplitude of the predicted baseline dataset to match
+<li><p><strong>BasePred</strong> (<a class="reference internal" href="#fullwaveqc.tools.SegyData" title="fullwaveqc.tools.SegyData"><em>fullwaveqc.tools.SegyData</em></a>) – Object outputted from fullwaveqc.tools.load function for the predicted baseline data.
+Requires same number of samples, sampling interval, shots and receiver position
+as MonObs</p></li>
+<li><p><strong>normalise</strong> (<em>bool</em><em>, </em><em>optional</em>) – If true will normalise the amplitude of the predicted baseline dataset to match
 the first trace of the observed dataset. Does so shot by shot. Default True</p></li>
-<li><p><strong>name</strong> – (str)        name to give the DDWI dataset, if None will give the name “DDWI-DATASET”.
+<li><p><strong>name</strong> (<em>str</em><em>, </em><em>optional</em>) – Name to give the DDWI dataset, if None will give the name “DDWI-DATASET”.
 Default None</p></li>
-<li><p><strong>mon_filepath</strong> – (str)        path to the observed monitor dataset. Must end in .sgy. Required if save option
+<li><p><strong>mon_filepath</strong> (<em>str</em><em>, </em><em>optional</em>) – Path to the observed monitor dataset. Must end in .sgy. Required if save option
 is set to True. Default None.</p></li>
-<li><p><strong>save</strong> – (bool)       Set to true if the DDWI dataset is to be saved in .sgy format. Default False</p></li>
-<li><p><strong>save_path</strong> – (str)        Path to folder where DDWI must be saved. Default “./”</p></li>
-<li><p><strong>verbose</strong> – (bool)       Set to true in order to verbose the steps of this function. Default 1</p></li>
+<li><p><strong>save</strong> (<em>bool</em><em>, </em><em>optional</em>) – Set to true if the DDWI dataset is to be saved in .sgy format. Default False</p></li>
+<li><p><strong>save_path</strong> (<em>str</em><em>, </em><em>optional</em>) – Path to folder where DDWI must be saved. Default “./”</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) – Set to true in order to verbose the steps of this function. Default 1</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>MON_DIFF       (SegyData)   object outputted from fullwaveqc.tools.load function with the DDWI monitor data</p>
+<dd class="field-even"><p><strong>MonDiff</strong> – Object outputted from fullwaveqc.tools.load function with the DDWI monitor data</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#fullwaveqc.tools.SegyData" title="fullwaveqc.tools.SegyData">fullwaveqc.tools.SegyData</a></p>
 </dd>
 </dl>
+<p class="rubric">Notes</p>
+<p>mon_filepath must be given if save is set to True. Saving occurs by copying and modifying
+the monitor SEG-Y headers and traces.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="fullwaveqc.tools.load">
-<code class="sig-prename descclassname">fullwaveqc.tools.</code><code class="sig-name descname">load</code><span class="sig-paren">(</span><em class="sig-param">filepath</em>, <em class="sig-param">model</em>, <em class="sig-param">scale=1</em>, <em class="sig-param">verbose=1</em><span class="sig-paren">)</span><a class="headerlink" href="#fullwaveqc.tools.load" title="Permalink to this definition">¶</a></dt>
-<dd><p>Loads a segy file into a SegyData or Model class, used for the other functionalities of the fullwaveqc package.
-Accepts 2D segy files and of the same sampling interval for all shots and segy model files with square cells</p>
+<code class="sig-prename descclassname">fullwaveqc.tools.</code><code class="sig-name descname">load</code><span class="sig-paren">(</span><em class="sig-param">filepath</em>, <em class="sig-param">model</em>, <em class="sig-param">name=None</em>, <em class="sig-param">scale=1</em>, <em class="sig-param">verbose=1</em><span class="sig-paren">)</span><a class="headerlink" href="#fullwaveqc.tools.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads a SEG-Y file into a SegyData or Model class, used for the other functionalities of the fullwaveqc package.
+Accepts 2D segy files and of the same sampling interval for all shots and segy model files with square cells.
+It is HIGHLY recommended that the attributes of this function are checked manually after loading, as different
+SEG-Y header formats are likely to be loaded incorrectly. This function is adapted to the SEGY header format of
+the outputs of Fullwave3D.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>filepath</strong> – (str)   path to segy file. Must end in .sgy</p></li>
-<li><p><strong>model</strong> – (bool)  Set true to load a Model and false to load a SegyData object</p></li>
-<li><p><strong>scale</strong> – (float) Value to multiply the data content of the files. Default 1</p></li>
-<li><p><strong>verbose</strong> – (bool)  Set to true in order to verbose the steps of this loading function. Default True</p></li>
+<li><p><strong>filepath</strong> (<em>str</em>) – Path to segy file. Must end in .sgy</p></li>
+<li><p><strong>model</strong> (<em>bool</em>) – Set true to load a Model and false to load a SegyData object</p></li>
+<li><p><strong>name</strong> (<em>str</em><em>, </em><em>optional</em>) – Name to give the data/model object. If None is given, name is inferred from .sgy file. Default is None</p></li>
+<li><p><strong>scale</strong> (<em>int</em><em>, </em><em>optional</em>) – Value to multiply the data content of the files. Default 1</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) – Set to true in order to verbose the steps of this loading function. Default True</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return:</dt>
-<dd class="field-even"><p>fullwaveqc.tools.SegyData or fullwave,tools.Model object</p>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>segy or model</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#fullwaveqc.tools.SegyData" title="fullwaveqc.tools.SegyData">fullwaveqc.tools.SegyData</a> or <a class="reference internal" href="#fullwaveqc.tools.Model" title="fullwaveqc.tools.Model">fullwaveqc.tools.Model</a>, depending on parameter model given</p>
 </dd>
 </dl>
 </dd></dl>
@@ -133,39 +165,67 @@ Accepts 2D segy files and of the same sampling interval for all shots and segy m
 <dl class="function">
 <dt id="fullwaveqc.tools.rm_empty_traces">
 <code class="sig-prename descclassname">fullwaveqc.tools.</code><code class="sig-name descname">rm_empty_traces</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">scale=1</em>, <em class="sig-param">verbose=1</em><span class="sig-paren">)</span><a class="headerlink" href="#fullwaveqc.tools.rm_empty_traces" title="Permalink to this definition">¶</a></dt>
-<dd><p>Removes all-zero traces of a segy file and saves the copy of the clean file in the same directory</p>
+<dd><p>Removes all-zero traces of a SEG-Y file and saves the copy of the clean file in the same directory</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>filename</strong> – (str)   path to segy file, must end in .sgy</p></li>
-<li><p><strong>scale</strong> – (float) Value to multiply the data content of the files. Default 1</p></li>
-<li><p><strong>verbose</strong> – (bool)  Set to true in order to verbose the steps of this loading function. Default True</p></li>
+<li><p><strong>filename</strong> (<em>str</em>) – Path to SEG-Y file, must end in .sgy</p></li>
+<li><p><strong>scale</strong> (<em>int</em><em>, </em><em>optional</em>) – Value to multiply the data content of the files. Default 1</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) – Set to true in order to verbose the steps of this loading function. Default True</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return:</dt>
-<dd class="field-even"><p>None</p>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="fullwaveqc.tools.set_verbose">
+<code class="sig-prename descclassname">fullwaveqc.tools.</code><code class="sig-name descname">set_verbose</code><span class="sig-paren">(</span><em class="sig-param">verbose</em><span class="sig-paren">)</span><a class="headerlink" href="#fullwaveqc.tools.set_verbose" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to set the verbose print level
+:param verbose: Verbose level, set to true to display verbose
+:type verbose: bool</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>verbose_print(message)</strong> – Function to display verbose message in console</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>lamda function</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="fullwaveqc.tools.smooth_model">
-<code class="sig-prename descclassname">fullwaveqc.tools.</code><code class="sig-name descname">smooth_model</code><span class="sig-paren">(</span><em class="sig-param">Model, strength=[1, 1], name=None, save=False, save_path='./'</em><span class="sig-paren">)</span><a class="headerlink" href="#fullwaveqc.tools.smooth_model" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">fullwaveqc.tools.</code><code class="sig-name descname">smooth_model</code><span class="sig-paren">(</span><em class="sig-param">Model, strength=[1, 1], w=[None, None, None, None], slowness=True, name=None, save=False, save_path='./', verbose=1</em><span class="sig-paren">)</span><a class="headerlink" href="#fullwaveqc.tools.smooth_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>Smoothes a model using scipy’s gaussian filter in “reflect” mode.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>Model</strong> – (Model)           object outputted from fullwaveqc.tools.load function for a model</p></li>
-<li><p><strong>strength</strong> – (list of floats)  [horizontal_smoothing_factor, vertical_smoothing_factor]. Default [1,1]</p></li>
-<li><p><strong>save</strong> – (bool)            set to true in order to save the model in .sgy format. Default False</p></li>
-<li><p><strong>save_path</strong> – (str)             path to save the .sgy smoothed model. Default “./”</p></li>
-<li><p><strong>name</strong> – (str)             name of the new smoothed model. If None it will be inferred from Model.
+<li><p><strong>Model</strong> (<a class="reference internal" href="#fullwaveqc.tools.Model" title="fullwaveqc.tools.Model"><em>fullwaveqc.tools.Model</em></a>) – Object outputted from fullwaveqc.tools.load function for a model. Must have a valid filepath attribute.</p></li>
+<li><p><strong>strength</strong> (<em>list</em><em>[</em><em>floats</em><em>]</em><em>, </em><em>optional</em>) – [horizontal_smoothing_factor, vertical_smoothing_factor]. Default [1,1]</p></li>
+<li><p><strong>w</strong> (<em>list</em><em>[</em><em>ints</em><em>]</em><em>, </em><em>optional</em>) – Windowing of the smoothing. Smoothing will be applied to the internal window created by the rectangle determined
+by [cells_from_top, cells_from bottom, cells_from_left, cells_from_right]. If None is given, then either the be
+ginning or end will of the model will be used. Default [None, None, None, None]</p></li>
+<li><p><strong>slowness</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True will smooth the slowness instead of velocities. Slowness defined
+as the reciprocal value of velocity and is commonly preferred in smoothing. Default True</p></li>
+<li><p><strong>name</strong> (<em>str</em><em>, </em><em>optional</em>) – name of the new smoothed model. If None it will be inferred from Model.
 Default None</p></li>
+<li><p><strong>save</strong> (<em>bool</em><em>, </em><em>optional</em>) – Set to true in order to save the model in .sgy format. Requires that Model
+has a valid filepath attribute. Default False</p></li>
+<li><p><strong>save_path</strong> (<em>str</em><em>, </em><em>optional</em>) – Path to save the .sgy smoothed model. Default “./”</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) – </p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>SmoothModel: (Model)           object as outputted from fullwaveqc.tools.load function containing the
-smoothed model</p>
+<dd class="field-even"><p><strong>SmoothModel</strong> – Object as outputted from fullwaveqc.tools.load function containing the smoothed model</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#fullwaveqc.tools.Model" title="fullwaveqc.tools.Model">fullwaveqc.tools.Model</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -181,17 +241,18 @@ the source should therefore be nabsorb + ndist.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>d</strong> – (float) distance between source and first receiver in units of distance (meters)</p></li>
-<li><p><strong>dx</strong> – (float) size of model cell in units of distance (meters)</p></li>
-<li><p><strong>fmin</strong> – (float) minimum frequency present in the wavelet (Hz)</p></li>
-<li><p><strong>vmax</strong> – (float) maximum P-wave velocity expected from the models (m/s)</p></li>
+<li><p><strong>d</strong> (<em>float</em>) – distance between source and first receiver in units of distance (meters)</p></li>
+<li><p><strong>dx</strong> (<em>float</em>) – size of model cell in units of distance (meters)</p></li>
+<li><p><strong>fmin</strong> (<em>float</em>) – minimum frequency present in the wavelet (Hz)</p></li>
+<li><p><strong>vmax</strong> (<em>float</em>) – maximum P-wave velocity expected from the models (m/s)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>nabsorb (int)   number of absorbing boundary cells recommended for the specific problem</p>
-</dd>
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>ndist   (int)   number of padded cells from the source to the start of the absorbing boundaries</p>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>nabsorb</strong> (<em>int</em>) – number of absorbing boundary cells recommended for the specific problem</p></li>
+<li><p><strong>ndist</strong> (<em>int</em>) – number of padded cells from the source to the start of the absorbing boundaries</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -203,49 +264,56 @@ the source should therefore be nabsorb + ndist.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>rcvgeopath</strong> – (str)  path to file &lt;PROJECT_NAME&gt;-Receivers.geo generated by SegyPrep</p></li>
-<li><p><strong>srcgeopath</strong> – (str)  path to file &lt;PROJECT_NAME&gt;-Sources.geo generated by SegyPrep</p></li>
-<li><p><strong>src_list</strong> – (list) list of source/shot numbers to retrieve and plot. Empty list returns
-all positions. Default: []</p></li>
-<li><p><strong>plot</strong> – (bool) If true will plot the shots and receivers of src_list. Default:False</p></li>
-<li><p><strong>verbose</strong> – (bool) If true will print to console the steps of this function. Default: False</p></li>
+<li><p><strong>rcvgeopath</strong> (<em>str</em>) – path to file &lt;PROJECT_NAME&gt;-Receivers.geo generated by SegyPrep</p></li>
+<li><p><strong>srcgeopath</strong> (<em>str</em>) – path to file &lt;PROJECT_NAME&gt;-Sources.geo generated by SegyPrep</p></li>
+<li><p><strong>src_list</strong> (<em>list</em><em>, </em><em>optional</em>) – list of source/shot numbers to retrieve and plot. Empty list returns all positions. Default: []</p></li>
+<li><p><strong>plot</strong> (<em>bool</em><em>, </em><em>optional</em>) – If true will plot the shots and receivers of src_list. Default:False</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) – If true will print to console the steps of this function. Default: False</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>src_ret     (list) list of all in-line positions from the sources in src_list</p>
+<dd class="field-even"><p><ul>
+<li><p><strong>src_ret</strong> (<em>list</em>) – list of all in-line positions from the sources in src_list</p></li>
+<li><p><strong>rcv_ret</strong> (<em>list</em>) –</p>
+<dl class="simple">
+<dt>list of numpy.arrays, for each source in src_list, with its array of in-line</dt><dd><p>receiver positions</p>
 </dd>
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>rcv_ret     (list) list of numpy.arrays, for each source in src_list, with its array of in-line
-receiver positions</p>
+</dl>
+</li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
 
 <span class="target" id="module-fullwaveqc.visual"></span><dl class="function">
 <dt id="fullwaveqc.visual.amplitude">
-<code class="sig-prename descclassname">fullwaveqc.visual.</code><code class="sig-name descname">amplitude</code><span class="sig-paren">(</span><em class="sig-param">SegyData</em>, <em class="sig-param">shot=1</em>, <em class="sig-param">cap=0.0</em>, <em class="sig-param">levels=100</em>, <em class="sig-param">vmin=None</em>, <em class="sig-param">vmax=None</em>, <em class="sig-param">cmap=&lt;matplotlib.colors.LinearSegmentedColormap object&gt;</em>, <em class="sig-param">xstart=0</em>, <em class="sig-param">xend=None</em>, <em class="sig-param">wstart=0</em>, <em class="sig-param">wend=None</em>, <em class="sig-param">save=False</em>, <em class="sig-param">save_path='./'</em><span class="sig-paren">)</span><a class="headerlink" href="#fullwaveqc.visual.amplitude" title="Permalink to this definition">¶</a></dt>
-<dd><p>Plots the amplitude map of a SegyData object in timesamples vs receiver index.
+<code class="sig-prename descclassname">fullwaveqc.visual.</code><code class="sig-name descname">amplitude</code><span class="sig-paren">(</span><em class="sig-param">SegyData</em>, <em class="sig-param">shot=1</em>, <em class="sig-param">cap=0.0</em>, <em class="sig-param">levels=50</em>, <em class="sig-param">vmin=None</em>, <em class="sig-param">vmax=None</em>, <em class="sig-param">cmap=&lt;matplotlib.colors.LinearSegmentedColormap object&gt;</em>, <em class="sig-param">xstart=0</em>, <em class="sig-param">xend=None</em>, <em class="sig-param">wstart=0</em>, <em class="sig-param">wend=None</em>, <em class="sig-param">save=False</em>, <em class="sig-param">save_path='./'</em><span class="sig-paren">)</span><a class="headerlink" href="#fullwaveqc.visual.amplitude" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plots the amplitude map of a SegyData object in timesamples (dt units) vs receiver index.
 Uses properties of matplotlib.contourf.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>SegyData</strong> – (SegyData)   object outputted from fullwaveqc.tools.load function for the segy data</p></li>
-<li><p><strong>shot</strong> – (int)        shot number to visualise. Count starts from 1. Default 1</p></li>
-<li><p><strong>cap</strong> – (float)      absolute value of amplitudes to cap, shown as 0. Default 0.</p></li>
-<li><p><strong>levels</strong> – (int)        amount of levels in the contour plot. Default 100</p></li>
-<li><p><strong>vmin</strong> – (float)      min val of color plot scale. Default None.</p></li>
-<li><p><strong>vmax</strong> – (float)      max val of color plot scale. Default None.</p></li>
-<li><p><strong>cmap</strong> – (plt.cm)     cmap object. Default plt.cm.seismic</p></li>
-<li><p><strong>xstart</strong> – (int)        first receiver index to plot. Default 0.</p></li>
-<li><p><strong>xend</strong> – (int)        last receiver index to plot. Default None</p></li>
-<li><p><strong>wstart</strong> – (int)        first timesample in time units to plot. Default 0</p></li>
-<li><p><strong>wend</strong> – (int)        last timesample in time units to plot. Default None</p></li>
-<li><p><strong>save</strong> – (bool)       set to true in order to save the plot in png 300dpi. Default False</p></li>
-<li><p><strong>save_path</strong> – (str)        path to save the plot. Default “./”</p></li>
+<li><p><strong>SegyData</strong> (<a class="reference internal" href="#fullwaveqc.tools.SegyData" title="fullwaveqc.tools.SegyData"><em>fullwaveqc.tools.SegyData</em></a>) – object outputted from fullwaveqc.tools.load function for the segy data</p></li>
+<li><p><strong>shot</strong> (<em>int</em><em>, </em><em>optional</em>) – shot number to visualise. Count starts from 1. Default 1</p></li>
+<li><p><strong>cap</strong> (<em>float</em><em>, </em><em>optional</em>) – absolute value of amplitudes to cap, shown as 0. See matplotlib.pyplot.contourf parameters. Default 0</p></li>
+<li><p><strong>levels</strong> (<em>int</em><em>, </em><em>optional</em>) – amount of levels in the contour plot. See matplotlib.pyplot.contourf parameters. Default 50</p></li>
+<li><p><strong>vmin</strong> (<em>float</em><em>, </em><em>optional</em>) – min val of color plot scale. See matplotlib.pyplot.contourf parameters. Default None.</p></li>
+<li><p><strong>vmax</strong> (<em>float</em><em>, </em><em>optional</em>) – max val of color plot scale. See matplotlib.pyplot.contourf parameters. Default None.</p></li>
+<li><p><strong>cmap</strong> (<em>matplotlib.pyplot.cm</em>) – colormap. Default plt.cm.seismic</p></li>
+<li><p><strong>xstart</strong> (<em>int</em><em>, </em><em>optional</em>) – first receiver index to plot. Default 0.</p></li>
+<li><p><strong>xend</strong> (<em>int</em><em>, </em><em>optional</em>) – last receiver index to plot. Default None</p></li>
+<li><p><strong>wstart</strong> (<em>int</em><em>, </em><em>optional</em>) – first timesample in time units to plot. Default 0</p></li>
+<li><p><strong>wend</strong> (<em>int</em><em>, </em><em>optional</em>) – last timesample in time units to plot. Default None</p></li>
+<li><p><strong>save</strong> (<em>bool</em><em>, </em><em>optional</em>) – set to true in order to save the plot in png 300dpi. Default False</p></li>
+<li><p><strong>save_path</strong> (<em>str</em><em>, </em><em>optional</em>) – path to save the plot. Default “./”</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>None</p>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -258,90 +326,101 @@ Uses properties of matplotlib.contourf.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>it_max</strong> – (int)        max amount of iterations to be analysed</p></li>
-<li><p><strong>path</strong> – (str)        path to folder where .sgy model files are located</p></li>
-<li><p><strong>project_name</strong> – (str)        name of the project – must match exactly</p></li>
-<li><p><strong>vmin</strong> – (float)      min val of color plot scale. Default None.</p></li>
-<li><p><strong>vmax</strong> – (float)      max val of color plot scale. Default None.</p></li>
-<li><p><strong>cmap</strong> – (plt.cm)     cmap object. Default plt.cm.jet</p></li>
-<li><p><strong>save</strong> – (bool)       set to true in order to save the animation</p></li>
-<li><p><strong>save_path</strong> – (str)        path to save the animation. Default “./”</p></li>
-<li><p><strong>verbose</strong> – (bool)       set to true to verbose the steps of this function</p></li>
+<li><p><strong>it_max</strong> (<em>int</em>) – max amount of iterations to be animated</p></li>
+<li><p><strong>path</strong> (<em>str</em>) – path to folder where .sgy model files are located</p></li>
+<li><p><strong>project_name</strong> (<em>str</em>) – name of the project – must match exactly</p></li>
+<li><p><strong>vmin</strong> (<em>float</em><em>, </em><em>optional</em>) – min val of color plot scale. See matplotlib.pyplot.contourf parameters. Default None.</p></li>
+<li><p><strong>vmax</strong> (<em>float</em><em>, </em><em>optional</em>) – max val of color plot scale. See matplotlib.pyplot.contourf parameters. Default None.</p></li>
+<li><p><strong>cmap</strong> (<em>matplotlib.pyplot.cm</em>) – colormap. Default plt.cm.jet</p></li>
+<li><p><strong>save</strong> (<em>bool</em><em>, </em><em>optional</em>) – set to true in order to save the animation. Default False</p></li>
+<li><p><strong>save_path</strong> (<em>str</em><em>, </em><em>optional</em>) – path to save the plot. Default “./”</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) – If set to True will verbose the main steps of the function calculation. Default True.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>None</p>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="fullwaveqc.visual.interamp">
-<code class="sig-prename descclassname">fullwaveqc.visual.</code><code class="sig-name descname">interamp</code><span class="sig-paren">(</span><em class="sig-param">SegyData1</em>, <em class="sig-param">SegyData2</em>, <em class="sig-param">shot=1</em>, <em class="sig-param">shot2=None</em>, <em class="sig-param">n_blocks=2</em>, <em class="sig-param">cap=0.0</em>, <em class="sig-param">levels=100</em>, <em class="sig-param">vmin=None</em>, <em class="sig-param">vmax=None</em>, <em class="sig-param">cmap=&lt;matplotlib.colors.LinearSegmentedColormap object&gt;</em>, <em class="sig-param">wstart=0</em>, <em class="sig-param">wend=None</em>, <em class="sig-param">save=False</em>, <em class="sig-param">save_path='./'</em><span class="sig-paren">)</span><a class="headerlink" href="#fullwaveqc.visual.interamp" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">fullwaveqc.visual.</code><code class="sig-name descname">interamp</code><span class="sig-paren">(</span><em class="sig-param">SegyData1</em>, <em class="sig-param">SegyData2</em>, <em class="sig-param">shot=1</em>, <em class="sig-param">shot2=None</em>, <em class="sig-param">n_blocks=2</em>, <em class="sig-param">cap=0.0</em>, <em class="sig-param">levels=50</em>, <em class="sig-param">vmin=None</em>, <em class="sig-param">vmax=None</em>, <em class="sig-param">cmap=&lt;matplotlib.colors.LinearSegmentedColormap object&gt;</em>, <em class="sig-param">wstart=0</em>, <em class="sig-param">wend=None</em>, <em class="sig-param">xstart=0</em>, <em class="sig-param">xend=None</em>, <em class="sig-param">save=False</em>, <em class="sig-param">save_path='./'</em><span class="sig-paren">)</span><a class="headerlink" href="#fullwaveqc.visual.interamp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plots the interleaving amplitude map of a SegyData1 and SegyData2 objects in timesamples vs receiver index.
 Uses properties of matplotlib.contourf.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>SegyData1</strong> – (SegyData)   object outputted from fullwaveqc.tools.load function for the segy data</p></li>
-<li><p><strong>SegyData2</strong> – (SegyData)   object outputted from fullwaveqc.tools.load function for the segy data
+<li><p><strong>SegyData1</strong> (<a class="reference internal" href="#fullwaveqc.tools.SegyData" title="fullwaveqc.tools.SegyData"><em>fullwaveqc.tools.SegyData</em></a>) – object outputted from fullwaveqc.tools.load function for the segy data</p></li>
+<li><p><strong>SegyData2</strong> (<a class="reference internal" href="#fullwaveqc.tools.SegyData" title="fullwaveqc.tools.SegyData"><em>fullwaveqc.tools.SegyData</em></a>) – object outputted from fullwaveqc.tools.load function for the segy data
 Requires same number of samples, sampling interval, shots and receiver
 positions as SegyData1</p></li>
-<li><p><strong>shot</strong> – (int)        shot number to visualise SegyData1. Default 1</p></li>
-<li><p><strong>shot2</strong> – (int)        shot number to visualise SegyData2. Count starts from 1. If None, will .
+<li><p><strong>shot</strong> (<em>int</em><em>, </em><em>optional</em>) – shot number to visualise SegyData1. Count starts from 1. Default 1</p></li>
+<li><p><strong>shot2</strong> (<em>int</em><em>, </em><em>optional</em>) – shot number to visualise SegyData2. Count starts from 1. If None, will .
 be read the same as ‘shot’. Default None</p></li>
-<li><p><strong>n_blocks</strong> – (int)        Number of total blocks in the interleaving space</p></li>
-<li><p><strong>cap</strong> – (float)      absolute value of amplitudes to cap, shown as 0. Default 0.</p></li>
-<li><p><strong>levels</strong> – (int)        amount of levels in the contour plot. Default 100</p></li>
-<li><p><strong>vmin</strong> – (float)      min val of color plot scale. Default None.</p></li>
-<li><p><strong>vmax</strong> – (float)      max val of color plot scale. Default None.</p></li>
-<li><p><strong>cmap</strong> – (plt.cm)     cmap object. Default plt.cm.seismic</p></li>
-<li><p><strong>wstart</strong> – (int)        first timesample in time units to plot. Default 0</p></li>
-<li><p><strong>wend</strong> – (int)        last timesample in time units to plot. Default None</p></li>
-<li><p><strong>save</strong> – (bool)       set to true in order to save the plot in png 300dpi. Default False</p></li>
-<li><p><strong>save_path</strong> – (str)        path to save the plot. Default “./”</p></li>
+<li><p><strong>n_blocks</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of total blocks in the interleaving space</p></li>
+<li><p><strong>levels</strong> (<em>int</em><em>, </em><em>optional</em>) – amount of levels in the contour plot. See matplotlib.pyplot.contourf parameters. Default 50</p></li>
+<li><p><strong>cap</strong> (<em>float</em><em>, </em><em>optional</em>) – absolute value of amplitudes to cap, shown as 0. Default 0.</p></li>
+<li><p><strong>vmin</strong> (<em>float</em><em>, </em><em>optional</em>) – min val of color plot scale. See matplotlib.pyplot.contourf parameters. Default None.</p></li>
+<li><p><strong>vmax</strong> (<em>float</em><em>, </em><em>optional</em>) – max val of color plot scale. See matplotlib.pyplot.contourf parameters. Default None.</p></li>
+<li><p><strong>cmap</strong> (<em>matplotlib.pyplot.cm</em>) – colormap. Default plt.cm.seismic</p></li>
+<li><p><strong>xstart</strong> (<em>int</em><em>, </em><em>optional</em>) – first receiver index to plot. Default 0.</p></li>
+<li><p><strong>xend</strong> (<em>int</em><em>, </em><em>optional</em>) – last receiver index to plot. Default None</p></li>
+<li><p><strong>wstart</strong> (<em>int</em><em>, </em><em>optional</em>) – first timesample in time units to plot. Default 0</p></li>
+<li><p><strong>wend</strong> (<em>int</em><em>, </em><em>optional</em>) – last timesample in time units to plot. Default None</p></li>
+<li><p><strong>save</strong> (<em>bool</em><em>, </em><em>optional</em>) – set to true in order to save the plot in png 300dpi. Default False</p></li>
+<li><p><strong>save_path</strong> (<em>str</em><em>, </em><em>optional</em>) – path to save the plot. Default “./”</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>None</p>
+<dd class="field-even"><p></p>
 </dd>
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p></p>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="fullwaveqc.visual.interwiggle">
-<code class="sig-prename descclassname">fullwaveqc.visual.</code><code class="sig-name descname">interwiggle</code><span class="sig-paren">(</span><em class="sig-param">SegyData1</em>, <em class="sig-param">SegyData2</em>, <em class="sig-param">shot=1</em>, <em class="sig-param">shot2=None</em>, <em class="sig-param">overlay=False</em>, <em class="sig-param">scale=5</em>, <em class="sig-param">skip_trace=20</em>, <em class="sig-param">skip_time=0</em>, <em class="sig-param">delay_samples=0</em>, <em class="sig-param">wstart=0</em>, <em class="sig-param">wend=None</em>, <em class="sig-param">xstart=0</em>, <em class="sig-param">xend=None</em>, <em class="sig-param">label1='SegyData1'</em>, <em class="sig-param">label2='SegyData2'</em>, <em class="sig-param">save=False</em>, <em class="sig-param">save_path='./'</em><span class="sig-paren">)</span><a class="headerlink" href="#fullwaveqc.visual.interwiggle" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">fullwaveqc.visual.</code><code class="sig-name descname">interwiggle</code><span class="sig-paren">(</span><em class="sig-param">SegyData1</em>, <em class="sig-param">SegyData2</em>, <em class="sig-param">shot=1</em>, <em class="sig-param">shot2=None</em>, <em class="sig-param">overlay=0</em>, <em class="sig-param">scale=5</em>, <em class="sig-param">skip_trace=20</em>, <em class="sig-param">skip_time=0</em>, <em class="sig-param">delay_samples=0</em>, <em class="sig-param">wstart=0</em>, <em class="sig-param">wend=None</em>, <em class="sig-param">xstart=0</em>, <em class="sig-param">xend=None</em>, <em class="sig-param">label1='SegyData1'</em>, <em class="sig-param">label2='SegyData2'</em>, <em class="sig-param">save=False</em>, <em class="sig-param">save_path='./'</em><span class="sig-paren">)</span><a class="headerlink" href="#fullwaveqc.visual.interwiggle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plots the interleaving wiggle trace map of a SegyData1 and SegyData2 objects in timesamples vs receiver index.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>SegyData1</strong> – (SegyData)   object outputted from fullwaveqc.tools.load function for the segy data</p></li>
-<li><p><strong>SegyData2</strong> – (SegyData)   object outputted from fullwaveqc.tools.load function for the segy data</p></li>
-<li><p><strong>shot</strong> – (int)        shot number to visualise SegyData1. Default 1</p></li>
-<li><p><strong>shot2</strong> – (int)        shot number to visualise SegyData2. Count starts from 1. If None, will
+<li><p><strong>SegyData1</strong> (<a class="reference internal" href="#fullwaveqc.tools.SegyData" title="fullwaveqc.tools.SegyData"><em>fullwaveqc.tools.SegyData</em></a>) – object outputted from fullwaveqc.tools.load function for the segy data</p></li>
+<li><p><strong>SegyData2</strong> (<a class="reference internal" href="#fullwaveqc.tools.SegyData" title="fullwaveqc.tools.SegyData"><em>fullwaveqc.tools.SegyData</em></a>) – object outputted from fullwaveqc.tools.load function for the segy data
+Requires same number of samples, sampling interval, shots and receiver
+positions as SegyData1</p></li>
+<li><p><strong>shot</strong> (<em>int</em><em>, </em><em>optional</em>) – shot number to visualise SegyData1. Count starts from 1. Default 1</p></li>
+<li><p><strong>shot2</strong> (<em>int</em><em>, </em><em>optional</em>) – shot number to visualise SegyData2. Count starts from 1. If None, will
 be read the same as ‘shot’. Default None</p></li>
-<li><p><strong>overlay</strong> – (bool)       If true, traces will be overlaid in different colours instead of being
-displayed side by side. Default False</p></li>
-<li><p><strong>scale</strong> – (float)      value to scale the amplitude of the wiggles for visualisation only. Default 1</p></li>
-<li><p><strong>skip_trace</strong> – (int)        Number of traces to skip. Default 0.</p></li>
-<li><p><strong>skip_time</strong> – (int)        Number of time samples to skip. Default 0</p></li>
-<li><p><strong>xstart</strong> – (int)        first receiver index to plot. Default 0.</p></li>
-<li><p><strong>xend</strong> – (int)        last receiver index to plot. Default None</p></li>
-<li><p><strong>wstart</strong> – (int)        first timesample in time units to plot. Default 0</p></li>
-<li><p><strong>wend</strong> – (int)        last timesample in time units to plot. Default None</p></li>
-<li><p><strong>delay_samples</strong> – (int)        number of time samples to delay the signal. Will pad the signal with 0s at
-the beginning. Default 0</p></li>
-<li><p><strong>label1</strong> – (str)        Label for SegyData1. Default SegyData1</p></li>
-<li><p><strong>label2</strong> – (str)        Label for SegyData2. Default SegyData2</p></li>
-<li><p><strong>save</strong> – (bool)       set to true in order to save the plot in png 300dpi. Default False</p></li>
-<li><p><strong>save_path</strong> – (str)        path to save the plot. Default “./”</p></li>
+<li><p><strong>overlay</strong> (<em>int</em><em>, </em><em>optional</em>) – If +ve, traces will be overlaid in different colours instead of being
+displayed side by side. Overlay=1 overlays with all filled colors, overlay=2
+overlays with SegyData2 as filled colors and SegyData1 as conotur. Default 0</p></li>
+<li><p><strong>scale</strong> (<em>float</em><em>, </em><em>optional</em>) – value to scale the amplitude of the wiggles for visualisation only. Default 1</p></li>
+<li><p><strong>skip_trace</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of traces to skip. Default 20.</p></li>
+<li><p><strong>skip_time</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of time samples to skip. Default 0</p></li>
+<li><p><strong>delay_samples</strong> (<em>int</em><em>, </em><em>optional</em>) – number of time samples to delay the signal. Will pad the signal with 0s at the
+beginning of each trace. Default 0.</p></li>
+<li><p><strong>xstart</strong> (<em>int</em><em>, </em><em>optional</em>) – first receiver index to plot. Default 0.</p></li>
+<li><p><strong>xend</strong> (<em>int</em><em>, </em><em>optional</em>) – last receiver index to plot. Default None</p></li>
+<li><p><strong>wstart</strong> (<em>int</em><em>, </em><em>optional</em>) – first timesample in time units to plot. Default 0</p></li>
+<li><p><strong>wend</strong> (<em>int</em><em>, </em><em>optional</em>) – last timesample in time units to plot. Default None</p></li>
+<li><p><strong>label1</strong> (<em>str</em><em>, </em><em>optional</em>) – Label for SegyData1. Default SegyData1</p></li>
+<li><p><strong>label2</strong> (<em>str</em><em>, </em><em>optional</em>) – Label for SegyData2. Default SegyData2</p></li>
+<li><p><strong>save</strong> (<em>bool</em><em>, </em><em>optional</em>) – set to true in order to save the plot in png 300dpi. Default False</p></li>
+<li><p><strong>save_path</strong> (<em>str</em><em>, </em><em>optional</em>) – path to save the plot. Default “./”</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>None</p>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -354,19 +433,22 @@ Uses properties of matplotlib.contourf.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>Model</strong> – (Model)      object outputted from fullwaveqc.tools.load function for a model</p></li>
-<li><p><strong>cap</strong> – (float)      absolute value of P-wave values to cap, below this all are shown as 0. Default 0.</p></li>
-<li><p><strong>levels</strong> – (int)        amount of levels in the contour plot. Default 200</p></li>
-<li><p><strong>vmin</strong> – (float)      min val of color plot scale. Default None.</p></li>
-<li><p><strong>vmax</strong> – (float)      max val of color plot scale. Default None.</p></li>
-<li><p><strong>cmap</strong> – (plt.cm)     cmap object. Default plt.cm.jet</p></li>
-<li><p><strong>units</strong> – (str)        units of amplitudes to show in colorbar. Default m/s</p></li>
-<li><p><strong>save</strong> – (bool)       set to true in order to save the plot in png 300dpi. Default False</p></li>
-<li><p><strong>save_path</strong> – (str)        path to save the plot. Default “./”</p></li>
+<li><p><strong>Model</strong> (<em>fullwavqc.tools.Model</em>) – object outputted from fullwaveqc.tools.load function for a model</p></li>
+<li><p><strong>levels</strong> (<em>int</em><em>, </em><em>optional</em>) – amount of levels in the contour plot. See matplotlib.pyplot.contourf parameters. Default 200</p></li>
+<li><p><strong>cap</strong> (<em>float</em><em>, </em><em>optional</em>) – absolute value of amplitudes to cap, shown as 0. Default 0.</p></li>
+<li><p><strong>vmin</strong> (<em>float</em><em>, </em><em>optional</em>) – min val of color plot scale. See matplotlib.pyplot.contourf parameters. Default None.</p></li>
+<li><p><strong>vmax</strong> (<em>float</em><em>, </em><em>optional</em>) – max val of color plot scale. See matplotlib.pyplot.contourf parameters. Default None.</p></li>
+<li><p><strong>cmap</strong> (<em>matplotlib.pyplot.cm</em>) – colormap. Default plt.cm.jet</p></li>
+<li><p><strong>units</strong> (<em>str</em><em>, </em><em>optional</em>) – units of amplitudes to show in colorbar. Default m/s</p></li>
+<li><p><strong>save</strong> (<em>bool</em><em>, </em><em>optional</em>) – set to true in order to save the plot in png 300dpi. Default False</p></li>
+<li><p><strong>save_path</strong> (<em>str</em><em>, </em><em>optional</em>) – path to save the plot. Default “./”</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>None</p>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -378,46 +460,50 @@ Uses properties of matplotlib.contourf.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>Model</strong> – (Model)        object outputted from fullwaveqc.tools.load function for a model</p></li>
-<li><p><strong>pos_x</strong> – (list of ints) lateral distances to which retrieve the well data</p></li>
-<li><p><strong>TrueModel</strong> – (Model)        object outputted from fullwaveqc.tools.load function for the true model.
-Default None</p></li>
-<li><p><strong>plot</strong> – (bool)         Plots the profiles when set to true.</p></li>
+<li><p><strong>Model</strong> (<em>fullwaveqc.SegyData.Model</em>) – object outputted from fullwaveqc.tools.load function for a model</p></li>
+<li><p><strong>pos_x</strong> (<em>list</em><em>(</em><em>ints</em><em>)</em>) – lateral distances to which retrieve the well data</p></li>
+<li><p><strong>TrueModel</strong> (<em>fullwaveqc.SegyData.Model</em><em>, </em><em>optional</em>) – object outputted from fullwaveqc.tools.load function for the true model. Default None</p></li>
+<li><p><strong>plot</strong> (<em>bool</em><em>, </em><em>optional</em>) – Plots the profiles when set to true.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>wells, true_wells, rmses (np.arrays) with well values and root mean square errors as compared to a true
-model, or simply returns well if no TrueModel is given.</p>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>wells</strong> (<em>list[numpy.array]</em>) – Well values with depth</p></li>
+<li><p><strong>true_wells</strong> (<em>list[numpy.array]</em>) – Only if TrueModel is given. True well values with depth</p></li>
+<li><p><strong>rmses</strong> (<em>list[numpy.array]</em>) – Only if TrueModel is given. RMS errors between true well and predicted well values.</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="fullwaveqc.visual.wiggle">
-<code class="sig-prename descclassname">fullwaveqc.visual.</code><code class="sig-name descname">wiggle</code><span class="sig-paren">(</span><em class="sig-param">SegyData</em>, <em class="sig-param">shot=1</em>, <em class="sig-param">scale=5</em>, <em class="sig-param">skip_trace=0</em>, <em class="sig-param">skip_time=0</em>, <em class="sig-param">wstart=0.0</em>, <em class="sig-param">wend=None</em>, <em class="sig-param">xstart=0</em>, <em class="sig-param">xend=None</em>, <em class="sig-param">delay_samples=0</em>, <em class="sig-param">save=False</em>, <em class="sig-param">save_path='./'</em><span class="sig-paren">)</span><a class="headerlink" href="#fullwaveqc.visual.wiggle" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>Plots the wiggle trace map of a SegyData object in timesamples vs receiver index.</p>
-</div></blockquote>
+<code class="sig-prename descclassname">fullwaveqc.visual.</code><code class="sig-name descname">wiggle</code><span class="sig-paren">(</span><em class="sig-param">SegyData</em>, <em class="sig-param">shot=1</em>, <em class="sig-param">scale=5</em>, <em class="sig-param">skip_trace=20</em>, <em class="sig-param">skip_time=0</em>, <em class="sig-param">wstart=0.0</em>, <em class="sig-param">wend=None</em>, <em class="sig-param">xstart=0</em>, <em class="sig-param">xend=None</em>, <em class="sig-param">delay_samples=0</em>, <em class="sig-param">save=False</em>, <em class="sig-param">save_path='./'</em><span class="sig-paren">)</span><a class="headerlink" href="#fullwaveqc.visual.wiggle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plots the wiggle trace map of a SegyData object in timesamples vs receiver index.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>SegyData</strong> – (SegyData)   object outputted from fullwaveqc.tools.load function for the segy data</p></li>
-<li><p><strong>shot</strong> – (int)        shot number to visualise. Count starts from 1. Default 1</p></li>
-<li><p><strong>scale</strong> – (float)      value to scale the amplitude of the wiggles for visualisation only. Default 1</p></li>
-<li><p><strong>skip_trace</strong> – (int)        Number of traces to skip. Default 0.</p></li>
-<li><p><strong>skip_time</strong> – (int)        Number of time samples to skip. Default 0</p></li>
-<li><p><strong>xstart</strong> – (int)        first receiver index to plot. Default 0.</p></li>
-<li><p><strong>xend</strong> – (int)        last receiver index to plot. Default None</p></li>
-<li><p><strong>wstart</strong> – (int)        first timesample in time units to plot. Default 0</p></li>
-<li><p><strong>wend</strong> – (int)        last timesample in time units to plot. Default None</p></li>
-<li><p><strong>delay_samples</strong> – (int)        number of time samples to delay the signal. Will pad the signal with 0s at the
-beginning. Default 0</p></li>
-<li><p><strong>save</strong> – (bool)       set to true in order to save the plot in png 300dpi. Default False</p></li>
-<li><p><strong>save_path</strong> – (str)        path to save the plot. Default “./”</p></li>
+<li><p><strong>SegyData</strong> (<a class="reference internal" href="#fullwaveqc.tools.SegyData" title="fullwaveqc.tools.SegyData"><em>fullwaveqc.tools.SegyData</em></a>) – object outputted from fullwaveqc.tools.load function for the segy data</p></li>
+<li><p><strong>shot</strong> (<em>int</em><em>, </em><em>optional</em>) – shot number to visualise SegyData1. Count starts from 1. Default 1</p></li>
+<li><p><strong>scale</strong> (<em>float</em><em>, </em><em>optional</em>) – value to scale the amplitude of the wiggles for visualisation only. Default 1</p></li>
+<li><p><strong>skip_trace</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of traces to skip. Default 20.</p></li>
+<li><p><strong>skip_time</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of time samples to skip. Default 0</p></li>
+<li><p><strong>xstart</strong> (<em>int</em><em>, </em><em>optional</em>) – first receiver index to plot. Default 0.</p></li>
+<li><p><strong>xend</strong> (<em>int</em><em>, </em><em>optional</em>) – last receiver index to plot. Default None</p></li>
+<li><p><strong>wstart</strong> (<em>int</em><em>, </em><em>optional</em>) – first timesample in time units to plot. Default 0</p></li>
+<li><p><strong>wend</strong> (<em>int</em><em>, </em><em>optional</em>) – last timesample in time units to plot. Default None</p></li>
+<li><p><strong>delay_samples</strong> (<em>int</em><em>, </em><em>optional</em>) – number of time samples to delay the signal. Will pad the signal with 0s at the
+beginning of each trace. Default 0.</p></li>
+<li><p><strong>save</strong> (<em>bool</em><em>, </em><em>optional</em>) – set to true in order to save the plot in png 300dpi. Default False</p></li>
+<li><p><strong>save_path</strong> (<em>str</em><em>, </em><em>optional</em>) – path to save the plot. Default “./”</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>None</p>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -426,47 +512,50 @@ beginning. Default 0</p></li>
 <dt id="fullwaveqc.siganalysis.closest2pow">
 <code class="sig-prename descclassname">fullwaveqc.siganalysis.</code><code class="sig-name descname">closest2pow</code><span class="sig-paren">(</span><em class="sig-param">n</em><span class="sig-paren">)</span><a class="headerlink" href="#fullwaveqc.siganalysis.closest2pow" title="Permalink to this definition">¶</a></dt>
 <dd><p>Finds the first integer greater or equal to n that is a power of 2</p>
-<p>:param   n          (float) any positive number
-:return:  n2pow      (int) the first integer greater or equal to n that is an exact power of two
-:raises  ValueError if n is less or equal to zero</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>n</strong> (<em>float</em>) – any positive number</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>n2pow</strong> – the first integer greater or equal to n that is an exact power of two</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError if n is less</strong><strong> or </strong><strong>equal to zero</strong> – </p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="fullwaveqc.siganalysis.dataspec">
-<code class="sig-prename descclassname">fullwaveqc.siganalysis.</code><code class="sig-name descname">dataspec</code><span class="sig-paren">(</span><em class="sig-param">SegyData</em>, <em class="sig-param">ms=True</em>, <em class="sig-param">shot=1</em>, <em class="sig-param">fmax=None</em>, <em class="sig-param">fft_smooth=1</em>, <em class="sig-param">plot=False</em><span class="sig-paren">)</span><a class="headerlink" href="#fullwaveqc.siganalysis.dataspec" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">fullwaveqc.siganalysis.</code><code class="sig-name descname">dataspec</code><span class="sig-paren">(</span><em class="sig-param">SegyData</em>, <em class="sig-param">ms=True</em>, <em class="sig-param">shot=1</em>, <em class="sig-param">fmax=None</em>, <em class="sig-param">fft_smooth=3</em>, <em class="sig-param">plot=False</em><span class="sig-paren">)</span><a class="headerlink" href="#fullwaveqc.siganalysis.dataspec" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns and plots the frequency spectrum of a single shot of a dataset. Does so by stacking the frequencies of each
 individual trace.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>SegyData</strong> – (SegyData)  object outputted from fullwaveqc.tools.load function</p></li>
-<li><p><strong>ms</strong> – (bool)      Set to true if sampling rate in Wavelet object is in milliseconds, otherwise assumed
+<li><p><strong>SegyData</strong> (<a class="reference internal" href="#fullwaveqc.tools.SegyData" title="fullwaveqc.tools.SegyData"><em>fullwaveqc.tools.SegyData</em></a>) – object outputted from fullwaveqc.tools.load function containing the dataset</p></li>
+<li><p><strong>ms</strong> (<em>bool</em><em>, </em><em>optional</em>) – Set to true if sampling rate in Wavelet object is in miliseconds, otherwise assumed
 in seconds. Default: True</p></li>
-</ul>
-</dd>
-</dl>
-<p>:param  shot        (int)       Shot number to compute the frequency spectrum. Default 1
-:param  fmax:       (float)     Value of the highest frequency expected in the signal. Default: None
-:param  plot:       (bool)      Will plot the spectrum and phases of the dataset in the frequency if set to True</p>
-<blockquote>
-<div><p>Default: False</p>
-</div></blockquote>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>fft_smooth</strong> – (int)       Parameter used to multiply the number of samples inputted into the Fast Fourier
+<li><p><strong>shot</strong> (<em>int</em><em>, </em><em>optional</em>) – Shot number to compute the frequency spectrum. Default 1</p></li>
+<li><p><strong>fmax</strong> (<em>float</em><em>, </em><em>optional</em>) – Value of the highest frequency expected in the signal. Default: None</p></li>
+<li><p><strong>plot</strong> (<em>bool</em><em>, </em><em>optional</em>) – Will plot the wavelet in time and wave frequencies if set to True. Default: False</p></li>
+<li><p><strong>fft_smooth</strong> (<em>int</em><em>, </em><em>optional</em>) – Parameter used to multiply the number of samples inputted into the Fast Fourier
 Transform. Increase this factor for a smoother plot. The final number of sample
 points will be the nearest power of two of fft_smooth multiplied by the original
 number of time samples in the signal. Higher value increases computational time.
-Default: 1</p>
+Default: 3</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>xf          (np.array)  1D array containing the frequencies</p>
-</dd>
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>yf          (np.array)  1D array containing the power of the frequencies in dB</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>phase       (np.array)  1D array containing the unwrapped phases at each frequency</p>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>xf</strong> (<em>numpy.array</em>) – 1D array containing the frequencies</p></li>
+<li><p><strong>yf</strong> (<em>numpy.array</em>) – 1D array containing the power of the frequencies in dB</p></li>
+<li><p><strong>phase</strong> (<em>numpy.array</em>) – 1D array containing the unwrapped phases at each frequency</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -474,66 +563,73 @@ Default: 1</p>
 <dl class="function">
 <dt id="fullwaveqc.siganalysis.gausswindow">
 <code class="sig-prename descclassname">fullwaveqc.siganalysis.</code><code class="sig-name descname">gausswindow</code><span class="sig-paren">(</span><em class="sig-param">samples</em>, <em class="sig-param">wstart</em>, <em class="sig-param">wend</em>, <em class="sig-param">dt</em><span class="sig-paren">)</span><a class="headerlink" href="#fullwaveqc.siganalysis.gausswindow" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a gaussian function to window a signal</p>
+<dd><p>Create a gaussian function to window a signal. Standard deviation of the gaussian function is equivalent to one
+quarter the window width</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>samples</strong> – (int) Total of points in the function</p></li>
-<li><p><strong>wstart</strong> – (int) Start time of the window (ms)</p></li>
-<li><p><strong>wend</strong> – (int) End time of the window (ms)</p></li>
-<li><p><strong>dt</strong> – (float) Time sampling of the signal(ms)</p></li>
+<li><p><strong>samples</strong> (<em>int</em>) – Total of points in the function</p></li>
+<li><p><strong>wstart</strong> (<em>int</em>) – Start time of the window (ms)</p></li>
+<li><p><strong>wend</strong> (<em>int</em>) – End time of the window (ms)</p></li>
+<li><p><strong>dt</strong> (<em>float</em>) – Time sampling of the signal(ms)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>w        (numpy.array) 1D array of a gaussian window of size (samples, 1)</p>
+<dd class="field-even"><p><strong>w</strong> – 1D array of a gaussian window of size (samples, 1)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy.array</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="fullwaveqc.siganalysis.phasediff">
-<code class="sig-prename descclassname">fullwaveqc.siganalysis.</code><code class="sig-name descname">phasediff</code><span class="sig-paren">(</span><em class="sig-param">PredData</em>, <em class="sig-param">ObsData</em>, <em class="sig-param">f=1</em>, <em class="sig-param">wstart=200</em>, <em class="sig-param">wend=1000</em>, <em class="sig-param">nr_max=None</em>, <em class="sig-param">ns_max=None</em>, <em class="sig-param">ms=True</em>, <em class="sig-param">fft_smooth=1</em>, <em class="sig-param">plot=False</em>, <em class="sig-param">verbose=1</em><span class="sig-paren">)</span><a class="headerlink" href="#fullwaveqc.siganalysis.phasediff" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">fullwaveqc.siganalysis.</code><code class="sig-name descname">phasediff</code><span class="sig-paren">(</span><em class="sig-param">PredData</em>, <em class="sig-param">ObsData</em>, <em class="sig-param">f=1</em>, <em class="sig-param">wstart=200</em>, <em class="sig-param">wend=1000</em>, <em class="sig-param">nr_min=0</em>, <em class="sig-param">nr_max=None</em>, <em class="sig-param">ns_min=0</em>, <em class="sig-param">ns_max=None</em>, <em class="sig-param">ms=True</em>, <em class="sig-param">fft_smooth=3</em>, <em class="sig-param">unwrap=True</em>, <em class="sig-param">plot=False</em>, <em class="sig-param">verbose=1</em><span class="sig-paren">)</span><a class="headerlink" href="#fullwaveqc.siganalysis.phasediff" title="Permalink to this definition">¶</a></dt>
 <dd><p>Computes and plots the phase difference between an observed and predicted dataset, at a single specified frequency,
-for all receivers and shots</p>
+for all receivers and shots. Will present undesired unwrapping effects in the presence of noise or low-amplitude
+signal. Calculates phase_observed - phase_predicted.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>PredData</strong> – (SegyData)  object outputted from fullwaveqc.tools.load function</p></li>
-<li><p><strong>ObsData</strong> – (SegyData)  object outputted from fullwaveqc.tools.load function</p></li>
-<li><p><strong>f</strong> – (float)     Frequency in Hz at which the phase difference should be calculated
-Default: 1</p></li>
-<li><p><strong>wstart</strong> – (int)       Time sample to which start the window for the phase difference computation
-Default: 200</p></li>
-<li><p><strong>wend</strong> – (int)       Time sample to which end the window for the phase difference computation
-Default: 1000</p></li>
-<li><p><strong>nr_max</strong> – (int)       Maximum number of receivers to which calculate the phase difference. If None is
-given, then number of receivers is inferred from the datasets.
-Default: None</p></li>
-<li><p><strong>ns_max</strong> – (int)       Maximum number of sources/shots to which calculate the phase difference. If None is
-given then number of sources is inferred from the datasets
-Default: None</p></li>
-<li><p><strong>ms</strong> – (bool)      Set to true if sampling rate in Wavelet object is in miliseconds, otherwise assumed
-in seconds.
-Default: True</p></li>
-<li><p><strong>fft_smooth</strong> – (int)       Parameter used to multiply the number of samples inputted into the Fast Fourier
+<li><p><strong>PredData</strong> (<a class="reference internal" href="#fullwaveqc.tools.SegyData" title="fullwaveqc.tools.SegyData"><em>fullwaveqc.tools.SegyData</em></a>) – object outputted from fullwaveqc.tools.load function</p></li>
+<li><p><strong>ObsData</strong> (<a class="reference internal" href="#fullwaveqc.tools.SegyData" title="fullwaveqc.tools.SegyData"><em>fullwaveqc.tools.SegyData</em></a>) – object outputted from fullwaveqc.tools.load function. Should have the same time sampling as PredData</p></li>
+<li><p><strong>f</strong> (<em>float</em><em>, </em><em>optional</em>) – Frequency in Hz at which the phase difference should be calculated. Default: 1</p></li>
+<li><p><strong>wstart</strong> (<em>int</em><em>, </em><em>optional</em>) – Time sample to which start the window for the phase difference computation. Default: 200</p></li>
+<li><p><strong>wend</strong> (<em>int</em><em>, </em><em>optional</em>) – Time sample to which end the window for the phase difference computation.If negative will take the entire
+shot window. Default: 1000</p></li>
+<li><p><strong>nr_min</strong> (<em>int</em><em>, </em><em>optional</em>) – Minimum receiver index to which calculate the phase difference. Default 0.</p></li>
+<li><p><strong>nr_max</strong> (<em>int</em><em>, </em><em>optional</em>) – <dl class="simple">
+<dt>Maximum  receiver index to which calculate the phase difference. If None is given, then number of receivers</dt><dd><p>is inferred from the datasets. Default None.</p>
+</dd>
+</dl>
+</p></li>
+<li><p><strong>ns_min</strong> (<em>int</em><em>, </em><em>optional</em>) – Minimum source/shot index to which calculate the phase difference. Default: 0</p></li>
+<li><p><strong>ns_max</strong> (<em>int</em><em>, </em><em>optional</em>) – Maximum source/shot index to which calculate the phase difference. If None is
+given then number of sources is inferred from the datasets. Default: None</p></li>
+<li><p><strong>ms</strong> (<em>bool</em><em>, </em><em>optional</em>) – Set to true if sampling rate in Wavelet object is in miliseconds, otherwise assumed
+in seconds. Default: True</p></li>
+<li><p><strong>fft_smooth</strong> (<em>int</em><em>, </em><em>optional</em>) – Parameter used to multiply the number of samples inputted into the Fast Fourier
 Transform. Increase this factor for a smoother plot. The final number of sample
 points will be the nearest power of two of fft_smooth multiplied by the original
 number of time samples in the signal. Higher value increases computational time.
-Default: 1</p></li>
-<li><p><strong>plot</strong> – (bool)      Will plot the phase difference if set to True
-Default: False</p></li>
-<li><p><strong>verbose</strong> – (bool)      If set to True will verbose the main steps of the function calculation. Default 1</p></li>
+Default: 3</p></li>
+<li><p><strong>unwrap</strong> (<em>bool</em><em>, </em><em>optional</em>) – If set to true will perform phase unwrapping in the receiver domain. For a detailed
+discussion of how these might affect the phase difference results, refer to the
+project report in the Github repository. Default True</p></li>
+<li><p><strong>plot</strong> (<em>bool</em><em>, </em><em>optional</em>) – Will plot the phase difference if set to True. Default: False</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) – If set to True will verbose the main steps of the function calculation. Default True.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>phase_pred  (np.array)  phase_pred  2D array of size (ns_max, nr_max) with the unwrapped phases of the</dt><dd><p>predicted dataset at the specified frequency</p>
-</dd>
-<dt>phase_obs   (np.array)  phase_obs  2D array of size (ns_max, nr_max) with the unwrapped phases of the</dt><dd><p>observed dataset at the specified frequency</p>
-</dd>
-<dt>phase_diff  (np.array)  phase_diff  2D array of size (ns_max, nr_max) with the unwrapped phase differences</dt><dd><p>between the observed and predicted datasets at the specified frequency</p>
-</dd>
-</dl>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>phase_pred</strong> (<em>numpy.array</em>) – 2D array of size (ns_max, nr_max) with the unwrapped phases of the
+predicted dataset at the specified frequency</p></li>
+<li><p><strong>phase_obs</strong> (<em>numpy.array</em>) – 2D array of size (ns_max, nr_max) with the unwrapped phases of the
+observed dataset at the specified frequency</p></li>
+<li><p><strong>phase_diff</strong> (<em>numpy.array</em>) – phase_diff  2D array of size (ns_max-ns_min, nr_max-nrmin) with the unwrapped phase differences
+between the observed and predicted datasets at the specified frequency</p></li>
+</ul>
 </p>
 </dd>
 </dl>
@@ -541,75 +637,67 @@ Default: False</p></li>
 
 <dl class="function">
 <dt id="fullwaveqc.siganalysis.wavespec">
-<code class="sig-prename descclassname">fullwaveqc.siganalysis.</code><code class="sig-name descname">wavespec</code><span class="sig-paren">(</span><em class="sig-param">Wavelet</em>, <em class="sig-param">ms=True</em>, <em class="sig-param">fmax=None</em>, <em class="sig-param">plot=False</em>, <em class="sig-param">fft_smooth=1</em><span class="sig-paren">)</span><a class="headerlink" href="#fullwaveqc.siganalysis.wavespec" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">fullwaveqc.siganalysis.</code><code class="sig-name descname">wavespec</code><span class="sig-paren">(</span><em class="sig-param">Wavelet</em>, <em class="sig-param">ms=True</em>, <em class="sig-param">fmax=None</em>, <em class="sig-param">plot=False</em>, <em class="sig-param">fft_smooth=3</em><span class="sig-paren">)</span><a class="headerlink" href="#fullwaveqc.siganalysis.wavespec" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns and plots the frequency spectrum of a source wavelet.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>Wavelet</strong> – (SegyData)   object outputted from fullwaveqc.tools.load function</p></li>
-<li><p><strong>ms</strong> – (bool)       Set to true if sampling rate in Wavelet object is in miliseconds, otherwise assumed
+<li><p><strong>Wavelet</strong> (<a class="reference internal" href="#fullwaveqc.tools.SegyData" title="fullwaveqc.tools.SegyData"><em>fullwaveqc.tools.SegyData</em></a>) – object outputted from fullwaveqc.tools.load function with the wavelet data</p></li>
+<li><p><strong>ms</strong> (<em>bool</em><em>, </em><em>optional</em>) – Set to true if sampling rate in Wavelet object is in miliseconds, otherwise assumed
 in seconds. Default: True</p></li>
-<li><p><strong>fmax</strong> – (float)      Value of the highest frequency expected in the signal
-Default: None</p></li>
-<li><p><strong>plot</strong> – (bool)       Will plot the wavelet in time and wave frequencies if set to True
-Default: False</p></li>
-<li><p><strong>fft_smooth</strong> – (int)        Parameter used to multiply the number of samples inputted into the Fast Fourier
+<li><p><strong>fmax</strong> (<em>float</em><em>, </em><em>optional</em>) – Value of the highest frequency expected in the signal. Default: None</p></li>
+<li><p><strong>plot</strong> (<em>bool</em><em>, </em><em>optional</em>) – Will plot the wavelet in time and wave frequencies if set to True. Default: False</p></li>
+<li><p><strong>fft_smooth</strong> (<em>int</em><em>, </em><em>optional</em>) – Parameter used to multiply the number of samples inputted into the Fast Fourier
 Transform. Increase this factor for a smoother plot. The final number of sample
 points will be the nearest power of two of fft_smooth multiplied by the original
 number of time samples in the signal. Higher value increases computational time.
-Default: 1</p></li>
+Default: 3</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>xf          (np.array)   1D array containing the frequencies</p>
-</dd>
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>yf          (np.array)   1D array containing the power of the frequencies in dB</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>phase       (np.array)   1D array containing the unwrapped phases at each frequency</p>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>xf</strong> (<em>numpy.array</em>) – 1D array containing the frequencies</p></li>
+<li><p><strong>yf</strong> (<em>numpy.array</em>) – 1D array containing the power of the frequencies in dB</p></li>
+<li><p><strong>phase</strong> (<em>numpy.array</em>) – 1D array containing the unwrapped phases at each frequency</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="fullwaveqc.siganalysis.xcorr">
-<code class="sig-prename descclassname">fullwaveqc.siganalysis.</code><code class="sig-name descname">xcorr</code><span class="sig-paren">(</span><em class="sig-param">PredData</em>, <em class="sig-param">ObsData</em>, <em class="sig-param">wstart=0</em>, <em class="sig-param">wend=-1</em>, <em class="sig-param">nr_max=None</em>, <em class="sig-param">ns_max=None</em>, <em class="sig-param">ms=True</em>, <em class="sig-param">plot=False</em>, <em class="sig-param">verbose=1</em><span class="sig-paren">)</span><a class="headerlink" href="#fullwaveqc.siganalysis.xcorr" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">fullwaveqc.siganalysis.</code><code class="sig-name descname">xcorr</code><span class="sig-paren">(</span><em class="sig-param">PredData</em>, <em class="sig-param">ObsData</em>, <em class="sig-param">wstart=0</em>, <em class="sig-param">wend=-1</em>, <em class="sig-param">nr_min=0</em>, <em class="sig-param">nr_max=None</em>, <em class="sig-param">ns_min=0</em>, <em class="sig-param">ns_max=None</em>, <em class="sig-param">ms=True</em>, <em class="sig-param">plot=False</em>, <em class="sig-param">verbose=1</em><span class="sig-paren">)</span><a class="headerlink" href="#fullwaveqc.siganalysis.xcorr" title="Permalink to this definition">¶</a></dt>
 <dd><p>Computes and plots the cross-correlation between an observed and predicted dataset using numpy.correlate.
 Traces are normalised to unit length for comparison</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>PredData</strong> – (SegyData) object outputted from fullwaveqc.tools.load function</p></li>
-<li><p><strong>ObsData</strong> – (SegyData) object outputted from fullwaveqc.tools.load function</p></li>
-<li><p><strong>wstart</strong> – (int)      Time sample to which start the window for the phase difference computation
-Default: 200</p></li>
-<li><p><strong>wend</strong> – (int)      Time sample to which end the window for the phase difference computation
-Default: 1000</p></li>
-<li><p><strong>nr_max</strong> – (int)      Maximum number of receivers to which calculate the phase difference. If None is given
-then max number of receivers is inferred from the PredData and ObsData
-Default: None</p></li>
-<li><p><strong>ns_max</strong> – (int)      Maximum number of sources/shots to which calculate the phase difference. If None is
-given, then max number of sources is inferred from the datasets
-Default: None</p></li>
-<li><p><strong>ms</strong> – (bool)     Set to true if sampling rate in Wavelet object is in miliseconds, otherwise assumed
-in seconds.
-Default: True</p></li>
-<li><p><strong>plot</strong> – (bool)     Will plot the phase difference if set to True
-Default: False</p></li>
-<li><p><strong>verbose</strong> – (bool)     If set to True will verbose the main steps of the function calculation. Default 1</p></li>
+<li><p><strong>PredData</strong> (<a class="reference internal" href="#fullwaveqc.tools.SegyData" title="fullwaveqc.tools.SegyData"><em>fullwaveqc.tools.SegyData</em></a>) – object outputted from fullwaveqc.tools.load function</p></li>
+<li><p><strong>ObsData</strong> (<a class="reference internal" href="#fullwaveqc.tools.SegyData" title="fullwaveqc.tools.SegyData"><em>fullwaveqc.tools.SegyData</em></a>) – object outputted from fullwaveqc.tools.load function</p></li>
+<li><p><strong>wstart</strong> (<em>int</em><em>, </em><em>optional</em>) – Time sample to which start the window for the phase difference computation. Default: 0</p></li>
+<li><p><strong>wend</strong> (<em>int</em><em>, </em><em>optional</em>) – Time sample to which end the window for the phase difference computation.If negative will use the entire shot
+window. Default -1.</p></li>
+<li><p><strong>nr_min</strong> (<em>int</em><em>, </em><em>optional</em>) – Minimum receiver index to which calculate the phase difference. Default 0.</p></li>
+<li><p><strong>nr_max</strong> (<em>int</em><em>, </em><em>optional</em>) – <dl class="simple">
+<dt>Maximum  receiver index to which calculate the phase difference. If None is given, then number of receivers</dt><dd><p>is inferred from the datasets. Default None.</p>
+</dd>
+</dl>
+</p></li>
+<li><p><strong>ns_min</strong> (<em>int</em><em>, </em><em>optional</em>) – Minimum source/shot index to which calculate the phase difference. Default: 0</p></li>
+<li><p><strong>ns_max</strong> (<em>int</em><em>, </em><em>optional</em>) – Maximum source/shot index to which calculate the phase difference. If None is
+given then number of sources is inferred from the datasets. Default: None</p></li>
+<li><p><strong>ms</strong> (<em>bool</em><em>, </em><em>optional</em>) – Set to true if sampling rate in Wavelet object is in miliseconds, otherwise assumed
+in seconds. Default: True</p></li>
+<li><p><strong>plot</strong> (<em>bool</em><em>, </em><em>optional</em>) – Will plot the phase difference if set to True. Default: False</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) – If set to True will verbose the main steps of the function calculation. Default True.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>xcorr_arr   (np.array) 2D array of size (ns_max, nr_max) with the unwrapped phases of the</dt><dd><p>predicted dataset at the specified frequency</p>
+<dd class="field-even"><p><strong>xcorr_arr</strong> – 2D array of size (ns_max, nr_max) with the normalised cross correlation values</p>
 </dd>
-<dt>(np.array)  phase_obs  2D array of size (ns_max, nr_max) with the unwrapped phases of the</dt><dd><p>observed dataset at the specified frequency</p>
-</dd>
-<dt>(np.array)  phase_diff  2D array of size (ns_max, nr_max) with the unwrapped phase differences</dt><dd><p>between the observed and predicted datasets at the specified frequency</p>
-</dd>
-</dl>
-</p>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy.array</p>
 </dd>
 </dl>
 </dd></dl>
@@ -617,21 +705,22 @@ Default: False</p></li>
 <span class="target" id="module-fullwaveqc.inversion"></span><dl class="function">
 <dt id="fullwaveqc.inversion.functional">
 <code class="sig-prename descclassname">fullwaveqc.inversion.</code><code class="sig-name descname">functional</code><span class="sig-paren">(</span><em class="sig-param">filepath</em>, <em class="sig-param">name=None</em>, <em class="sig-param">plot=False</em><span class="sig-paren">)</span><a class="headerlink" href="#fullwaveqc.inversion.functional" title="Permalink to this definition">¶</a></dt>
-<dd><p>Retrieves and plots the global functional value of an inversion run with Fullwave3D as  recorded in the job log
+<dd><p>Retrieves and plots the global functional value of an inversion run with Fullwave3D as recorded in the job log
 file</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>filepath</strong> – (str)      path to &lt;PROJECT_NAME&gt;_job,log file</p></li>
-<li><p><strong>name</strong> – (str)      name of the project. If not given, will be inferred from filename. Default: None</p></li>
-<li><p><strong>plot</strong> – (bool)     if true will produce a plot of the functional values vs iterations. Default: False</p></li>
+<li><p><strong>filepath</strong> (<em>str</em>) – path to &lt;PROJECT_NAME&gt;_job,log file</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – name of the project. If not given, will be inferred from filename. Default: None</p></li>
+<li><p><strong>plot</strong> (<em>bool</em>) – if true will produce a plot of the functional values vs iterations. Default: False</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>iter_all     (np.array) array of iteration numbers of the run of size (number_of_iterations, 1)</p>
-</dd>
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>func         (np.array) array of functional of size (number_of_iterations, 1)</p>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>iter_all</strong> (<em>numpy.array</em>) – array of iteration numbers of the run of size (number_of_iterations, 1)</p></li>
+<li><p><strong>func</strong> (<em>numpy.array</em>) – array of functional of size (number_of_iterations, 1)</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -639,21 +728,23 @@ file</p>
 <dl class="function">
 <dt id="fullwaveqc.inversion.steplen">
 <code class="sig-prename descclassname">fullwaveqc.inversion.</code><code class="sig-name descname">steplen</code><span class="sig-paren">(</span><em class="sig-param">filepath</em>, <em class="sig-param">name=None</em>, <em class="sig-param">plot=False</em><span class="sig-paren">)</span><a class="headerlink" href="#fullwaveqc.inversion.steplen" title="Permalink to this definition">¶</a></dt>
-<dd><p>Retrieves and plots the step length value of an inversion run with Fullwave3D as recorded in the job log
+<dd><p>Retrieves and plots the global functional value of an inversion run with Fullwave3D as recorded in the job log
 file</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>filepath</strong> – (str)      path to &lt;PROJECT_NAME&gt;_job,log file</p></li>
-<li><p><strong>name</strong> – (str)      name of the project. If not given, will be inferred from filename. Default: None</p></li>
-<li><p><strong>plot</strong> – (bool)     if true will produce a plot of the step length values vs iterations. Default: False</p></li>
+<li><p><strong>filepath</strong> (<em>str</em>) – path to &lt;PROJECT_NAME&gt;_job,log file</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – name of the project. If not given, will be inferred from filename. Default: None</p></li>
+<li><p><strong>plot</strong> (<em>bool</em>) – if true will produce a plot of the step length values vs iterations. And highlight
+in red all negative step length values. Default: False</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>iter_all     (np.array) array of iteration numbers of the run of size (number_of_iterations, 1)</p>
-</dd>
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>steplenarr   (np.array) array of step length values of size (number_of_iterations, 1)</p>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>iter_all</strong> (<em>numpy.array</em>) – array of iteration numbers of the run of size (number_of_iterations, 1)</p></li>
+<li><p><strong>func</strong> (<em>numpy.array</em>) – array of step length values of size (number_of_iterations, 1)</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>

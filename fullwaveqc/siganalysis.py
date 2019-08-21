@@ -7,16 +7,28 @@ from scipy.fftpack import fft
 import matplotlib.pyplot as plt
 import warnings
 import sys
+import fullwaveqc.tools as tools
 
 
 def closest2pow(n):
     """
     Finds the first integer greater or equal to n that is a power of 2
 
-    :param   n          (float) any positive number
-    :return:  n2pow      (int) the first integer greater or equal to n that is an exact power of two
-    :raises  ValueError if n is less or equal to zero
+    Parameters
+    ----------
+    n: float
+        any positive number
+
+    Returns
+    -------
+    n2pow: int
+        the first integer greater or equal to n that is an exact power of two
+
+    Raises
+    ------
+        ValueError if n is less or equal to zero
     """
+
     if n <= 0:
         raise ValueError("Can only compute the closest power of two of positive numbers")
 
@@ -29,12 +41,23 @@ def gausswindow(samples, wstart, wend, dt):
     Create a gaussian function to window a signal. Standard deviation of the gaussian function is equivalent to one
     quarter the window width
 
-    :param   samples: (int) Total of points in the function
-    :param   wstart:  (int) Start time of the window (ms)
-    :param   wend:    (int) End time of the window (ms)
-    :param   dt:      (float) Time sampling of the signal(ms)
-    :return:  w        (numpy.array) 1D array of a gaussian window of size (samples, 1)
+    Parameters
+    ----------
+    samples: int
+        Total of points in the function
+    wstart: int
+        Start time of the window (ms)
+    wend: int
+        End time of the window (ms)
+    dt: float
+        Time sampling of the signal(ms)
+
+    Returns
+    -------
+    w: numpy.array
+        1D array of a gaussian window of size (samples, 1)
     """
+
     # Transform window to index points
     wend, wstart = wend/dt, wstart/dt
 
@@ -50,26 +73,39 @@ def gausswindow(samples, wstart, wend, dt):
     return w
 
 
-def wavespec(Wavelet, ms=True, fmax=None, plot=False, fft_smooth=1):
+def wavespec(Wavelet, ms=True, fmax=None, plot=False, fft_smooth=3):
     """
     Returns and plots the frequency spectrum of a source wavelet.
 
-    :param  Wavelet:    (SegyData)   object outputted from fullwaveqc.tools.load function
-    :param  ms:         (bool)       Set to true if sampling rate in Wavelet object is in miliseconds, otherwise assumed
-                                     in seconds. Default: True
-    :param  fmax:       (float)      Value of the highest frequency expected in the signal
-                                     Default: None
-    :param  plot:       (bool)       Will plot the wavelet in time and wave frequencies if set to True
-                                     Default: False
-    :param  fft_smooth: (int)        Parameter used to multiply the number of samples inputted into the Fast Fourier
-                                     Transform. Increase this factor for a smoother plot. The final number of sample
-                                     points will be the nearest power of two of fft_smooth multiplied by the original
-                                     number of time samples in the signal. Higher value increases computational time.
-                                     Default: 1
-    :return: xf          (np.array)   1D array containing the frequencies
-    :return: yf          (np.array)   1D array containing the power of the frequencies in dB
-    :return: phase       (np.array)   1D array containing the unwrapped phases at each frequency
+    Parameters
+    ----------
+    Wavelet: fullwaveqc.tools.SegyData
+        object outputted from fullwaveqc.tools.load function with the wavelet data
+    ms: bool, optional
+        Set to true if sampling rate in Wavelet object is in miliseconds, otherwise assumed
+        in seconds. Default: True
+    fmax: float, optional
+        Value of the highest frequency expected in the signal. Default: None
+    plot: bool, optional
+        Will plot the wavelet in time and wave frequencies if set to True. Default: False
+    fft_smooth: int, optional
+        Parameter used to multiply the number of samples inputted into the Fast Fourier
+        Transform. Increase this factor for a smoother plot. The final number of sample
+        points will be the nearest power of two of fft_smooth multiplied by the original
+        number of time samples in the signal. Higher value increases computational time.
+        Default: 3
+
+    Returns
+    -------
+    xf: numpy.array
+        1D array containing the frequencies
+    yf: numpy.array
+        1D array containing the power of the frequencies in dB
+    phase: numpy.array
+        1D array containing the unwrapped phases at each frequency
+
     """
+
     # Obtaining information from the wavelet
     n = Wavelet.samples[0]
     dt = Wavelet.dt[0]
@@ -137,26 +173,39 @@ def wavespec(Wavelet, ms=True, fmax=None, plot=False, fft_smooth=1):
     return xf, yf, phase
 
 
-def dataspec(SegyData, ms=True, shot=1, fmax=None, fft_smooth=1, plot=False):
+def dataspec(SegyData, ms=True, shot=1, fmax=None, fft_smooth=3, plot=False):
     """
     Returns and plots the frequency spectrum of a single shot of a dataset. Does so by stacking the frequencies of each
     individual trace.
 
-    :param  SegyData:   (SegyData)  object outputted from fullwaveqc.tools.load function
-    :param  ms:         (bool)      Set to true if sampling rate in Wavelet object is in milliseconds, otherwise assumed
-                                    in seconds. Default: True
-    :param  shot        (int)       Shot number to compute the frequency spectrum. Default 1
-    :param  fmax:       (float)     Value of the highest frequency expected in the signal. Default: None
-    :param  plot:       (bool)      Will plot the spectrum and phases of the dataset in the frequency if set to True
-                                    Default: False
-    :param  fft_smooth: (int)       Parameter used to multiply the number of samples inputted into the Fast Fourier
-                                    Transform. Increase this factor for a smoother plot. The final number of sample
-                                    points will be the nearest power of two of fft_smooth multiplied by the original
-                                    number of time samples in the signal. Higher value increases computational time.
-                                    Default: 1
-    :return: xf          (np.array)  1D array containing the frequencies
-    :return: yf          (np.array)  1D array containing the power of the frequencies in dB
-    :return: phase       (np.array)  1D array containing the unwrapped phases at each frequency
+    Parameters
+    ----------
+    SegyData: fullwaveqc.tools.SegyData
+        object outputted from fullwaveqc.tools.load function containing the dataset
+    ms: bool, optional
+        Set to true if sampling rate in Wavelet object is in miliseconds, otherwise assumed
+        in seconds. Default: True
+    shot: int, optional
+        Shot number to compute the frequency spectrum. Default 1
+    fmax: float, optional
+        Value of the highest frequency expected in the signal. Default: None
+    plot: bool, optional
+        Will plot the wavelet in time and wave frequencies if set to True. Default: False
+    fft_smooth: int, optional
+        Parameter used to multiply the number of samples inputted into the Fast Fourier
+        Transform. Increase this factor for a smoother plot. The final number of sample
+        points will be the nearest power of two of fft_smooth multiplied by the original
+        number of time samples in the signal. Higher value increases computational time.
+        Default: 3
+
+    Returns
+    -------
+    xf: numpy.array
+        1D array containing the frequencies
+    yf: numpy.array
+        1D array containing the power of the frequencies in dB
+    phase: numpy.array
+        1D array containing the unwrapped phases at each frequency
     """
 
     # Get shot information and adjust dt
@@ -221,48 +270,69 @@ def dataspec(SegyData, ms=True, shot=1, fmax=None, fft_smooth=1, plot=False):
 
 
 def phasediff(PredData, ObsData, f=1, wstart=200, wend=1000, nr_min=0, nr_max=None, ns_min=0, ns_max=None, ms=True,
-              fft_smooth=3, scale=1, unwrap=True, plot=False, verbose=1):
+              fft_smooth=3, unwrap=True, plot=False, verbose=1):
     """
     Computes and plots the phase difference between an observed and predicted dataset, at a single specified frequency,
     for all receivers and shots. Will present undesired unwrapping effects in the presence of noise or low-amplitude
     signal. Calculates phase_observed - phase_predicted.
 
-    :param  PredData:   (SegyData)  object outputted from fullwaveqc.tools.load function
-    :param  ObsData:    (SegyData)  object outputted from fullwaveqc.tools.load function. Should have the same time
-                                    sampling as PredData
-    :param  f:          (float)     Frequency in Hz at which the phase difference should be calculated
-                                    Default: 1
-    :param  wstart:     (int)       Time sample to which start the window for the phase difference computation
-                                    Default: 200
-    :param  wend:       (int)       Time sample to which end the window for the phase difference computation.
-                                    If negative will take the entire shot window.
-                                    Default: 1000
-    :param  nr_max:     (int)       Maximum number of receivers to which calculate the phase difference. If None is
-                                    given, then number of receivers is inferred from the datasets.
-                                    Default: None
-    :param  ns_max:     (int)       Maximum number of sources/shots to which calculate the phase difference. If None is 
-                                    given then number of sources is inferred from the datasets
-                                    Default: None
-    :param  ms:         (bool)      Set to true if sampling rate in Wavelet object is in miliseconds, otherwise assumed
-                                    in seconds.
-                                    Default: True
-    :param  fft_smooth: (int)       Parameter used to multiply the number of samples inputted into the Fast Fourier 
-                                    Transform. Increase this factor for a smoother plot. The final number of sample 
-                                    points will be the nearest power of two of fft_smooth multiplied by the original 
-                                    number of time samples in the signal. Higher value increases computational time.
-                                    Recommended minimum of 2 for stable calculations
-                                    Default: 3
-    :param  plot:       (bool)      Will plot the phase difference if set to True
-                                    Default: False
-    :param  verbose:    (bool)      If set to True will verbose the main steps of the function calculation. Default 1
-    :return: phase_pred  (np.array)  phase_pred  2D array of size (ns_max, nr_max) with the unwrapped phases of the
-                                    predicted dataset at the specified frequency
-            phase_obs   (np.array)  phase_obs  2D array of size (ns_max, nr_max) with the unwrapped phases of the
-                                    observed dataset at the specified frequency
-            phase_diff  (np.array)  phase_diff  2D array of size (ns_max, nr_max) with the unwrapped phase differences
-                                    between the observed and predicted datasets at the specified frequency
+    Parameters
+    ----------
+    PredData: fullwaveqc.tools.SegyData
+        object outputted from fullwaveqc.tools.load function
+    ObsData: fullwaveqc.tools.SegyData
+        object outputted from fullwaveqc.tools.load function. Should have the same time sampling as PredData
+    f: float, optional
+        Frequency in Hz at which the phase difference should be calculated. Default: 1
+    wstart: int, optional
+         Time sample to which start the window for the phase difference computation. Default: 200
+    wend: int, optional
+        Time sample to which end the window for the phase difference computation.If negative will take the entire
+        shot window. Default: 1000
+    nr_min: int, optional
+        Minimum receiver index to which calculate the phase difference. Default 0.
+    nr_max: int, optional
+        Maximum  receiver index to which calculate the phase difference. If None is given, then number of receivers
+         is inferred from the datasets. Default None.
+    ns_min: int, optional
+        Minimum source/shot index to which calculate the phase difference. Default: 0
+    ns_max: int, optional
+        Maximum source/shot index to which calculate the phase difference. If None is
+        given then number of sources is inferred from the datasets. Default: None
+    ms: bool, optional
+        Set to true if sampling rate in Wavelet object is in miliseconds, otherwise assumed
+        in seconds. Default: True
+    fft_smooth: int, optional
+        Parameter used to multiply the number of samples inputted into the Fast Fourier
+        Transform. Increase this factor for a smoother plot. The final number of sample
+        points will be the nearest power of two of fft_smooth multiplied by the original
+        number of time samples in the signal. Higher value increases computational time.
+        Default: 3
+    unwrap: bool, optional
+        If set to true will perform phase unwrapping in the receiver domain. For a detailed
+        discussion of how these might affect the phase difference results, refer to the
+        project report in the Github repository. Default True
+    plot: bool, optional
+        Will plot the phase difference if set to True. Default: False
+    verbose: bool, optional
+        If set to True will verbose the main steps of the function calculation. Default True.
+
+    Returns
+    -------
+    phase_pred: numpy.array
+        2D array of size (ns_max, nr_max) with the unwrapped phases of the
+        predicted dataset at the specified frequency
+    phase_obs: numpy.array
+        2D array of size (ns_max, nr_max) with the unwrapped phases of the
+        observed dataset at the specified frequency
+    phase_diff: numpy.array
+        phase_diff  2D array of size (ns_max-ns_min, nr_max-nrmin) with the unwrapped phase differences
+        between the observed and predicted datasets at the specified frequency
 
     """
+
+    # Set verbose
+    verbose_print = tools.set_verbose(verbose)
 
     # Get number of sources and max number of receivers per source
     if ns_max is None:
@@ -298,9 +368,8 @@ def phasediff(PredData, ObsData, f=1, wstart=200, wend=1000, nr_min=0, nr_max=No
 
         # Find array index in frequency domain closest to frequency of interest
         idf = (np.abs(xf - f)).argmin()
-        if verbose:
-            sys.stdout.write(str(datetime.datetime.now()) +
-                             " \t Calculating phase at frequency %.2fHz of shot %g...\r" % (xf[idf], i))
+        verbose_print(str(datetime.datetime.now()) + " \t Calculating phase at frequency %.2fHz of shot %g...\r" %
+                      (xf[idf], i))
 
         try:
             # Loop through each receiver -- try and except
@@ -308,13 +377,12 @@ def phasediff(PredData, ObsData, f=1, wstart=200, wend=1000, nr_min=0, nr_max=No
                 # compute phase for predicted dataset
                 try:
                     # multiply pred and obs trace by gauss window
-                    pred_trace = (w * PredData.data[i][j] * scale)
-                    obs_trace = (w * ObsData.data[i][j] * scale)
+                    pred_trace = (w * PredData.data[i][j])
+                    obs_trace = (w * ObsData.data[i][j])
 
                     # do fft for pred and obs separately, slice it to match frequency domain xf
                     pred_fft = fft(pred_trace, n=nt)[0:nt // 2]
                     obs_fft = fft(obs_trace, n=nt)[0:nt // 2]
-
 
                     # compute and unwrap phase
                     if pred_fft.real[idf] == 0:
@@ -341,8 +409,7 @@ def phasediff(PredData, ObsData, f=1, wstart=200, wend=1000, nr_min=0, nr_max=No
         except IndexError:
             pass
 
-    if verbose:
-        sys.stdout.write(str(datetime.datetime.now()) + "                   \t All phases calculated successfully")
+    verbose_print(str(datetime.datetime.now()) + "                   \t All phases calculated successfully \n")
 
     # Unwrap phase in space and Compute phase difference
     if unwrap:
@@ -350,7 +417,6 @@ def phasediff(PredData, ObsData, f=1, wstart=200, wend=1000, nr_min=0, nr_max=No
         phase_obs = np.unwrap(2*phase_obs, axis=1, discont=np.pi)/2
         phase_pred = np.unwrap(2*phase_pred, axis=1, discont=np.pi)/2
     phase_diff = phase_obs - phase_pred
-
 
     # Plot
     if plot:
@@ -384,33 +450,44 @@ def xcorr(PredData, ObsData, wstart=0, wend=-1, nr_min=0, nr_max=None, ns_min=0,
     Computes and plots the cross-correlation between an observed and predicted dataset using numpy.correlate.
     Traces are normalised to unit length for comparison
 
-    :param  PredData:   (SegyData) object outputted from fullwaveqc.tools.load function
-    :param  ObsData:    (SegyData) object outputted from fullwaveqc.tools.load function
-    :param  wstart:     (int)      Time sample to which start the window for the phase difference computation
-                                   Default: 200
-    :param  wend:       (int)      Time sample to which end the window for the phase difference computation.
-                                   If negative will use the entire shot window.
-                                   Default: 1000
-    :param  nr_max:     (int)      Maximum number of receivers to which calculate the phase difference. If None is given
-                                   then max number of receivers is inferred from the PredData and ObsData
-                                   Default: None
-    :param  ns_max:     (int)      Maximum number of sources/shots to which calculate the phase difference. If None is
-                                   given, then max number of sources is inferred from the datasets
-                                   Default: None
-    :param  ms:         (bool)     Set to true if sampling rate in Wavelet object is in miliseconds, otherwise assumed
-                                   in seconds.
-                                   Default: True
-    :param  plot:       (bool)     Will plot the phase difference if set to True
-                                   Default: False
-    :param  verbose:    (bool)     If set to True will verbose the main steps of the function calculation. Default 1
-    :return: xcorr_arr   (np.array) 2D array of size (ns_max, nr_max) with the unwrapped phases of the
-                                   predicted dataset at the specified frequency
-                       (np.array)  phase_obs  2D array of size (ns_max, nr_max) with the unwrapped phases of the
-                                   observed dataset at the specified frequency
-                       (np.array)  phase_diff  2D array of size (ns_max, nr_max) with the unwrapped phase differences
-                                   between the observed and predicted datasets at the specified frequency
+    Parameters
+    ----------
+    PredData: fullwaveqc.tools.SegyData
+        object outputted from fullwaveqc.tools.load function
+    ObsData: fullwaveqc.tools.SegyData
+        object outputted from fullwaveqc.tools.load function
+    wstart: int, optional
+        Time sample to which start the window for the phase difference computation. Default: 0
+    wend: int, optional
+        Time sample to which end the window for the phase difference computation.If negative will use the entire shot
+        window. Default -1.
+    nr_min: int, optional
+        Minimum receiver index to which calculate the phase difference. Default 0.
+    nr_max: int, optional
+        Maximum  receiver index to which calculate the phase difference. If None is given, then number of receivers
+         is inferred from the datasets. Default None.
+    ns_min: int, optional
+        Minimum source/shot index to which calculate the phase difference. Default: 0
+    ns_max: int, optional
+        Maximum source/shot index to which calculate the phase difference. If None is
+        given then number of sources is inferred from the datasets. Default: None
+    ms: bool, optional
+        Set to true if sampling rate in Wavelet object is in miliseconds, otherwise assumed
+        in seconds. Default: True
+    plot: bool, optional
+        Will plot the phase difference if set to True. Default: False
+    verbose: bool, optional
+        If set to True will verbose the main steps of the function calculation. Default True.
+
+    Returns
+    -------
+    xcorr_arr: numpy.array
+        2D array of size (ns_max, nr_max) with the normalised cross correlation values
 
     """
+
+    # Set verbose
+    verbose_print = tools.set_verbose(verbose)
 
     # Get number of sources and max number of receivers per source
     if ns_max is None:
@@ -431,8 +508,7 @@ def xcorr(PredData, ObsData, wstart=0, wend=-1, nr_min=0, nr_max=None, ns_min=0,
         w = gausswindow(PredData.samples[i], wstart, wend, PredData.dt[i])
 
         # Find array index in frequency domain closest to frequency of interest
-        if verbose:
-            sys.stdout.write(str(datetime.datetime.now()) + " \t Cross correlating traces of shot %g ...\r" % i)
+        verbose_print(str(datetime.datetime.now()) + " \t Cross correlating traces of shot %g ...\r" % i)
 
         try:
             # Loop through each receiver -- try and except
@@ -448,36 +524,34 @@ def xcorr(PredData, ObsData, wstart=0, wend=-1, nr_min=0, nr_max=None, ns_min=0,
                                       np.sqrt(np.sum(pred_trace**2)*np.sum(obs_trace**2))
 
                 except RuntimeError:
-                    if verbose:
-                        sys.stdout.write("All zero predicted signal encountered at trace %g of shot %g" % (j, i))
+                    verbose_print("All zero predicted signal encountered at trace %g of shot %g" % (j, i))
                 except IndexError:
                     warnings.warn("Predicted trace %g of shot %g not well defined" % (j, i))
         except IndexError:
             warnings.warn("Shot %g not well defined" % i)
 
-    if verbose:
-        sys.stdout.write(str(datetime.datetime.now()) + "                   \t All cross-correlations calculated "
-                                                        "successfully")
+    verbose_print(str(datetime.datetime.now()) + "                   \t All cross-correlations calculated "
+                  "successfully \n")
 
     # Plot
     if plot:
         s = np.arange(0, ns_max - ns_min, 1) + ns_min
         r = np.arange(0, nr_max - nr_min, 1) + nr_min
 
-        cmap = "PiYG"
+        cmap="PuRd"
         figure, ax = plt.subplots(1, 1)
         figure.set_size_inches(7.5, 7.5)
-        ax.contourf(r, s, xcorr_arr, cmap=cmap, levels=360, vmin=-1, vmax=1)
+        ax.contourf(r, s, xcorr_arr, cmap=cmap, levels=360, vmin=0., vmax=1)
 
         ax.set(xlabel="Rec x", ylabel="Src x")
-        ax.set_title(PredData.name + " Zero Lag X-Correlation %g ms - %g ms" % (wstart, wend), pad=40)
+        ax.set_title(PredData.name + "XCorr %g ms - %g ms" % (wstart, wend), pad=40)
         ax.invert_yaxis()
         ax.tick_params(labeltop=True, labelright=False, labelbottom=True, labelleft=True)
 
         # Format limits of colour bar
         m = plt.cm.ScalarMappable(cmap=cmap)
         m.set_array(xcorr_arr)
-        m.set_clim(-1, 1)
+        m.set_clim(0., 1)
         cbar = plt.colorbar(m)
         cbar.set_label(r"Zero Lag Cross Correlation")
 
