@@ -10,20 +10,24 @@ import sys
 from scipy.ndimage import gaussian_filter
 from scipy.signal import butter, lfilter
 from scipy.signal import freqz
+import os
 
 
 class SegyData:
+    """
+    Class to store properties of SEG-Y data files. Should be called only by the fullwaveqc.tools.load function.
+    """
     def __init__(self, filepath, name=None):
         if name is not None:
             self.name = name
         else:
             self.name = filepath.split("/")[-1].split('.')[0]
         self._type = "data"
-        self.filepath = filepath
+        self._filepath = filepath
         self.src_pos = None
         self.rec_pos = None
-        self.nsrc = -1
-        self.nrec = -1
+        self.nsrc = None
+        self.nrec = None
         self.src_z = None
         self.rec_z = None
         self.samples = None
@@ -44,18 +48,21 @@ class SegyData:
 
 
 class Model:
+    """
+    Class to store properties of SEG-Y 2D model files. Should be called only by the fullwaveqc.tools.load function.
+    """
     def __init__(self, filepath, name=None):
         if name is not None:
             self.name = name
         else:
             self.name = filepath.split("/")[-1].split('.')[0]
         self._type = "model"
-        self.filepath = filepath
-        self.dx = -1
-        self.nx = -1
-        self.nz = -1
-        self.minvp = -1
-        self.maxvp = -1
+        self._filepath = filepath
+        self.dx = None
+        self.nx = None
+        self.nz = None
+        self.minvp = None
+        self.maxvp = None
         self.data = None
 
         return
@@ -71,32 +78,63 @@ class Model:
         return v
 
 
+def set_verbose(verbose):
+    """
+    Function to set the verbose print level
+    Parameters
+    ----------
+    verbose: bool
+        Verbose level, set to true to display verbose
+
+    Returns
+    -------
+    verbose_print(message): lamda function
+        Function to display verbose message in console
+
+    """
+    if verbose:
+        verbose_print = lambda message: sys.stdout.write(message)
+    else:
+        verbose_print = lambda message: None
+    return verbose_print
+
+
 def load(filepath, model, name=None, scale=1, verbose=1):
     """
-    Loads a segy file into a SegyData or Model class, used for the other functionalities of the fullwaveqc package.
+    Loads a SEG-Y file into a SegyData or Model class, used for the other functionalities of the fullwaveqc package.
     Accepts 2D segy files and of the same sampling interval for all shots and segy model files with square cells.
     It is HIGHLY recommended that the attributes of this function are checked manually after loading, as different
-    SEGY header formats are likely to be loaded incorrectly. This function is adapted to the SEGY header format of
+    SEG-Y header formats are likely to be loaded incorrectly. This function is adapted to the SEGY header format of
     the outputs of Fullwave3D.
 
-    :param    filepath: (str)   path to segy file. Must end in .sgy
-    :param    model:    (bool)  Set true to load a Model and false to load a SegyData object
-    :param    name:     (str)   Name to give the data/model object
-    :param    scale:    (float) Value to multiply the data content of the files. Default 1
-    :param    verbose:  (bool)  Set to true in order to verbose the steps of this loading function. Default True
-    :return::  fullwaveqc.tools.SegyData or fullwave,tools.Model object
+    Parameters
+    ----------
+    filepath: str
+        Path to segy file. Must end in .sgy
+    model: bool
+        Set true to load a Model and false to load a SegyData object
+    name: str, optional
+        Name to give the data/model object. If None is given, name is inferred from .sgy file. Default is None
+    scale: int, optional
+        Value to multiply the data content of the files. Default 1
+    verbose: bool, optional
+        Set to true in order to verbose the steps of this loading function. Default True
+    Returns
+    -------
+    segy or model: fullwaveqc.tools.SegyData or fullwaveqc.tools.Model, depending on parameter model given
     """
+
+    # Set verbose level
+    verbose_print = set_verbose(verbose)
 
     if not model:
         # Create Data object
         segy = SegyData(filepath, name)
 
         # Open datafile with segyio
-        if verbose:
-            sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Opening file %s..." % filepath)
+        verbose_print("\n" + str(datetime.datetime.now()) + " \t Opening file %s..." % filepath)
         with segyio.open(filepath, mode='r', ignore_geometry=True) as segyfile:
-            if verbose:
-                sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Loading data...")
+            verbose_print("\n" + str(datetime.datetime.now()) + " \t Loading data...")
             data = np.asarray([trace * 1.0 for trace in segyfile.trace]) * scale
             src_all = segyfile.attributes(segyio.TraceField.SourceX)[:]
             rec_all = segyfile.attributes(segyio.TraceField.GroupX)[:]
@@ -113,8 +151,7 @@ def load(filepath, model, name=None, scale=1, verbose=1):
         # Get source numbers and positions
         segy.src_pos = np.unique(src_all)                    # position of each source w.r.t to origin
         segy.nsrc = len(segy.src_pos)                        # number of sources/shots
-        if verbose:
-            sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t %g shots found. Loading headers..." % segy.nsrc)
+        verbose_print("\n" + str(datetime.datetime.now()) + " \t %g shots found. Loading headers..." % segy.nsrc)
 
         # Collecting and splitting receiver locations and data
         # segy.rec_pos and segy.data should be a list of arrays, each array corresponding to a source
@@ -137,14 +174,13 @@ def load(filepath, model, name=None, scale=1, verbose=1):
             segy.samples.append(np.array(samples_all)[index][0])
             segy.dt.append(np.array(dt_all)[index][0]/1000.)
 
-        if verbose:
-            sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t %g total traces read" % np.sum(np.array(segy.nrec)))
+        verbose_print("\n" + str(datetime.datetime.now()) + " \t %g total traces read" %
+                      np.sum(np.array(segy.nrec)))
 
         # Source spacing
         segy.dsrc = np.diff(segy.src_pos)
 
-        if verbose:
-            sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Data loaded successfully")
+        verbose_print("\n" + str(datetime.datetime.now()) + " \t Data loaded successfully")
 
         return segy
 
@@ -153,11 +189,9 @@ def load(filepath, model, name=None, scale=1, verbose=1):
         model = Model(filepath, name)
 
         # Open file with segyio
-        if verbose:
-            sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Opening file %s..." % filepath)
+        verbose_print("\n" + str(datetime.datetime.now()) + " \t Opening file %s..." % filepath)
         with segyio.open(filepath, mode='r', ignore_geometry=True) as segyfile:
-            if verbose:
-                sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Reading model...")
+            verbose_print("\n" + str(datetime.datetime.now()) + " \t Reading model...")
             data = np.asarray([trace * 1.0 for trace in segyfile.trace]) * scale
             data = data.T
             src_all = segyfile.attributes(segyio.TraceField.SourceX)[:]
@@ -169,9 +203,8 @@ def load(filepath, model, name=None, scale=1, verbose=1):
         if model.dx <= 0:
             warnings.warn("Zero or negative model spacing. File might not have been loaded correctly."
                           "Check manually!")
-        if verbose:
-            sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Successfully loaded model of size %g x %g!"
-                             % (model.nz, model.nx))
+        verbose_print("\n" + str(datetime.datetime.now()) + " \t Successfully loaded model of size %g x %g!"
+                      % (model.nz, model.nx))
         model.maxvp = np.max(data)
         model.minvp = np.min(data)
 
@@ -180,32 +213,38 @@ def load(filepath, model, name=None, scale=1, verbose=1):
 
 def rm_empty_traces(filename, scale=1, verbose=1):
     """
-    Removes all-zero traces of a segy file and saves the copy of the clean file in the same directory
+    Removes all-zero traces of a SEG-Y file and saves the copy of the clean file in the same directory
 
-    :param    filename: (str)   path to segy file, must end in .sgy
-    :param    scale:    (float) Value to multiply the data content of the files. Default 1
-    :param    verbose:  (bool)  Set to true in order to verbose the steps of this loading function. Default True
-    :return::  None
+    Parameters
+    ----------
+    filename: str
+        Path to SEG-Y file, must end in .sgy
+    scale: int, optional
+        Value to multiply the data content of the files. Default 1
+    verbose: bool, optional
+        Set to true in order to verbose the steps of this loading function. Default True
+    Returns
+    -------
+    None
     """
 
-    #
+    # Set verbose level
+    verbose_print = set_verbose(verbose)
+
+    # Destination file name
     dstpath = filename[:-4]+"-CLEAN.sgy"
 
-    if verbose:
-        sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Opening file %s..." % filename)
+    verbose_print("\n" + str(datetime.datetime.now()) + " \t Opening file %s..." % filename)
     with segyio.open(filename, mode='r', ignore_geometry=True) as segyfile:
-        if verbose:
-            sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Reading trace data...")
+        verbose_print("\n" + str(datetime.datetime.now()) + " \t Reading trace data...")
         data = np.asarray([trace * 1.0 for trace in segyfile.trace])*scale  # (number of traces, number of samples)
 
-        if verbose:
-            sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Reading headers...")
+        verbose_print("\n" + str(datetime.datetime.now()) + " \t Reading headers...")
         header = []
         for i in range(0, data.shape[0]):
             header.append(segyfile.header[i])  # list of dictionaries
 
-        if verbose:
-            sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Collecting header parameters...")
+        verbose_print("\n" + str(datetime.datetime.now()) + " \t Collecting header parameters...")
         newspec = segyio.spec()
         newspec.ilines = segyfile.ilines
         newspec.xlines = segyfile.ilines
@@ -213,8 +252,7 @@ def rm_empty_traces(filename, scale=1, verbose=1):
         newspec.sorting = segyfile.sorting
         newspec.format = segyfile.format
 
-    if verbose:
-        sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Cleaning traces and headers ...")
+    verbose_print("\n" + str(datetime.datetime.now()) + " \t Cleaning traces and headers ...")
     newdata = data[~np.all(data == 0, axis=1)]
     newheader = []
     for i in range(0, data.shape[0]):
@@ -222,19 +260,17 @@ def rm_empty_traces(filename, scale=1, verbose=1):
             newheader.append(header[i])
     assert newdata.shape[0] == len(newheader)
 
-    if verbose:
-        sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Removed %g empty traces!" % (data.shape[0] - newdata.shape[0]))
+    verbose_print("\n" + str(datetime.datetime.now()) + " \t Removed %g empty traces!" %
+                  (data.shape[0] - newdata.shape[0]))
     newspec.tracecount = newdata.shape[0]
 
-    if verbose:
-        sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Writing trace and headers to new file at %s..." % dstpath)
+    verbose_print("\n" + str(datetime.datetime.now()) + " \t Writing trace and headers to new file at %s..." % dstpath)
     with segyio.create(dstpath, newspec) as newsegy:
         newsegy.trace[:] = newdata
         for i in range(0, newdata.shape[0]):
             newsegy.header[i] = newheader[i]
 
-    if verbose:
-        sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Clean file created successfully!")
+    verbose_print("\n" + str(datetime.datetime.now()) + " \t Clean file created successfully!")
 
     return None
 
@@ -249,61 +285,84 @@ def ddwi(MonObs, BaseObs, BasePred, normalise=True, name=None, mon_filepath=None
     Note: If data delay has been applied to BaseObs and MonObs, the resulting ddwi dataset will already have the data
     delay applied.
 
-    :param  MonObs:        (SegyData)   object outputted from fullwaveqc.tools.load function for the true monitor data
-    :param  BaseObs:       (SegyData)   object outputted from fullwaveqc.tools.load function for the true baseline data.
-                                        Requires same number of samples, sampling interval, shots and receiver positions
-                                        as MonObs
-    :param  BasePred:      (SegyData)   object outputted from fullwaveqc.tools.load function for the predicted baseline
-                                        data. Requires same number of samples, sampling interval, shots and receiver
-                                        positions as MonObs.
-    :param  normalise:     (bool)       if true will normalise the amplitude of the predicted baseline dataset to match
-                                        the first trace of the observed dataset. Does so shot by shot. Default True
-    :param  name:          (str)        name to give the DDWI dataset, if None will give the name "DDWI-DATASET".
-                                        Default None
-    :param  mon_filepath:  (str)        path to the observed monitor dataset. Must end in .sgy. Required if save option
-                                        is set to True. Default None.
-    :param  save:          (bool)       Set to true if the DDWI dataset is to be saved in .sgy format. Default False
-    :param  save_path:     (str)        Path to folder where DDWI must be saved. Default "./"
-    :param  verbose:       (bool)       Set to true in order to verbose the steps of this function. Default 1
-    :return: MON_DIFF       (SegyData)   object outputted from fullwaveqc.tools.load function with the DDWI monitor data
+    Parameters
+    ----------
+    MonObs: fullwaveqc.tools.SegyData
+        Object outputted from fullwaveqc.tools.load function for the true monitor data
+    BaseObs: fullwaveqc.tools.SegyData
+        Object outputted from fullwaveqc.tools.load function for the true baseline data.
+        Requires same number of samples, sampling interval, shots and receiver position
+        as MonObs
+    BasePred: fullwaveqc.tools.SegyData
+        Object outputted from fullwaveqc.tools.load function for the predicted baseline data.
+        Requires same number of samples, sampling interval, shots and receiver position
+        as MonObs
+    normalise: bool, optional
+        If true will normalise the amplitude of the predicted baseline dataset to match
+        the first trace of the observed dataset. Does so shot by shot. Default True
+    name: str, optional
+        Name to give the DDWI dataset, if None will give the name "DDWI-DATASET".
+        Default None
+    mon_filepath: str, optional
+        Path to the observed monitor dataset. Must end in .sgy. Required if save option
+        is set to True. Default None.
+    save: bool, optional
+        Set to true if the DDWI dataset is to be saved in .sgy format. Default False
+    save_path: str, optional
+        Path to folder where DDWI must be saved. Default "./"
+    verbose: bool, optional
+        Set to true in order to verbose the steps of this function. Default 1
+
+    Returns
+    -------
+    MonDiff: fullwaveqc.tools.SegyData
+        Object outputted from fullwaveqc.tools.load function with the DDWI monitor data
+        
+    Notes
+    -----
+    mon_filepath must be given if save is set to True. Saving occurs by copying and modifying
+    the monitor SEG-Y headers and traces.
     """
 
-    # error handling: check dst path is valid
-    # optimise: stacking
+    # Set verbose level
+    verbose_print = set_verbose(verbose)
 
     # Normalise traces of BasePred
     if normalise:
-        if verbose:
-            sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Normalising traces ...")
-        # BaseObs = ampnorm(BasePred, BaseObs, verbose=verbose)
-        # MonObs = ampnorm(BasePred, MonObs, verbose=verbose)
+        verbose_print("\n" + str(datetime.datetime.now()) + " \t Normalising traces ...")
         BasePred = ampnorm(BaseObs, BasePred, verbose=verbose)
 
     # Compute double difference dataset
-    if verbose:
-        sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Computing double difference ...")
-    MON_DIFF = copy.deepcopy(MonObs)
-    for i, d in enumerate(MON_DIFF.data):
-        MON_DIFF.data[i] = BasePred.data[i] + (MonObs.data[i] - BaseObs.data[i])
-    if verbose:
-        sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Double difference dataset calculated successfully!")
+    verbose_print("\n" + str(datetime.datetime.now()) + " \t Computing double difference ...")
+    MonDiff = copy.deepcopy(MonObs)
+    for i, d in enumerate(MonDiff.data):
+        MonDiff.data[i] = BasePred.data[i] + (MonObs.data[i] - BaseObs.data[i])
+    verbose_print("\n" + str(datetime.datetime.now()) + " \t Double difference dataset calculated successfully!")
 
     # Assign new name to object
     if name is None:
-        MON_DIFF.name = "DDWI-DATASET"
+        MonDiff.name = "DDWI-DATASET"
     else:
-        MON_DIFF.name = name
-    MON_DIFF.filepath = None
-
+        MonDiff.name = name
+    
+    # Saving file
     if save:
-        if mon_filepath is None:
-            raise NameError
-
+        # Check destination path is valid for writing
         dstpath = save_path + name + ".sgy"
+        try:
+            with open(dstpath, 'w'):
+                MonDiff.filepath = dstpath
+        except IOError as x:
+            raise IOError('error ', x.errno, ',', x.strerror, ", save_path invalid")
+
+        # Check of mon_filepath is exists
+        if mon_filepath is None:
+            raise TypeError("mon_filepath must be given along with the save option")
+        elif not os.path.isfile(mon_filepath):
+            raise IOError("mon_pathfile invalid")
 
         with segyio.open(mon_filepath, ignore_geometry=True) as src:
-            if verbose:
-                sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Reading file %s..." % mon_filepath)
+            verbose_print("\n" + str(datetime.datetime.now()) + " \t Reading file %s..." % mon_filepath)
             spec = segyio.spec()
             spec.sorting = src.sorting
             spec.format = src.format
@@ -314,41 +373,49 @@ def ddwi(MonObs, BaseObs, BasePred, normalise=True, name=None, mon_filepath=None
             spec.tracecount = src.tracecount
 
             # Create new file and copy all but trace data
-            if verbose:
-                sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Creating new file  at %s..." % dstpath)
+            verbose_print("\n" + str(datetime.datetime.now()) + " \t Creating new file  at %s..." % dstpath)
             with segyio.create(dstpath, spec) as dst:
                 dst.text[0] = src.text[0]
                 dst.bin = src.bin
                 dst.header = src.header
 
                 # Stack data
-                if verbose:
-                    sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Stacking data ...")
-                data = copy.deepcopy(MON_DIFF.data[0])
-                for i in range(1, len(MON_DIFF.data)):
-                    data = np.vstack((data, MON_DIFF.data[i]))
+                verbose_print("\n" + str(datetime.datetime.now()) + " \t Stacking data ...")
+                data = copy.deepcopy(MonDiff.data[0])
+                for i in range(1, len(MonDiff.data)):
+                    data = np.vstack((data, MonDiff.data[i]))
 
                 # Update traces
-                if verbose:
-                    sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Updating traces ...")
+                verbose_print("\n" + str(datetime.datetime.now()) + " \t Updating traces ...")
                 dst.trace[:] = data
-        if verbose:
-            sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Double difference dataset saved!")
+        verbose_print("\n" + str(datetime.datetime.now()) + " \t Double difference dataset saved!")
 
-    return MON_DIFF
+    return MonDiff
 
 
 def bandpass(trace, flow, fhigh, forder, dt):
     """
     Band passes a trace using a Butter filter.
 
-    :param  trace:     (np.array) 1D array containing the signal in time domain
-    :param  flow:      (float)    low frquency to band pass
-    :param  fhigh:     (float)    high frequency to band pass
-    :param  forder:    (int)      order of band pass filter, determines the steepnes of the transition band
-    :param  dt:        (float)    Time sampling of the signal
-    :return: filtered   (np.array) 1D array of same size as trace, with the filtered signal
+    Parameters
+    ----------
+    trace: numpy.array
+        1D array containing the signal in time domain
+    flow: float
+        Low frquency to band pass (Hz)
+    fhigh: float
+        High frquency to band pass (Hz)
+    forder: float
+        Order of band pass filter, determines the steepnes of the transition band
+    dt: float
+        Time sampling of the signal
+
+    Returns
+    -------
+    filtered: numpy.array
+        1D array of same size as trace, with the filtered signal
     """
+
     # set up parameters for bandpass filtering
     nyq = 0.5 / dt  # nyquist frequency
     low = flow / nyq
@@ -370,7 +437,6 @@ def bandpass(trace, flow, fhigh, forder, dt):
             filtered[:, i] = lfilter(b, a, trace[:, i])
     else:  # only 1 trace
         filtered = lfilter(b, a, trace)
-
     return filtered
 
 
@@ -379,51 +445,89 @@ def ampnorm(Obs, Pred, ref_trace=0, verbose=1):
     Normalises the amplitude of a predicted dataset with an observed dataset by matching the values of their maximum
     amplitudes of a reference trace.
 
-    :param  Obs:         (SegyData)   object outputted from fullwaveqc.tools.load function for the observed data
-    :param  Pred:        (SegyData)   object outputted from fullwaveqc.tools.load function for the predicted data.
-                                      Requires same number of samples, sampling interval, shots and receiver positions
-                                      as Obs
-    :param  ref_trace:   (int)        trace number to each normalise each shot. For streamer data, this value should be
-                                      0 in order to normalise it to the first arrival trace. Default 0
-    :param  verbose:     (bool)       Set to true to verbose the steps of this function. Default 1
-    :return: PredNorm     (SegyData)   object outputted from fullwaveqc.tools.load function with the normalise predicted
-                                      data
+    Parameters
+    ----------
+    Obs: fullwaveqc.tools.SegyData
+        Object outputted from fullwaveqc.tools.load function for the observed data
+    Pred: fullwaveqc.tools.SegyData
+        object outputted from fullwaveqc.tools.load function for the predicted data.
+        Requires same number of samples, sampling interval, shots and receiver positions
+        as Obs
+    ref_trace: int, optional
+        Trace number to normalise each shot. For streamer data, this value should be
+        0 in order to normalise the shot to the first arrival of the first trace. Default 0
+    verbose: bool, optional
+        Set to true to verbose the steps of this function. Default 1
+
+    Returns
+    -------
+    PredNorm: fullwaveqc.tools.SegyData
+        Object outputted from fullwaveqc.tools.load function with the normalise predicted data
     """
+
+    # Set verbose
+    verbose_print = set_verbose(verbose)
+
+    # Copy original dataset and modify each trace of each shot
     PredNorm = copy.deepcopy(Pred)
     for i, d in enumerate(PredNorm.data):
         ratio = np.max(Obs.data[i][ref_trace]) / np.max(Pred.data[i][ref_trace])
         for j, trace in enumerate(d):
             PredNorm.data[i][j] = (PredNorm.data[i][j] * ratio)
-        if verbose:
-            sys.stdout.write(str(datetime.datetime.now()) + " \t Normalising shot %g\r" % i)
+        verbose_print(str(datetime.datetime.now()) + " \t Normalising shot %g\r" % i)
     sys.stdout.write(str(datetime.datetime.now()) + " \t All shots normalised")
     return PredNorm
 
 
-def smooth_model(Model, strength=[1, 1], w=[None, None, None, None], slowness=True, name=None, save=False, save_path="./", verbose=1):
+def smooth_model(Model, strength=[1, 1], w=[None, None, None, None], slowness=True, name=None, save=False,
+                 save_path="./", verbose=1):
     """
     Smoothes a model using scipy's gaussian filter in "reflect" mode.
 
-    :param  Model:       (Model)           object outputted from fullwaveqc.tools.load function for a model. Must have
-                                           a valid filepath attribute.
-    :param  strength:    (list of floats)  [horizontal_smoothing_factor, vertical_smoothing_factor]. Default [1,1]
-    :param  slowness     (bool)            if True will smooth the slowness instead of velocities. Slowness defined
-                                           as the reciprocal value of velocity and is commonly preferred in smoothing.
-    :param  save:        (bool)            set to true in order to save the model in .sgy format. Requires that Model
-                                           has a valid filepath attribute. Default True
-    :param  save_path:   (str)             path to save the .sgy smoothed model. Default "./"
-    :param  name:        (str)             name of the new smoothed model. If None it will be inferred from Model.
-                                           Default None
-    :return: SmoothModel: (Model)           object as outputted from fullwaveqc.tools.load function containing the
-                                           smoothed model
+    Parameters
+    ----------
+    Model: fullwaveqc.tools.Model
+        Object outputted from fullwaveqc.tools.load function for a model. Must have a valid filepath attribute.
+    strength: list[floats], optional
+        [horizontal_smoothing_factor, vertical_smoothing_factor]. Default [1,1]
+    w: list[ints], optional
+        Windowing of the smoothing. Smoothing will be applied to the internal window created by the rectangle determined
+        by [cells_from_top, cells_from bottom, cells_from_left, cells_from_right]. If None is given, then either the be
+        ginning or end will of the model will be used. Default [None, None, None, None]
+    slowness: bool, optional
+        If True will smooth the slowness instead of velocities. Slowness defined
+        as the reciprocal value of velocity and is commonly preferred in smoothing. Default True
+    name: str, optional
+        name of the new smoothed model. If None it will be inferred from Model.
+        Default None
+    save: bool, optional
+        Set to true in order to save the model in .sgy format. Requires that Model
+        has a valid filepath attribute. Default False
+    save_path: str, optional
+        Path to save the .sgy smoothed model. Default "./"
+    verbose: bool, optional
+
+    Returns
+    -------
+    SmoothModel: fullwaveqc.tools.Model
+        Object as outputted from fullwaveqc.tools.load function containing the smoothed model
+
     """
 
+    # Set verbose
+    verbose_print = set_verbose(verbose)
+
+    # make copy and edit model
     SmoothModel = copy.deepcopy(Model)
     if slowness:
         SmoothModel.data = 1. / SmoothModel.data
+    # flip data so that windows make sense
     SmoothModel.data = np.flipud(SmoothModel.data)
-    SmoothModel.data[w[0]:w[1], w[2]:w[3]] = gaussian_filter(SmoothModel.data[w[0]:w[1], w[2]:w[3]], strength, mode="reflect")
+    SmoothModel.data[w[0]:w[1], w[2]:w[3]] = gaussian_filter(SmoothModel.data[w[0]:w[1], w[2]:w[3]],
+                                                             strength, mode="reflect")
+    # unflip data to recover format
     SmoothModel.data = np.flipud(SmoothModel.data)
+
     if slowness:
         SmoothModel.data = 1. / SmoothModel.data
 
@@ -436,8 +540,7 @@ def smooth_model(Model, strength=[1, 1], w=[None, None, None, None], slowness=Tr
         dstpath = save_path + SmoothModel.name + ".sgy"
 
         with segyio.open(Model.filepath, ignore_geometry=True) as src:
-            if verbose:
-                sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Reading file %s..." % Model.filepath)
+            verbose_print("\n" + str(datetime.datetime.now()) + " \t Reading file %s..." % Model.filepath)
             spec = segyio.spec()
             spec.sorting = src.sorting
             spec.format = src.format
@@ -448,26 +551,22 @@ def smooth_model(Model, strength=[1, 1], w=[None, None, None, None], slowness=Tr
             spec.tracecount = src.tracecount
 
             # Create new file and copy all but trace data
-            if verbose:
-                sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Creating new file  at %s..." % dstpath)
+            verbose_print("\n" + str(datetime.datetime.now()) + " \t Creating new file  at %s..." % dstpath)
             with segyio.create(dstpath, spec) as dst:
                 dst.text[0] = src.text[0]
                 dst.bin = src.bin
                 dst.header = src.header
 
                 # Stack data
-                if verbose:
-                    sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Stacking data ...")
+                verbose_print("\n" + str(datetime.datetime.now()) + " \t Stacking data ...")
                 data = copy.deepcopy(SmoothModel.data[0])
                 for i in range(1, len(SmoothModel.data)):
                     data = np.vstack((data, SmoothModel.data[i]))
                 data = np.fliplr(data.T)
 
                 # Update traces
-                if verbose:
-                    sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Updating model ...")
+                verbose_print("\n" + str(datetime.datetime.now()) + " \t Updating model ...")
                 dst.trace[:] = data
-        if verbose:
-            sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Smoothed model saved!")
+        verbose_print("\n" + str(datetime.datetime.now()) + " \t Smoothed model saved!")
 
     return SmoothModel

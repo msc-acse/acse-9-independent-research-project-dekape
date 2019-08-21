@@ -7,11 +7,11 @@ from matplotlib.lines import Line2D
 import matplotlib.animation as an
 from IPython.core.display import display, HTML
 import matplotlib
-from scipy.stats import spearmanr
 import copy
 import fullwaveqc.tools as tools
 import sys
 import datetime
+import os
 
 # Setting matplotlib plotting parameters
 plt.rcParams.update({'font.size': 14})
@@ -70,98 +70,168 @@ class AnimateImshow:
         return self.im, self.text
 
 
-def amplitude(SegyData, shot=1, cap=0., levels=100, vmin=None, vmax=None, cmap=plt.cm.seismic,
+def amplitude(SegyData, shot=1, cap=0., levels=50, vmin=None, vmax=None, cmap=plt.cm.seismic,
               xstart=0, xend=None, wstart=0, wend=None, save=False, save_path="./"):
     """
-    Plots the amplitude map of a SegyData object in timesamples vs receiver index.
+    Plots the amplitude map of a SegyData object in timesamples (dt units) vs receiver index.
     Uses properties of matplotlib.contourf.
 
-    :param  SegyData:  (SegyData)   object outputted from fullwaveqc.tools.load function for the segy data
-    :param  shot:      (int)        shot number to visualise. Count starts from 1. Default 1
-    :param  cap:       (float)      absolute value of amplitudes to cap, shown as 0. Default 0.
-    :param  levels:    (int)        amount of levels in the contour plot. Default 100
-    :param  vmin:      (float)      min val of color plot scale. Default None.
-    :param  vmax:      (float)      max val of color plot scale. Default None.
-    :param  cmap:      (plt.cm)     cmap object. Default plt.cm.seismic
-    :param  xstart:    (int)        first receiver index to plot. Default 0.
-    :param  xend:      (int)        last receiver index to plot. Default None
-    :param  wstart:    (int)        first timesample in time units to plot. Default 0
-    :param  wend:      (int)        last timesample in time units to plot. Default None
-    :param  save:      (bool)       set to true in order to save the plot in png 300dpi. Default False
-    :param  save_path: (str)        path to save the plot. Default "./"
-    :return: None
+    Parameters
+    ----------
+    SegyData: fullwaveqc.tools.SegyData
+        object outputted from fullwaveqc.tools.load function for the segy data
+    shot: int, optional
+        shot number to visualise. Count starts from 1. Default 1
+    cap: float, optional
+        absolute value of amplitudes to cap, shown as 0. See matplotlib.pyplot.contourf parameters. Default 0
+    levels: int, optional
+        amount of levels in the contour plot. See matplotlib.pyplot.contourf parameters. Default 50
+    vmin: float, optional
+        min val of color plot scale. See matplotlib.pyplot.contourf parameters. Default None.
+    vmax: float, optional
+        max val of color plot scale. See matplotlib.pyplot.contourf parameters. Default None.
+    cmap: matplotlib.pyplot.cm
+        colormap. Default plt.cm.seismic
+    xstart: int, optional
+        first receiver index to plot. Default 0.
+    xend: int, optional
+        last receiver index to plot. Default None
+    wstart: int, optional
+        first timesample in time units to plot. Default 0
+    wend: int, optional
+        last timesample in time units to plot. Default None
+    save: bool, optional
+        set to true in order to save the plot in png 300dpi. Default False
+    save_path: str, optional
+        path to save the plot. Default "./"
+
+    Returns
+    -------
+    None
+
     """
-
-    # Get data from SegyData object
-    dt = SegyData.dt[shot-1]
-    wstart = int(wstart/dt)
-    if wend is not None:
-        wend = int(wend/dt)
-    data = SegyData.data[shot-1][xstart:xend, wstart:wend]
-
-    # Cap amplitude values
-    data[np.where(np.logical_and(data >= (-1) * cap, data <= cap))] = 0.
-
-    # Plot figure
-    figure, ax = plt.subplots(1, 1)
-    figure.set_size_inches(18.5, 10.5)
-
-    # Plotting and adjusting axis
-    if xend is None:
-        xend = data.shape[0]
-    x = np.arange(xstart, xend, 1)
-
-    if wend is None:
-        wend = data.shape[1]
-    y = np.linspace(wend, wstart, data.shape[1]) * dt
-
-    ax.contourf(x, y, np.rot90(data), cmap=cmap, levels=levels, vmin=vmin, vmax=vmax)
-    ax.invert_yaxis()
-    ax.set_title(SegyData.name + " Shot {}".format(shot))
-    ax.set_ylabel("Time (ms)")
-    ax.set_xlabel("Rec x")
-
-    # Formatting extent of colorbar
-    m = plt.cm.ScalarMappable(cmap=cmap)
-    m.set_array(data)
-    m.set_clim(vmin, vmax)
-    plt.colorbar(m)
-
-    # Saving option
     if save:
-        plt.savefig(save_path + SegyData.name + ".png", dpi=300)
-    else:
-        plt.show()
+        if save_path[-1] != "/":
+            save_path = save_path + "/"
+        if not os.path.isdir(save_path):
+            raise Exception("Save path is invalid")
+
+    try:
+        # Get dt from SegyData object
+        dt = SegyData.dt[shot-1]
+
+        # Transform ms window to index
+        wstart = int(wstart / dt)
+        if wend is not None:
+            wend = int(wend / dt)
+            if wend > SegyData.samples[shot-1]:
+                wend = SegyData.samples[shot - 1]
+        else:
+            wend = SegyData.samples[shot-1]
+
+        # Getting last receiver is xend is not defined
+        if xend is None:
+            xend = SegyData.nrec[shot-1]
+        elif xend > SegyData.nrec[shot-1]:
+            xend = SegyData.nrec[shot-1]
+
+        # Check inputs are sensible
+        if wstart < 0 or xstart < 0:
+            raise ValueError("wstart and xstart must be zero or positive numbers")
+        if wend - 2 <= wstart:
+            raise ValueError("Window too small or negative. Increase the wend wstart gap.")
+        if xend <= xstart:
+            raise ValueError("xend must be larger than xstart")
+
+        # Get data from SegyData object
+        data = SegyData.data[shot-1][xstart:xend, wstart:wend]
+
+        # Cap amplitude values
+        data[np.where(np.logical_and(data >= (-1) * cap, data <= cap))] = 0.
+
+        # Create array axes for plotting
+        x = np.arange(xstart, xend, 1)
+        y = np.linspace(wend, wstart, data.shape[1]) * dt
+
+        # Plot figure
+        figure, ax = plt.subplots(1, 1)
+        figure.set_size_inches(18.5, 10.5)
+        ax.contourf(x, y, np.rot90(data), cmap=cmap, levels=levels, vmin=vmin, vmax=vmax)
+        ax.invert_yaxis()
+        ax.set_title(SegyData.name + " Shot {}".format(shot))
+        ax.set_ylabel("Time (ms)")
+        ax.set_xlabel("Rec x")
+
+        # Formatting extent of colorbar
+        m = plt.cm.ScalarMappable(cmap=cmap)
+        m.set_array(data)
+        m.set_clim(vmin, vmax)
+        plt.colorbar(m)
+
+        # Saving option
+        if save:
+            plt.savefig(save_path + SegyData.name + ".png", dpi=300)
+        else:
+            plt.show()
+
+    except AttributeError as e:
+        raise type(e)("SegyData must be a fullwaveqc.tools.SegyData instance.")
 
     return None
 
 
-def interamp(SegyData1, SegyData2, shot=1, shot2=None, n_blocks=2, cap=0., levels=100, vmin=None, vmax=None,
+def interamp(SegyData1, SegyData2, shot=1, shot2=None, n_blocks=2, cap=0., levels=50, vmin=None, vmax=None,
              cmap=plt.cm.seismic, wstart=0, wend=None, xstart=0, xend=None, save=False, save_path="./"):
     """
     Plots the interleaving amplitude map of a SegyData1 and SegyData2 objects in timesamples vs receiver index.
     Uses properties of matplotlib.contourf.
 
-    :param SegyData1:      (SegyData)   object outputted from fullwaveqc.tools.load function for the segy data
-    :param SegyData2:      (SegyData)   object outputted from fullwaveqc.tools.load function for the segy data
-                                        Requires same number of samples, sampling interval, shots and receiver
-                                        positions as SegyData1
-    :param shot:           (int)        shot number to visualise SegyData1. Default 1
-    :param shot2:          (int)        shot number to visualise SegyData2. Count starts from 1. If None, will .
-                                        be read the same as 'shot'. Default None
-    :param n_blocks:       (int)        Number of total blocks in the interleaving space
-    :param  cap:           (float)      absolute value of amplitudes to cap, shown as 0. Default 0.
-    :param  levels:        (int)        amount of levels in the contour plot. Default 100
-    :param  vmin:          (float)      min val of color plot scale. Default None.
-    :param  vmax:          (float)      max val of color plot scale. Default None.
-    :param  cmap:          (plt.cm)     cmap object. Default plt.cm.seismic
-    :param  wstart:        (int)        first timesample in time units to plot. Default 0
-    :param  wend:          (int)        last timesample in time units to plot. Default None
-    :param  save:          (bool)       set to true in order to save the plot in png 300dpi. Default False
-    :param  save_path:     (str)        path to save the plot. Default "./"
-    :return: None
-    :return:
+    Parameters
+    ----------
+    SegyData1: fullwaveqc.tools.SegyData
+        object outputted from fullwaveqc.tools.load function for the segy data
+    SegyData2: fullwaveqc.tools.SegyData
+        object outputted from fullwaveqc.tools.load function for the segy data
+        Requires same number of samples, sampling interval, shots and receiver
+        positions as SegyData1
+    shot: int, optional
+        shot number to visualise SegyData1. Count starts from 1. Default 1
+    shot2: int, optional
+        shot number to visualise SegyData2. Count starts from 1. If None, will .
+        be read the same as 'shot'. Default None
+    n_blocks: int, optional
+        Number of total blocks in the interleaving space
+    levels: int, optional
+        amount of levels in the contour plot. See matplotlib.pyplot.contourf parameters. Default 50
+    cap: float, optional
+        absolute value of amplitudes to cap, shown as 0. Default 0.
+    vmin: float, optional
+        min val of color plot scale. See matplotlib.pyplot.contourf parameters. Default None.
+    vmax: float, optional
+        max val of color plot scale. See matplotlib.pyplot.contourf parameters. Default None.
+    cmap: matplotlib.pyplot.cm
+        colormap. Default plt.cm.seismic
+    xstart: int, optional
+        first receiver index to plot. Default 0.
+    xend: int, optional
+        last receiver index to plot. Default None
+    wstart: int, optional
+        first timesample in time units to plot. Default 0
+    wend: int, optional
+        last timesample in time units to plot. Default None
+    save: bool, optional
+        set to true in order to save the plot in png 300dpi. Default False
+    save_path: str, optional
+        path to save the plot. Default "./"
+
+
+    Returns
+    -------
+    None
+
     """
+    if not (isinstance(SegyData1, tools.SegyData) and isinstance(SegyData2, tools.SegyData)):
+        raise AttributeError("SegyData must be a fullwaveqc.tools.SegyData instance.")
 
     data1 = SegyData1.data[shot-1]
     if shot2 is not None:
@@ -186,28 +256,46 @@ def interamp(SegyData1, SegyData2, shot=1, shot2=None, n_blocks=2, cap=0., level
     InterData.name = SegyData2.name + "-" + SegyData1.name + "-INTERAMP"
     amplitude(InterData, shot=shot, cap=cap, levels=levels, vmin=vmin, vmax=vmax, cmap=cmap, save=save,
               wstart=wstart, wend=wend, xstart=xstart, xend=xend, save_path=save_path)
+    del InterData
     return None
 
 
-def wiggle(SegyData, shot=1, scale=5, skip_trace=0, skip_time=0, wstart=0., wend=None, xstart=0, xend=None,
+def wiggle(SegyData, shot=1, scale=5, skip_trace=20, skip_time=0, wstart=0., wend=None, xstart=0, xend=None,
            delay_samples=0, save=False, save_path="./"):
     """
-     Plots the wiggle trace map of a SegyData object in timesamples vs receiver index.
+    Plots the wiggle trace map of a SegyData object in timesamples vs receiver index.
 
-    :param  SegyData:      (SegyData)   object outputted from fullwaveqc.tools.load function for the segy data
-    :param  shot:          (int)        shot number to visualise. Count starts from 1. Default 1
-    :param  scale:         (float)      value to scale the amplitude of the wiggles for visualisation only. Default 1
-    :param  skip_trace:    (int)        Number of traces to skip. Default 0.
-    :param  skip_time:     (int)        Number of time samples to skip. Default 0
-    :param  xstart:        (int)        first receiver index to plot. Default 0.
-    :param  xend:          (int)        last receiver index to plot. Default None
-    :param  wstart:        (int)        first timesample in time units to plot. Default 0
-    :param  wend:          (int)        last timesample in time units to plot. Default None
-    :param  delay_samples: (int)        number of time samples to delay the signal. Will pad the signal with 0s at the
-                                        beginning. Default 0.
-    :param  save:          (bool)       set to true in order to save the plot in png 300dpi. Default False
-    :param  save_path:     (str)        path to save the plot. Default "./"
-    :return:  None
+    Parameters
+    ----------
+    SegyData: fullwaveqc.tools.SegyData
+        object outputted from fullwaveqc.tools.load function for the segy data
+    shot: int, optional
+        shot number to visualise SegyData1. Count starts from 1. Default 1
+    scale: float, optional
+        value to scale the amplitude of the wiggles for visualisation only. Default 1
+    skip_trace: int, optional
+        Number of traces to skip. Default 20.
+    skip_time: int, optional
+        Number of time samples to skip. Default 0
+    xstart: int, optional
+        first receiver index to plot. Default 0.
+    xend: int, optional
+        last receiver index to plot. Default None
+    wstart: int, optional
+        first timesample in time units to plot. Default 0
+    wend: int, optional
+        last timesample in time units to plot. Default None
+    delay_samples: int, optional
+        number of time samples to delay the signal. Will pad the signal with 0s at the
+        beginning of each trace. Default 0.
+    save: bool, optional
+        set to true in order to save the plot in png 300dpi. Default False
+    save_path: str, optional
+        path to save the plot. Default "./"
+
+    Returns
+    -------
+    None
     """
 
     # Get data from SegyData object
@@ -255,29 +343,54 @@ def interwiggle(SegyData1, SegyData2, shot=1, shot2=None, overlay=0, scale=5, sk
     """
     Plots the interleaving wiggle trace map of a SegyData1 and SegyData2 objects in timesamples vs receiver index.
 
-    :param   SegyData1:       (SegyData)   object outputted from fullwaveqc.tools.load function for the segy data
-    :param   SegyData2:       (SegyData)   object outputted from fullwaveqc.tools.load function for the segy data
-    :param   shot:            (int)        shot number to visualise SegyData1. Default 1
-    :param   shot2:           (int)        shot number to visualise SegyData2. Count starts from 1. If None, will
-                                           be read the same as 'shot'. Default None
-    :param   overlay:         (int)        If +ve, traces will be overlaid in different colours instead of being
-                                           displayed side by side. Overlay=1 overlays with all filled colors, overlay=2
-                                           overlays with SegyData2 as filled colors and SegyData1 as conotur. Default 0
-    :param   scale:           (float)      value to scale the amplitude of the wiggles for visualisation only. Default 1
-    :param   skip_trace:      (int)        Number of traces to skip. Default 0.
-    :param   skip_time:       (int)        Number of time samples to skip. Default 0
-    :param   xstart:          (int)        first receiver index to plot. Default 0.
-    :param   xend:            (int)        last receiver index to plot. Default None
-    :param   wstart:          (int)        first timesample in time units to plot. Default 0
-    :param   wend:            (int)        last timesample in time units to plot. Default None
-    :param   delay_samples:   (int)        number of time samples to delay the signal. Will pad the signal with 0s at
-                                           the beginning. Default 0
-    :param   label1:          (str)        Label for SegyData1. Default SegyData1
-    :param   label2:          (str)        Label for SegyData2. Default SegyData2
-    :param   save:            (bool)       set to true in order to save the plot in png 300dpi. Default False
-    :param   save_path:       (str)        path to save the plot. Default "./"
-    :return:  None
+    Parameters
+    ----------
+    SegyData1: fullwaveqc.tools.SegyData
+        object outputted from fullwaveqc.tools.load function for the segy data
+    SegyData2: fullwaveqc.tools.SegyData
+        object outputted from fullwaveqc.tools.load function for the segy data
+        Requires same number of samples, sampling interval, shots and receiver
+        positions as SegyData1
+    shot: int, optional
+        shot number to visualise SegyData1. Count starts from 1. Default 1
+    shot2: int, optional
+        shot number to visualise SegyData2. Count starts from 1. If None, will
+        be read the same as 'shot'. Default None
+    overlay: int, optional
+        If +ve, traces will be overlaid in different colours instead of being
+        displayed side by side. Overlay=1 overlays with all filled colors, overlay=2
+        overlays with SegyData2 as filled colors and SegyData1 as conotur. Default 0
+    scale: float, optional
+        value to scale the amplitude of the wiggles for visualisation only. Default 1
+    skip_trace: int, optional
+        Number of traces to skip. Default 20.
+    skip_time: int, optional
+        Number of time samples to skip. Default 0
+    delay_samples: int, optional
+        number of time samples to delay the signal. Will pad the signal with 0s at the
+        beginning of each trace. Default 0.
+    xstart: int, optional
+        first receiver index to plot. Default 0.
+    xend: int, optional
+        last receiver index to plot. Default None
+    wstart: int, optional
+        first timesample in time units to plot. Default 0
+    wend: int, optional
+        last timesample in time units to plot. Default None
+    label1: str, optional
+        Label for SegyData1. Default SegyData1
+    label2: str, optional
+        Label for SegyData2. Default SegyData2
+    save: bool, optional
+        set to true in order to save the plot in png 300dpi. Default False
+    save_path: str, optional
+        path to save the plot. Default "./"
+
+    Returns
+    -------
+    None
     """
+
     data1 = SegyData1.data[shot-1]
     if shot2 is not None:
         data2 = SegyData2.data[shot2-1]
@@ -353,16 +466,30 @@ def vpmodel(Model, cap=0., levels=200, vmin=None, vmax=None, cmap=plt.cm.jet, un
     Plots the P-velocity amplitude map of a Model object in depth and lateral offset.
     Uses properties of matplotlib.contourf.
 
-    :param  Model:      (Model)      object outputted from fullwaveqc.tools.load function for a model
-    :param  cap:        (float)      absolute value of P-wave values to cap, below this all are shown as 0. Default 0.
-    :param  levels:     (int)        amount of levels in the contour plot. Default 200
-    :param  vmin:       (float)      min val of color plot scale. Default None.
-    :param  vmax:       (float)      max val of color plot scale. Default None.
-    :param  cmap:       (plt.cm)     cmap object. Default plt.cm.jet
-    :param  units:      (str)        units of amplitudes to show in colorbar. Default m/s
-    :param  save:       (bool)       set to true in order to save the plot in png 300dpi. Default False
-    :param  save_path:  (str)        path to save the plot. Default "./"
-    :return: None
+    Parameters
+    ----------
+    Model: fullwavqc.tools.Model
+        object outputted from fullwaveqc.tools.load function for a model
+    levels: int, optional
+        amount of levels in the contour plot. See matplotlib.pyplot.contourf parameters. Default 200
+    cap: float, optional
+        absolute value of amplitudes to cap, shown as 0. Default 0.
+    vmin: float, optional
+        min val of color plot scale. See matplotlib.pyplot.contourf parameters. Default None.
+    vmax: float, optional
+        max val of color plot scale. See matplotlib.pyplot.contourf parameters. Default None.
+    cmap: matplotlib.pyplot.cm
+        colormap. Default plt.cm.jet
+    units: str, optional
+        units of amplitudes to show in colorbar. Default m/s
+    save: bool, optional
+        set to true in order to save the plot in png 300dpi. Default False
+    save_path: str, optional
+        path to save the plot. Default "./"
+
+    Returns
+    -------
+    None
     """
 
     # Get data from Model
@@ -405,13 +532,26 @@ def vpwell(Model, pos_x, TrueModel=None,  plot=True):
     """
     Retrieves the Vp well profile from a Model at specified locations
 
-    :param Model:      (Model)        object outputted from fullwaveqc.tools.load function for a model
-    :param pos_x:      (list of ints) lateral distances to which retrieve the well data
-    :param TrueModel:  (Model)        object outputted from fullwaveqc.tools.load function for the true model.
-                                      Default None
-    :param plot:       (bool)         Plots the profiles when set to true.
-    :return: wells, true_wells, rmses (np.arrays) with well values and root mean square errors as compared to a true
-             model, or simply returns well if no TrueModel is given.
+    Parameters
+    ----------
+    Model: fullwaveqc.SegyData.Model
+        object outputted from fullwaveqc.tools.load function for a model
+    pos_x: list(ints)
+        lateral distances to which retrieve the well data
+    TrueModel: fullwaveqc.SegyData.Model, optional
+        object outputted from fullwaveqc.tools.load function for the true model. Default None
+    plot: bool, optional
+        Plots the profiles when set to true.
+
+    Returns
+    -------
+    wells: list[numpy.array]
+        Well values with depth
+    true_wells:list[numpy.array]
+        Only if TrueModel is given. True well values with depth
+    rmses:list[numpy.array]
+        Only if TrueModel is given. RMS errors between true well and predicted well values.
+
     """
 
     # Get model data
@@ -489,17 +629,34 @@ def animateinv(it_max, path, project_name, vmin=None, vmax=None, cmap=plt.cm.jet
     Animates the evolution of an inversion progression outputted by Fullwave3D. Files searched for must be named:
     <project_name>-CPxxxxx-Vp.sgy and be all located in the same path folder.
 
-    :param  it_max:        (int)        max amount of iterations to be analysed
-    :param  path:          (str)        path to folder where .sgy model files are located
-    :param  project_name:  (str)        name of the project -- must match exactly
-    :param  vmin:          (float)      min val of color plot scale. Default None.
-    :param  vmax:          (float)      max val of color plot scale. Default None.
-    :param  cmap:          (plt.cm)     cmap object. Default plt.cm.jet
-    :param  save:          (bool)       set to true in order to save the animation
-    :param  save_path:     (str)        path to save the animation. Default "./"
-    :param verbose:        (bool)       set to true to verbose the steps of this function
-    :return: None
+    Parameters
+    ----------
+    it_max: int
+        max amount of iterations to be animated
+    path: str
+        path to folder where .sgy model files are located
+    project_name: str
+        name of the project -- must match exactly
+    vmin: float, optional
+        min val of color plot scale. See matplotlib.pyplot.contourf parameters. Default None.
+    vmax: float, optional
+        max val of color plot scale. See matplotlib.pyplot.contourf parameters. Default None.
+    cmap: matplotlib.pyplot.cm
+        colormap. Default plt.cm.jet
+    save: bool, optional
+        set to true in order to save the animation. Default False
+    save_path: str, optional
+        path to save the plot. Default "./"
+    verbose: bool, optional
+        If set to True will verbose the main steps of the function calculation. Default True.
+
+    Returns
+    -------
+    None
     """
+
+    # Set verbose
+    verbose_print = tools.set_verbose(verbose)
 
     # Load starting model and get dimensions
     start = tools.load(path + project_name + "-StartVp.sgy", model=True, verbose=0).data
@@ -513,13 +670,11 @@ def animateinv(it_max, path, project_name, vmin=None, vmax=None, cmap=plt.cm.jet
         try:
             ani_data[i] = tools.load(path + project_name + "-CP" + format(i, "05") + "-Vp.sgy",
                                      model=True, verbose=0).data
-            if verbose:
-                sys.stdout.write(str(datetime.datetime.now()) + " \t Loading model %g ...\r" % i)
+            verbose_print(str(datetime.datetime.now()) + " \t Loading model %g ...\r" % i)
         except (IndexError, FileNotFoundError):
             sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Unable to load model %g \r" % i)
 
-    if verbose:
-        sys.stdout.write("\n" + str(datetime.datetime.now()) + " \t Creating animation...")
+    verbose_print("\n" + str(datetime.datetime.now()) + " \t Creating animation...")
     obj = AnimateImshow(ani_data, vmin=vmin, vmax=vmax, cmap=cmap)  # setup the animation
     obj.title = project_name
     obj.xlabel = "x-grid"
