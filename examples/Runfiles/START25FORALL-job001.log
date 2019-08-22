@@ -1,0 +1,1586 @@
+---=== Starting run (host: node01) on 2019/07/22, 12:27:01 ===---
+executable: fullwave3D.exe, version: unknown, release date: 2019-06-19
+=== scheduler_getprojargs: Project name (command-line argument): "START25FORALL"
+=== scheduler_getprojargs: Checkpoint number (command-line argument): -1
++++ ReadParms: WARNING: Runfile said there should be 1 iteration blocks/freqs, but only found info for 0 actual blocks/freqs in Runfile - truncating to lower value...
++++ ReadParms: finished Runfile with no "Anisotropy" keyword given - assuming isotropic...
++++ ReadParms: finished Runfile" with no "Kernel" keyword given - assuming low-order...
+=== setup_probtype: Equation: "acoustic", Anisotropy: "none", Domain: "time", Kernel: "low"
+    read_runfile: number of iteration blocks in "START25FORALL-Runfile.key": 1
++++ update_runfile: No total time given in "START25FORALL-Runfile.key" - will attempt to work out from other data files
+    scheduler_readinput: Grid dimensions (Length x Width x Depth): 861x1x401 cells
+    read_modelprop: Got Vp model from "START25FORALL-TrueVp.sgy"
+    scheduler_readinput: Initial min/max Vp (m/s): 1500.00, 3198.94
+    scheduler_readinput: Initial min/max Qp: 0.00, 0.00
+    scheduler_readinput: Max. reliable pressure wave propagation frequency on this grid is about 12.00Hz
++++ getall: Runfile did not have TotalTime - using maximum trace length from data: 6.0020003 seconds
+    getall: Time-step: 2.0000E-03, maximum trace-length: 6.0020E+00
+    getall: number of composite shots found in "START25FORALL-Signature.sgy": 521
+    GetShotPointSourceWaveletsInfo: number of composite shots found in "START25FORALL-Template.sgy": 521
+---=== Scheduler initialisation complete. Ready for slaves on 2019/07/22, 12:27:02 ===---
+    scheduler_run: tasks left for synthetic problem: 521 (out of 521)
+    (Slave2;CSRef201;SrcID201) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave3;CSRef196;SrcID196) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave4;CSRef194;SrcID194) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave5;CSRef197;SrcID197) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave6;CSRef198;SrcID198) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave7;CSRef199;SrcID199) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave1;CSRef195;SrcID195) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave8;CSRef193;SrcID193) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave9;CSRef192;SrcID192) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave10;CSRef200;SrcID200) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave11;CSRef191;SrcID191) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 8 (srcid=193,blkid=1,csrgid=193,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 193 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 1 (srcid=195,blkid=1,csrgid=195,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 195 to synthetic traces file
+    (Slave1;CSRef203;SrcID203) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 3 (srcid=196,blkid=1,csrgid=196,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 196 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 2 (srcid=201,blkid=1,csrgid=201,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 201 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 9 (srcid=192,blkid=1,csrgid=192,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 192 to synthetic traces file
+    (Slave2;CSRef204;SrcID204) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 10 (srcid=200,blkid=1,csrgid=200,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 200 to synthetic traces file
+    (Slave3;CSRef190;SrcID190) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave8;CSRef202;SrcID202) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave9;CSRef189;SrcID189) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 11 (srcid=191,blkid=1,csrgid=191,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 191 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 4 (srcid=194,blkid=1,csrgid=194,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 194 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 7 (srcid=199,blkid=1,csrgid=199,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 199 to synthetic traces file
+    (Slave4;CSRef187;SrcID187) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 5 (srcid=197,blkid=1,csrgid=197,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 197 to synthetic traces file
+    (Slave11;CSRef188;SrcID188) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave10;CSRef205;SrcID205) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 6 (srcid=198,blkid=1,csrgid=198,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 198 to synthetic traces file
+    (Slave5;CSRef207;SrcID207) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave7;CSRef206;SrcID206) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave6;CSRef208;SrcID208) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 1 (srcid=203,blkid=1,csrgid=203,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 203 to synthetic traces file
+    (Slave1;CSRef186;SrcID186) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 2 (srcid=204,blkid=1,csrgid=204,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 204 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 8 (srcid=202,blkid=1,csrgid=202,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 202 to synthetic traces file
+    (Slave2;CSRef209;SrcID209) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 3 (srcid=190,blkid=1,csrgid=190,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 190 to synthetic traces file
+    (Slave8;CSRef210;SrcID210) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 9 (srcid=189,blkid=1,csrgid=189,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 189 to synthetic traces file
+    (Slave3;CSRef185;SrcID185) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 10 (srcid=205,blkid=1,csrgid=205,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 205 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 4 (srcid=187,blkid=1,csrgid=187,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 187 to synthetic traces file
+    (Slave10;CSRef212;SrcID212) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave9;CSRef211;SrcID211) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 11 (srcid=188,blkid=1,csrgid=188,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 188 to synthetic traces file
+    (Slave4;CSRef184;SrcID184) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 5 (srcid=207,blkid=1,csrgid=207,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 207 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 7 (srcid=206,blkid=1,csrgid=206,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 206 to synthetic traces file
+    (Slave5;CSRef183;SrcID183) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave11;CSRef213;SrcID213) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 6 (srcid=208,blkid=1,csrgid=208,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 208 to synthetic traces file
+    (Slave7;CSRef182;SrcID182) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave6;CSRef181;SrcID181) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 1 (srcid=186,blkid=1,csrgid=186,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 186 to synthetic traces file
+    (Slave1;CSRef214;SrcID214) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 8 (srcid=210,blkid=1,csrgid=210,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 210 to synthetic traces file
+    (Slave8;CSRef180;SrcID180) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 2 (srcid=209,blkid=1,csrgid=209,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 209 to synthetic traces file
+    (Slave2;CSRef215;SrcID215) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 3 (srcid=185,blkid=1,csrgid=185,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 185 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 9 (srcid=211,blkid=1,csrgid=211,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 211 to synthetic traces file
+    (Slave3;CSRef179;SrcID179) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 10 (srcid=212,blkid=1,csrgid=212,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 212 to synthetic traces file
+    (Slave9;CSRef178;SrcID178) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 11 (srcid=213,blkid=1,csrgid=213,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 213 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 4 (srcid=184,blkid=1,csrgid=184,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 184 to synthetic traces file
+    (Slave11;CSRef177;SrcID177) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave10;CSRef216;SrcID216) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave4;CSRef176;SrcID176) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 5 (srcid=183,blkid=1,csrgid=183,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 183 to synthetic traces file
+    (Slave5;CSRef217;SrcID217) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 7 (srcid=182,blkid=1,csrgid=182,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 182 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 6 (srcid=181,blkid=1,csrgid=181,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 181 to synthetic traces file
+    (Slave7;CSRef175;SrcID175) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave6;CSRef218;SrcID218) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=799) from slave id 1 (srcid=214,blkid=1,csrgid=214,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 799 receivers in composite shot 214 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 8 (srcid=180,blkid=1,csrgid=180,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 180 to synthetic traces file
+    (Slave1;CSRef174;SrcID174) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave8;CSRef173;SrcID173) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=797) from slave id 2 (srcid=215,blkid=1,csrgid=215,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 797 receivers in composite shot 215 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 9 (srcid=178,blkid=1,csrgid=178,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 178 to synthetic traces file
+    (Slave2;CSRef219;SrcID219) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave9;CSRef172;SrcID172) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 3 (srcid=179,blkid=1,csrgid=179,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 179 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=795) from slave id 10 (srcid=216,blkid=1,csrgid=216,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 795 receivers in composite shot 216 to synthetic traces file
+    (Slave3;CSRef220;SrcID220) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 11 (srcid=177,blkid=1,csrgid=177,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 177 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 4 (srcid=176,blkid=1,csrgid=176,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 176 to synthetic traces file
+    (Slave11;CSRef221;SrcID221) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave10;CSRef171;SrcID171) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave4;CSRef170;SrcID170) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=793) from slave id 5 (srcid=217,blkid=1,csrgid=217,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 793 receivers in composite shot 217 to synthetic traces file
+    (Slave5;CSRef222;SrcID222) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=791) from slave id 6 (srcid=218,blkid=1,csrgid=218,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 791 receivers in composite shot 218 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 7 (srcid=175,blkid=1,csrgid=175,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 175 to synthetic traces file
+    (Slave6;CSRef169;SrcID169) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave7;CSRef223;SrcID223) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 8 (srcid=173,blkid=1,csrgid=173,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 173 to synthetic traces file
+    (Slave8;CSRef168;SrcID168) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 1 (srcid=174,blkid=1,csrgid=174,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 174 to synthetic traces file
+    (Slave1;CSRef224;SrcID224) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 9 (srcid=172,blkid=1,csrgid=172,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 172 to synthetic traces file
+    (Slave9;CSRef167;SrcID167) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=789) from slave id 2 (srcid=219,blkid=1,csrgid=219,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 789 receivers in composite shot 219 to synthetic traces file
+    (Slave2;CSRef225;SrcID225) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=785) from slave id 11 (srcid=221,blkid=1,csrgid=221,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 785 receivers in composite shot 221 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=787) from slave id 3 (srcid=220,blkid=1,csrgid=220,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 787 receivers in composite shot 220 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 10 (srcid=171,blkid=1,csrgid=171,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 171 to synthetic traces file
+    (Slave3;CSRef226;SrcID226) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave11;CSRef166;SrcID166) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 4 (srcid=170,blkid=1,csrgid=170,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 170 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=783) from slave id 5 (srcid=222,blkid=1,csrgid=222,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 783 receivers in composite shot 222 to synthetic traces file
+    (Slave4;CSRef227;SrcID227) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave10;CSRef165;SrcID165) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave5;CSRef164;SrcID164) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 6 (srcid=169,blkid=1,csrgid=169,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 169 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=781) from slave id 7 (srcid=223,blkid=1,csrgid=223,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 781 receivers in composite shot 223 to synthetic traces file
+    (Slave6;CSRef228;SrcID228) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 8 (srcid=168,blkid=1,csrgid=168,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 168 to synthetic traces file
+    (Slave7;CSRef163;SrcID163) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave8;CSRef229;SrcID229) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 9 (srcid=167,blkid=1,csrgid=167,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 167 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=779) from slave id 1 (srcid=224,blkid=1,csrgid=224,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 779 receivers in composite shot 224 to synthetic traces file
+    (Slave9;CSRef162;SrcID162) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave1;CSRef161;SrcID161) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=777) from slave id 2 (srcid=225,blkid=1,csrgid=225,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 777 receivers in composite shot 225 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 11 (srcid=166,blkid=1,csrgid=166,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 166 to synthetic traces file
+    (Slave2;CSRef230;SrcID230) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave11;CSRef231;SrcID231) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 10 (srcid=165,blkid=1,csrgid=165,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 165 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=775) from slave id 3 (srcid=226,blkid=1,csrgid=226,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 775 receivers in composite shot 226 to synthetic traces file
+    (Slave10;CSRef160;SrcID160) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=773) from slave id 4 (srcid=227,blkid=1,csrgid=227,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 773 receivers in composite shot 227 to synthetic traces file
+    (Slave3;CSRef159;SrcID159) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 5 (srcid=164,blkid=1,csrgid=164,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 164 to synthetic traces file
+    (Slave4;CSRef232;SrcID232) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave5;CSRef158;SrcID158) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=769) from slave id 8 (srcid=229,blkid=1,csrgid=229,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 769 receivers in composite shot 229 to synthetic traces file
+    (Slave8;CSRef233;SrcID233) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=771) from slave id 6 (srcid=228,blkid=1,csrgid=228,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 771 receivers in composite shot 228 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 7 (srcid=163,blkid=1,csrgid=163,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 163 to synthetic traces file
+    (Slave6;CSRef157;SrcID157) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave7;CSRef234;SrcID234) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 9 (srcid=162,blkid=1,csrgid=162,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 162 to synthetic traces file
+    (Slave9;CSRef156;SrcID156) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 1 (srcid=161,blkid=1,csrgid=161,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 161 to synthetic traces file
+    (Slave1;CSRef235;SrcID235) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=765) from slave id 11 (srcid=231,blkid=1,csrgid=231,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 765 receivers in composite shot 231 to synthetic traces file
+    (Slave11;CSRef236;SrcID236) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=767) from slave id 2 (srcid=230,blkid=1,csrgid=230,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 767 receivers in composite shot 230 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 10 (srcid=160,blkid=1,csrgid=160,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 160 to synthetic traces file
+    (Slave2;CSRef155;SrcID155) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave10;CSRef237;SrcID237) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=761) from slave id 8 (srcid=233,blkid=1,csrgid=233,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 761 receivers in composite shot 233 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 3 (srcid=159,blkid=1,csrgid=159,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 159 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=763) from slave id 4 (srcid=232,blkid=1,csrgid=232,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 763 receivers in composite shot 232 to synthetic traces file
+    (Slave3;CSRef238;SrcID238) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 5 (srcid=158,blkid=1,csrgid=158,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 158 to synthetic traces file
+    (Slave4;CSRef153;SrcID153) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave8;CSRef154;SrcID154) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave5;CSRef239;SrcID239) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 6 (srcid=157,blkid=1,csrgid=157,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 157 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 9 (srcid=156,blkid=1,csrgid=156,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 156 to synthetic traces file
+    (Slave6;CSRef152;SrcID152) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=759) from slave id 7 (srcid=234,blkid=1,csrgid=234,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 759 receivers in composite shot 234 to synthetic traces file
+    (Slave9;CSRef240;SrcID240) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave7;CSRef151;SrcID151) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=757) from slave id 1 (srcid=235,blkid=1,csrgid=235,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 757 receivers in composite shot 235 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=755) from slave id 11 (srcid=236,blkid=1,csrgid=236,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 755 receivers in composite shot 236 to synthetic traces file
+    (Slave1;CSRef241;SrcID241) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave11;CSRef150;SrcID150) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=753) from slave id 10 (srcid=237,blkid=1,csrgid=237,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 753 receivers in composite shot 237 to synthetic traces file
+    (Slave10;CSRef242;SrcID242) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 2 (srcid=155,blkid=1,csrgid=155,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 155 to synthetic traces file
+    (Slave2;CSRef149;SrcID149) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 8 (srcid=154,blkid=1,csrgid=154,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 154 to synthetic traces file
+    (Slave8;CSRef243;SrcID243) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=751) from slave id 3 (srcid=238,blkid=1,csrgid=238,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 751 receivers in composite shot 238 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=749) from slave id 5 (srcid=239,blkid=1,csrgid=239,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 749 receivers in composite shot 239 to synthetic traces file
+    (Slave3;CSRef148;SrcID148) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 4 (srcid=153,blkid=1,csrgid=153,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 153 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=747) from slave id 9 (srcid=240,blkid=1,csrgid=240,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 747 receivers in composite shot 240 to synthetic traces file
+    (Slave5;CSRef244;SrcID244) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave4;CSRef147;SrcID147) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 6 (srcid=152,blkid=1,csrgid=152,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 152 to synthetic traces file
+    (Slave9;CSRef245;SrcID245) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 7 (srcid=151,blkid=1,csrgid=151,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 151 to synthetic traces file
+    (Slave6;CSRef146;SrcID146) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave7;CSRef246;SrcID246) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 11 (srcid=150,blkid=1,csrgid=150,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 150 to synthetic traces file
+    (Slave11;CSRef145;SrcID145) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=745) from slave id 1 (srcid=241,blkid=1,csrgid=241,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 745 receivers in composite shot 241 to synthetic traces file
+    (Slave1;CSRef247;SrcID247) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=743) from slave id 10 (srcid=242,blkid=1,csrgid=242,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 743 receivers in composite shot 242 to synthetic traces file
+    (Slave10;CSRef144;SrcID144) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 2 (srcid=149,blkid=1,csrgid=149,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 149 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=741) from slave id 8 (srcid=243,blkid=1,csrgid=243,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 741 receivers in composite shot 243 to synthetic traces file
+    (Slave2;CSRef248;SrcID248) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave8;CSRef143;SrcID143) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 3 (srcid=148,blkid=1,csrgid=148,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 148 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=737) from slave id 9 (srcid=245,blkid=1,csrgid=245,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 737 receivers in composite shot 245 to synthetic traces file
+    (Slave3;CSRef249;SrcID249) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave9;CSRef142;SrcID142) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=739) from slave id 5 (srcid=244,blkid=1,csrgid=244,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 739 receivers in composite shot 244 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 4 (srcid=147,blkid=1,csrgid=147,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 147 to synthetic traces file
+    (Slave5;CSRef250;SrcID250) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=735) from slave id 7 (srcid=246,blkid=1,csrgid=246,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 735 receivers in composite shot 246 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 6 (srcid=146,blkid=1,csrgid=146,obscnt=1)
+    (Slave4;CSRef141;SrcID141) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 146 to synthetic traces file
+    (Slave7;CSRef251;SrcID251) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 11 (srcid=145,blkid=1,csrgid=145,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 145 to synthetic traces file
+    (Slave6;CSRef140;SrcID140) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 10 (srcid=144,blkid=1,csrgid=144,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 144 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=733) from slave id 1 (srcid=247,blkid=1,csrgid=247,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 733 receivers in composite shot 247 to synthetic traces file
+    (Slave11;CSRef252;SrcID252) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave10;CSRef253;SrcID253) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave1;CSRef139;SrcID139) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 8 (srcid=143,blkid=1,csrgid=143,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 143 to synthetic traces file
+    (Slave8;CSRef254;SrcID254) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=731) from slave id 2 (srcid=248,blkid=1,csrgid=248,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 731 receivers in composite shot 248 to synthetic traces file
+    (Slave2;CSRef138;SrcID138) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 9 (srcid=142,blkid=1,csrgid=142,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 142 to synthetic traces file
+    (Slave9;CSRef255;SrcID255) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=729) from slave id 3 (srcid=249,blkid=1,csrgid=249,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 729 receivers in composite shot 249 to synthetic traces file
+    (Slave3;CSRef137;SrcID137) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=727) from slave id 5 (srcid=250,blkid=1,csrgid=250,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 727 receivers in composite shot 250 to synthetic traces file
+    (Slave5;CSRef256;SrcID256) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 4 (srcid=141,blkid=1,csrgid=141,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 141 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=725) from slave id 7 (srcid=251,blkid=1,csrgid=251,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 725 receivers in composite shot 251 to synthetic traces file
+    (Slave4;CSRef136;SrcID136) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 6 (srcid=140,blkid=1,csrgid=140,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 140 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=723) from slave id 11 (srcid=252,blkid=1,csrgid=252,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 723 receivers in composite shot 252 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 1 (srcid=139,blkid=1,csrgid=139,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 139 to synthetic traces file
+    (Slave6;CSRef135;SrcID135) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave7;CSRef257;SrcID257) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=719) from slave id 8 (srcid=254,blkid=1,csrgid=254,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 719 receivers in composite shot 254 to synthetic traces file
+    (Slave1;CSRef134;SrcID134) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=721) from slave id 10 (srcid=253,blkid=1,csrgid=253,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 721 receivers in composite shot 253 to synthetic traces file
+    (Slave8;CSRef259;SrcID259) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave11;CSRef258;SrcID258) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave10;CSRef133;SrcID133) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 2 (srcid=138,blkid=1,csrgid=138,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 138 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=717) from slave id 9 (srcid=255,blkid=1,csrgid=255,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 717 receivers in composite shot 255 to synthetic traces file
+    (Slave2;CSRef260;SrcID260) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave9;CSRef261;SrcID261) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 3 (srcid=137,blkid=1,csrgid=137,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 137 to synthetic traces file
+    (Slave3;CSRef132;SrcID132) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=715) from slave id 5 (srcid=256,blkid=1,csrgid=256,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 715 receivers in composite shot 256 to synthetic traces file
+    (Slave5;CSRef262;SrcID262) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 4 (srcid=136,blkid=1,csrgid=136,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 136 to synthetic traces file
+    (Slave4;CSRef131;SrcID131) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=709) from slave id 8 (srcid=259,blkid=1,csrgid=259,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 709 receivers in composite shot 259 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 6 (srcid=135,blkid=1,csrgid=135,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 135 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 1 (srcid=134,blkid=1,csrgid=134,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 134 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 10 (srcid=133,blkid=1,csrgid=133,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 133 to synthetic traces file
+    (Slave1;CSRef264;SrcID264) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=711) from slave id 11 (srcid=258,blkid=1,csrgid=258,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 711 receivers in composite shot 258 to synthetic traces file
+    (Slave6;CSRef130;SrcID130) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=713) from slave id 7 (srcid=257,blkid=1,csrgid=257,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 713 receivers in composite shot 257 to synthetic traces file
+    (Slave8;CSRef263;SrcID263) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave10;CSRef129;SrcID129) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave11;CSRef265;SrcID265) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=705) from slave id 9 (srcid=261,blkid=1,csrgid=261,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 705 receivers in composite shot 261 to synthetic traces file
+    (Slave7;CSRef266;SrcID266) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=707) from slave id 2 (srcid=260,blkid=1,csrgid=260,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 707 receivers in composite shot 260 to synthetic traces file
+    (Slave9;CSRef128;SrcID128) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave2;CSRef267;SrcID267) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 3 (srcid=132,blkid=1,csrgid=132,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 132 to synthetic traces file
+    (Slave3;CSRef127;SrcID127) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=703) from slave id 5 (srcid=262,blkid=1,csrgid=262,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 703 receivers in composite shot 262 to synthetic traces file
+    (Slave5;CSRef268;SrcID268) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 4 (srcid=131,blkid=1,csrgid=131,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 131 to synthetic traces file
+    (Slave4;CSRef126;SrcID126) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=701) from slave id 8 (srcid=263,blkid=1,csrgid=263,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 701 receivers in composite shot 263 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=699) from slave id 1 (srcid=264,blkid=1,csrgid=264,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 699 receivers in composite shot 264 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 6 (srcid=130,blkid=1,csrgid=130,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 130 to synthetic traces file
+    (Slave1;CSRef270;SrcID270) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave8;CSRef269;SrcID269) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 9 (srcid=128,blkid=1,csrgid=128,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 128 to synthetic traces file
+    (Slave6;CSRef125;SrcID125) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 10 (srcid=129,blkid=1,csrgid=129,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 129 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=693) from slave id 2 (srcid=267,blkid=1,csrgid=267,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 693 receivers in composite shot 267 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=695) from slave id 7 (srcid=266,blkid=1,csrgid=266,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 695 receivers in composite shot 266 to synthetic traces file
+    (Slave2;CSRef272;SrcID272) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=697) from slave id 11 (srcid=265,blkid=1,csrgid=265,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 697 receivers in composite shot 265 to synthetic traces file
+    (Slave7;CSRef123;SrcID123) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave9;CSRef271;SrcID271) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave10;CSRef124;SrcID124) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave11;CSRef273;SrcID273) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 3 (srcid=127,blkid=1,csrgid=127,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 127 to synthetic traces file
+    (Slave3;CSRef122;SrcID122) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=691) from slave id 5 (srcid=268,blkid=1,csrgid=268,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 691 receivers in composite shot 268 to synthetic traces file
+    (Slave5;CSRef274;SrcID274) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 4 (srcid=126,blkid=1,csrgid=126,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 126 to synthetic traces file
+    (Slave4;CSRef275;SrcID275) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=689) from slave id 8 (srcid=269,blkid=1,csrgid=269,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 689 receivers in composite shot 269 to synthetic traces file
+    (Slave8;CSRef121;SrcID121) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=687) from slave id 1 (srcid=270,blkid=1,csrgid=270,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 687 receivers in composite shot 270 to synthetic traces file
+    (Slave1;CSRef276;SrcID276) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 6 (srcid=125,blkid=1,csrgid=125,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 125 to synthetic traces file
+    (Slave6;CSRef120;SrcID120) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=685) from slave id 9 (srcid=271,blkid=1,csrgid=271,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 685 receivers in composite shot 271 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 10 (srcid=124,blkid=1,csrgid=124,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 124 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=683) from slave id 2 (srcid=272,blkid=1,csrgid=272,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 683 receivers in composite shot 272 to synthetic traces file
+    (Slave10;CSRef119;SrcID119) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=681) from slave id 11 (srcid=273,blkid=1,csrgid=273,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 681 receivers in composite shot 273 to synthetic traces file
+    (Slave2;CSRef278;SrcID278) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 7 (srcid=123,blkid=1,csrgid=123,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 123 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 3 (srcid=122,blkid=1,csrgid=122,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 122 to synthetic traces file
+    (Slave11;CSRef279;SrcID279) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=679) from slave id 5 (srcid=274,blkid=1,csrgid=274,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 679 receivers in composite shot 274 to synthetic traces file
+    (Slave3;CSRef280;SrcID280) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave7;CSRef118;SrcID118) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave9;CSRef277;SrcID277) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave5;CSRef117;SrcID117) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=677) from slave id 4 (srcid=275,blkid=1,csrgid=275,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 677 receivers in composite shot 275 to synthetic traces file
+    (Slave4;CSRef281;SrcID281) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 8 (srcid=121,blkid=1,csrgid=121,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 121 to synthetic traces file
+    (Slave8;CSRef116;SrcID116) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=675) from slave id 1 (srcid=276,blkid=1,csrgid=276,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 675 receivers in composite shot 276 to synthetic traces file
+    (Slave1;CSRef282;SrcID282) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 6 (srcid=120,blkid=1,csrgid=120,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 120 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 10 (srcid=119,blkid=1,csrgid=119,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 119 to synthetic traces file
+    (Slave6;CSRef283;SrcID283) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave10;CSRef115;SrcID115) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=669) from slave id 11 (srcid=279,blkid=1,csrgid=279,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 669 receivers in composite shot 279 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=671) from slave id 2 (srcid=278,blkid=1,csrgid=278,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 671 receivers in composite shot 278 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=673) from slave id 9 (srcid=277,blkid=1,csrgid=277,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 673 receivers in composite shot 277 to synthetic traces file
+    (Slave2;CSRef114;SrcID114) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave11;CSRef284;SrcID284) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave9;CSRef285;SrcID285) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=667) from slave id 3 (srcid=280,blkid=1,csrgid=280,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 667 receivers in composite shot 280 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 5 (srcid=117,blkid=1,csrgid=117,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 117 to synthetic traces file
+    (Slave3;CSRef113;SrcID113) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 7 (srcid=118,blkid=1,csrgid=118,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 118 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=665) from slave id 4 (srcid=281,blkid=1,csrgid=281,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 665 receivers in composite shot 281 to synthetic traces file
+    (Slave7;CSRef112;SrcID112) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave5;CSRef286;SrcID286) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave4;CSRef287;SrcID287) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 8 (srcid=116,blkid=1,csrgid=116,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 116 to synthetic traces file
+    (Slave8;CSRef111;SrcID111) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=663) from slave id 1 (srcid=282,blkid=1,csrgid=282,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 663 receivers in composite shot 282 to synthetic traces file
+    (Slave1;CSRef288;SrcID288) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 10 (srcid=115,blkid=1,csrgid=115,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 115 to synthetic traces file
+    (Slave10;CSRef289;SrcID289) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=661) from slave id 6 (srcid=283,blkid=1,csrgid=283,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 661 receivers in composite shot 283 to synthetic traces file
+    (Slave6;CSRef110;SrcID110) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=657) from slave id 9 (srcid=285,blkid=1,csrgid=285,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 657 receivers in composite shot 285 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=659) from slave id 11 (srcid=284,blkid=1,csrgid=284,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 659 receivers in composite shot 284 to synthetic traces file
+    (Slave9;CSRef290;SrcID290) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave11;CSRef109;SrcID109) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 2 (srcid=114,blkid=1,csrgid=114,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 114 to synthetic traces file
+    (Slave2;CSRef291;SrcID291) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 3 (srcid=113,blkid=1,csrgid=113,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 113 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 8 (srcid=111,blkid=1,csrgid=111,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 111 to synthetic traces file
+    (Slave3;CSRef108;SrcID108) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=653) from slave id 4 (srcid=287,blkid=1,csrgid=287,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 653 receivers in composite shot 287 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=655) from slave id 5 (srcid=286,blkid=1,csrgid=286,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 655 receivers in composite shot 286 to synthetic traces file
+    (Slave4;CSRef107;SrcID107) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 7 (srcid=112,blkid=1,csrgid=112,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 112 to synthetic traces file
+    (Slave5;CSRef293;SrcID293) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave8;CSRef292;SrcID292) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave7;CSRef106;SrcID106) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=649) from slave id 10 (srcid=289,blkid=1,csrgid=289,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 649 receivers in composite shot 289 to synthetic traces file
+    (Slave10;CSRef294;SrcID294) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=651) from slave id 1 (srcid=288,blkid=1,csrgid=288,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 651 receivers in composite shot 288 to synthetic traces file
+    (Slave1;CSRef105;SrcID105) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=647) from slave id 9 (srcid=290,blkid=1,csrgid=290,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 647 receivers in composite shot 290 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 6 (srcid=110,blkid=1,csrgid=110,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 110 to synthetic traces file
+    (Slave9;CSRef295;SrcID295) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 11 (srcid=109,blkid=1,csrgid=109,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 109 to synthetic traces file
+    (Slave6;CSRef104;SrcID104) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave11;CSRef296;SrcID296) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=645) from slave id 2 (srcid=291,blkid=1,csrgid=291,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 645 receivers in composite shot 291 to synthetic traces file
+    (Slave2;CSRef103;SrcID103) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 3 (srcid=108,blkid=1,csrgid=108,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 108 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=643) from slave id 8 (srcid=292,blkid=1,csrgid=292,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 643 receivers in composite shot 292 to synthetic traces file
+    (Slave3;CSRef297;SrcID297) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 4 (srcid=107,blkid=1,csrgid=107,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 107 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=641) from slave id 5 (srcid=293,blkid=1,csrgid=293,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 641 receivers in composite shot 293 to synthetic traces file
+    (Slave4;CSRef298;SrcID298) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 7 (srcid=106,blkid=1,csrgid=106,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 106 to synthetic traces file
+    (Slave5;CSRef101;SrcID101) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave8;CSRef102;SrcID102) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=639) from slave id 10 (srcid=294,blkid=1,csrgid=294,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 639 receivers in composite shot 294 to synthetic traces file
+    (Slave7;CSRef299;SrcID299) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave10;CSRef300;SrcID300) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 1 (srcid=105,blkid=1,csrgid=105,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 105 to synthetic traces file
+    (Slave1;CSRef100;SrcID100) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=637) from slave id 9 (srcid=295,blkid=1,csrgid=295,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 637 receivers in composite shot 295 to synthetic traces file
+    (Slave9;CSRef301;SrcID301) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=635) from slave id 11 (srcid=296,blkid=1,csrgid=296,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 635 receivers in composite shot 296 to synthetic traces file
+    (Slave11;CSRef99;SrcID99) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 6 (srcid=104,blkid=1,csrgid=104,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 104 to synthetic traces file
+    (Slave6;CSRef302;SrcID302) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 2 (srcid=103,blkid=1,csrgid=103,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 103 to synthetic traces file
+    (Slave2;CSRef98;SrcID98) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=633) from slave id 3 (srcid=297,blkid=1,csrgid=297,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 633 receivers in composite shot 297 to synthetic traces file
+    (Slave3;CSRef303;SrcID303) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 8 (srcid=102,blkid=1,csrgid=102,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 102 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=631) from slave id 4 (srcid=298,blkid=1,csrgid=298,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 631 receivers in composite shot 298 to synthetic traces file
+    (Slave8;CSRef97;SrcID97) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=627) from slave id 10 (srcid=300,blkid=1,csrgid=300,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 627 receivers in composite shot 300 to synthetic traces file
+    (Slave4;CSRef304;SrcID304) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 5 (srcid=101,blkid=1,csrgid=101,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 101 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=629) from slave id 7 (srcid=299,blkid=1,csrgid=299,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 629 receivers in composite shot 299 to synthetic traces file
+    (Slave5;CSRef305;SrcID305) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave10;CSRef96;SrcID96) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave7;CSRef95;SrcID95) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=625) from slave id 9 (srcid=301,blkid=1,csrgid=301,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 625 receivers in composite shot 301 to synthetic traces file
+    (Slave9;CSRef306;SrcID306) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 1 (srcid=100,blkid=1,csrgid=100,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 100 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 11 (srcid=99,blkid=1,csrgid=99,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 99 to synthetic traces file
+    (Slave1;CSRef94;SrcID94) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave11;CSRef307;SrcID307) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=623) from slave id 6 (srcid=302,blkid=1,csrgid=302,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 623 receivers in composite shot 302 to synthetic traces file
+    (Slave6;CSRef93;SrcID93) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 2 (srcid=98,blkid=1,csrgid=98,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 98 to synthetic traces file
+    (Slave2;CSRef308;SrcID308) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=621) from slave id 3 (srcid=303,blkid=1,csrgid=303,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 621 receivers in composite shot 303 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 8 (srcid=97,blkid=1,csrgid=97,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 97 to synthetic traces file
+    (Slave3;CSRef92;SrcID92) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave8;CSRef309;SrcID309) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=619) from slave id 4 (srcid=304,blkid=1,csrgid=304,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 619 receivers in composite shot 304 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=615) from slave id 9 (srcid=306,blkid=1,csrgid=306,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 615 receivers in composite shot 306 to synthetic traces file
+    (Slave4;CSRef91;SrcID91) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 10 (srcid=96,blkid=1,csrgid=96,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 96 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=617) from slave id 5 (srcid=305,blkid=1,csrgid=305,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 617 receivers in composite shot 305 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 7 (srcid=95,blkid=1,csrgid=95,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 95 to synthetic traces file
+    (Slave5;CSRef311;SrcID311) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave10;CSRef90;SrcID90) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave9;CSRef310;SrcID310) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=613) from slave id 11 (srcid=307,blkid=1,csrgid=307,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 613 receivers in composite shot 307 to synthetic traces file
+    (Slave7;CSRef312;SrcID312) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave11;CSRef89;SrcID89) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 1 (srcid=94,blkid=1,csrgid=94,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 94 to synthetic traces file
+    (Slave1;CSRef313;SrcID313) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 6 (srcid=93,blkid=1,csrgid=93,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 93 to synthetic traces file
+    (Slave6;CSRef88;SrcID88) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=609) from slave id 8 (srcid=309,blkid=1,csrgid=309,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 609 receivers in composite shot 309 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=611) from slave id 2 (srcid=308,blkid=1,csrgid=308,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 611 receivers in composite shot 308 to synthetic traces file
+    (Slave8;CSRef314;SrcID314) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave2;CSRef87;SrcID87) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 3 (srcid=92,blkid=1,csrgid=92,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 92 to synthetic traces file
+    (Slave3;CSRef315;SrcID315) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 4 (srcid=91,blkid=1,csrgid=91,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 91 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=607) from slave id 9 (srcid=310,blkid=1,csrgid=310,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 607 receivers in composite shot 310 to synthetic traces file
+    (Slave4;CSRef86;SrcID86) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 10 (srcid=90,blkid=1,csrgid=90,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 90 to synthetic traces file
+    (Slave9;CSRef316;SrcID316) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 11 (srcid=89,blkid=1,csrgid=89,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 89 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=605) from slave id 5 (srcid=311,blkid=1,csrgid=311,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 605 receivers in composite shot 311 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=603) from slave id 7 (srcid=312,blkid=1,csrgid=312,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 603 receivers in composite shot 312 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=601) from slave id 1 (srcid=313,blkid=1,csrgid=313,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 601 receivers in composite shot 313 to synthetic traces file
+    (Slave10;CSRef85;SrcID85) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave7;CSRef318;SrcID318) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave11;CSRef317;SrcID317) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave1;CSRef319;SrcID319) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave5;CSRef84;SrcID84) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 6 (srcid=88,blkid=1,csrgid=88,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 88 to synthetic traces file
+    (Slave6;CSRef83;SrcID83) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=599) from slave id 8 (srcid=314,blkid=1,csrgid=314,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 599 receivers in composite shot 314 to synthetic traces file
+    (Slave8;CSRef320;SrcID320) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 2 (srcid=87,blkid=1,csrgid=87,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 87 to synthetic traces file
+    (Slave2;CSRef82;SrcID82) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=597) from slave id 3 (srcid=315,blkid=1,csrgid=315,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 597 receivers in composite shot 315 to synthetic traces file
+    (Slave3;CSRef321;SrcID321) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=595) from slave id 9 (srcid=316,blkid=1,csrgid=316,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 595 receivers in composite shot 316 to synthetic traces file
+    (Slave9;CSRef81;SrcID81) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 4 (srcid=86,blkid=1,csrgid=86,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 86 to synthetic traces file
+    (Slave4;CSRef322;SrcID322) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=593) from slave id 11 (srcid=317,blkid=1,csrgid=317,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 593 receivers in composite shot 317 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 10 (srcid=85,blkid=1,csrgid=85,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 85 to synthetic traces file
+    (Slave11;CSRef80;SrcID80) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave10;CSRef323;SrcID323) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=591) from slave id 7 (srcid=318,blkid=1,csrgid=318,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 591 receivers in composite shot 318 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=589) from slave id 1 (srcid=319,blkid=1,csrgid=319,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 589 receivers in composite shot 319 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 5 (srcid=84,blkid=1,csrgid=84,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 84 to synthetic traces file
+    (Slave1;CSRef324;SrcID324) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave7;CSRef79;SrcID79) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave5;CSRef78;SrcID78) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=587) from slave id 8 (srcid=320,blkid=1,csrgid=320,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 587 receivers in composite shot 320 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 6 (srcid=83,blkid=1,csrgid=83,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 83 to synthetic traces file
+    (Slave8;CSRef325;SrcID325) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave6;CSRef77;SrcID77) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 2 (srcid=82,blkid=1,csrgid=82,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 82 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=585) from slave id 3 (srcid=321,blkid=1,csrgid=321,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 585 receivers in composite shot 321 to synthetic traces file
+    (Slave2;CSRef326;SrcID326) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 9 (srcid=81,blkid=1,csrgid=81,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 81 to synthetic traces file
+    (Slave3;CSRef327;SrcID327) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave9;CSRef76;SrcID76) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=583) from slave id 4 (srcid=322,blkid=1,csrgid=322,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 583 receivers in composite shot 322 to synthetic traces file
+    (Slave4;CSRef328;SrcID328) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=581) from slave id 10 (srcid=323,blkid=1,csrgid=323,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 581 receivers in composite shot 323 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 11 (srcid=80,blkid=1,csrgid=80,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 80 to synthetic traces file
+    (Slave10;CSRef75;SrcID75) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave11;CSRef329;SrcID329) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=577) from slave id 8 (srcid=325,blkid=1,csrgid=325,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 577 receivers in composite shot 325 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=579) from slave id 1 (srcid=324,blkid=1,csrgid=324,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 579 receivers in composite shot 324 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 5 (srcid=78,blkid=1,csrgid=78,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 78 to synthetic traces file
+    (Slave1;CSRef330;SrcID330) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 7 (srcid=79,blkid=1,csrgid=79,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 79 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 6 (srcid=77,blkid=1,csrgid=77,obscnt=1)
+    (Slave5;CSRef73;SrcID73) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 77 to synthetic traces file
+    (Slave7;CSRef331;SrcID331) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave8;CSRef74;SrcID74) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave6;CSRef72;SrcID72) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 9 (srcid=76,blkid=1,csrgid=76,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 76 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=575) from slave id 2 (srcid=326,blkid=1,csrgid=326,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 575 receivers in composite shot 326 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=573) from slave id 3 (srcid=327,blkid=1,csrgid=327,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 573 receivers in composite shot 327 to synthetic traces file
+    (Slave2;CSRef71;SrcID71) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave9;CSRef332;SrcID332) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave3;CSRef333;SrcID333) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=569) from slave id 11 (srcid=329,blkid=1,csrgid=329,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 569 receivers in composite shot 329 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=571) from slave id 4 (srcid=328,blkid=1,csrgid=328,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 571 receivers in composite shot 328 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 10 (srcid=75,blkid=1,csrgid=75,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 75 to synthetic traces file
+    (Slave4;CSRef70;SrcID70) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave11;CSRef334;SrcID334) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave10;CSRef335;SrcID335) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=567) from slave id 1 (srcid=330,blkid=1,csrgid=330,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 567 receivers in composite shot 330 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 8 (srcid=74,blkid=1,csrgid=74,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 74 to synthetic traces file
+    (Slave1;CSRef69;SrcID69) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 5 (srcid=73,blkid=1,csrgid=73,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 73 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 6 (srcid=72,blkid=1,csrgid=72,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 72 to synthetic traces file
+    (Slave5;CSRef68;SrcID68) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=565) from slave id 7 (srcid=331,blkid=1,csrgid=331,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 565 receivers in composite shot 331 to synthetic traces file
+    (Slave6;CSRef337;SrcID337) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave8;CSRef336;SrcID336) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave7;CSRef67;SrcID67) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=563) from slave id 9 (srcid=332,blkid=1,csrgid=332,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 563 receivers in composite shot 332 to synthetic traces file
+    (Slave9;CSRef338;SrcID338) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=561) from slave id 3 (srcid=333,blkid=1,csrgid=333,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 561 receivers in composite shot 333 to synthetic traces file
+    (Slave3;CSRef339;SrcID339) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 2 (srcid=71,blkid=1,csrgid=71,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 71 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=559) from slave id 11 (srcid=334,blkid=1,csrgid=334,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 559 receivers in composite shot 334 to synthetic traces file
+    (Slave2;CSRef66;SrcID66) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=557) from slave id 10 (srcid=335,blkid=1,csrgid=335,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 557 receivers in composite shot 335 to synthetic traces file
+    (Slave11;CSRef340;SrcID340) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave10;CSRef65;SrcID65) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 4 (srcid=70,blkid=1,csrgid=70,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 70 to synthetic traces file
+    (Slave4;CSRef341;SrcID341) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 1 (srcid=69,blkid=1,csrgid=69,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 69 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=555) from slave id 8 (srcid=336,blkid=1,csrgid=336,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 555 receivers in composite shot 336 to synthetic traces file
+    (Slave1;CSRef64;SrcID64) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=551) from slave id 9 (srcid=338,blkid=1,csrgid=338,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 551 receivers in composite shot 338 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 5 (srcid=68,blkid=1,csrgid=68,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 68 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=553) from slave id 6 (srcid=337,blkid=1,csrgid=337,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 553 receivers in composite shot 337 to synthetic traces file
+    (Slave5;CSRef343;SrcID343) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave9;CSRef63;SrcID63) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 7 (srcid=67,blkid=1,csrgid=67,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 67 to synthetic traces file
+    (Slave8;CSRef342;SrcID342) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave6;CSRef62;SrcID62) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave7;CSRef344;SrcID344) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=549) from slave id 3 (srcid=339,blkid=1,csrgid=339,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 549 receivers in composite shot 339 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=547) from slave id 11 (srcid=340,blkid=1,csrgid=340,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 547 receivers in composite shot 340 to synthetic traces file
+    (Slave3;CSRef345;SrcID345) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 10 (srcid=65,blkid=1,csrgid=65,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 65 to synthetic traces file
+    (Slave11;CSRef61;SrcID61) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave10;CSRef346;SrcID346) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 2 (srcid=66,blkid=1,csrgid=66,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 66 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=545) from slave id 4 (srcid=341,blkid=1,csrgid=341,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 545 receivers in composite shot 341 to synthetic traces file
+    (Slave2;CSRef60;SrcID60) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave4;CSRef347;SrcID347) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 1 (srcid=64,blkid=1,csrgid=64,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 64 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=543) from slave id 8 (srcid=342,blkid=1,csrgid=342,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 543 receivers in composite shot 342 to synthetic traces file
+    (Slave1;CSRef59;SrcID59) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 9 (srcid=63,blkid=1,csrgid=63,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 63 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=541) from slave id 5 (srcid=343,blkid=1,csrgid=343,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 541 receivers in composite shot 343 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=539) from slave id 7 (srcid=344,blkid=1,csrgid=344,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 539 receivers in composite shot 344 to synthetic traces file
+    (Slave5;CSRef349;SrcID349) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave8;CSRef348;SrcID348) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 6 (srcid=62,blkid=1,csrgid=62,obscnt=1)
+    (Slave9;CSRef58;SrcID58) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 62 to synthetic traces file
+    (Slave7;CSRef350;SrcID350) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=535) from slave id 10 (srcid=346,blkid=1,csrgid=346,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 535 receivers in composite shot 346 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=537) from slave id 3 (srcid=345,blkid=1,csrgid=345,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 537 receivers in composite shot 345 to synthetic traces file
+    (Slave10;CSRef351;SrcID351) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 11 (srcid=61,blkid=1,csrgid=61,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 61 to synthetic traces file
+    (Slave6;CSRef57;SrcID57) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave3;CSRef56;SrcID56) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave11;CSRef352;SrcID352) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=533) from slave id 4 (srcid=347,blkid=1,csrgid=347,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 533 receivers in composite shot 347 to synthetic traces file
+    (Slave4;CSRef55;SrcID55) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 2 (srcid=60,blkid=1,csrgid=60,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 60 to synthetic traces file
+    (Slave2;CSRef353;SrcID353) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=531) from slave id 8 (srcid=348,blkid=1,csrgid=348,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 531 receivers in composite shot 348 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 1 (srcid=59,blkid=1,csrgid=59,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 59 to synthetic traces file
+    (Slave8;CSRef54;SrcID54) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 9 (srcid=58,blkid=1,csrgid=58,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 58 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=529) from slave id 5 (srcid=349,blkid=1,csrgid=349,obscnt=1)
+    (Slave1;CSRef354;SrcID354) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+=== scheduler_writeobserved: appending synthetic data for 529 receivers in composite shot 349 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=527) from slave id 7 (srcid=350,blkid=1,csrgid=350,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 527 receivers in composite shot 350 to synthetic traces file
+    (Slave5;CSRef53;SrcID53) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave9;CSRef355;SrcID355) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=525) from slave id 10 (srcid=351,blkid=1,csrgid=351,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 525 receivers in composite shot 351 to synthetic traces file
+    (Slave7;CSRef356;SrcID356) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=523) from slave id 11 (srcid=352,blkid=1,csrgid=352,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 523 receivers in composite shot 352 to synthetic traces file
+    (Slave10;CSRef52;SrcID52) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave11;CSRef357;SrcID357) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 3 (srcid=56,blkid=1,csrgid=56,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 56 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 6 (srcid=57,blkid=1,csrgid=57,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 57 to synthetic traces file
+    (Slave3;CSRef51;SrcID51) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave6;CSRef358;SrcID358) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 4 (srcid=55,blkid=1,csrgid=55,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 55 to synthetic traces file
+    (Slave4;CSRef50;SrcID50) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=521) from slave id 2 (srcid=353,blkid=1,csrgid=353,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 521 receivers in composite shot 353 to synthetic traces file
+    (Slave2;CSRef359;SrcID359) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 8 (srcid=54,blkid=1,csrgid=54,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 54 to synthetic traces file
+    (Slave8;CSRef360;SrcID360) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=517) from slave id 9 (srcid=355,blkid=1,csrgid=355,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 517 receivers in composite shot 355 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=519) from slave id 1 (srcid=354,blkid=1,csrgid=354,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 519 receivers in composite shot 354 to synthetic traces file
+    (Slave9;CSRef49;SrcID49) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave1;CSRef361;SrcID361) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=513) from slave id 11 (srcid=357,blkid=1,csrgid=357,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 513 receivers in composite shot 357 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 10 (srcid=52,blkid=1,csrgid=52,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 52 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 5 (srcid=53,blkid=1,csrgid=53,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 53 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=515) from slave id 7 (srcid=356,blkid=1,csrgid=356,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 515 receivers in composite shot 356 to synthetic traces file
+    (Slave5;CSRef47;SrcID47) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave10;CSRef362;SrcID362) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave11;CSRef48;SrcID48) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave7;CSRef363;SrcID363) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=511) from slave id 6 (srcid=358,blkid=1,csrgid=358,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 511 receivers in composite shot 358 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 3 (srcid=51,blkid=1,csrgid=51,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 51 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 4 (srcid=50,blkid=1,csrgid=50,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 50 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=509) from slave id 2 (srcid=359,blkid=1,csrgid=359,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 509 receivers in composite shot 359 to synthetic traces file
+    (Slave6;CSRef46;SrcID46) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave3;CSRef364;SrcID364) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave4;CSRef365;SrcID365) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave2;CSRef45;SrcID45) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=507) from slave id 8 (srcid=360,blkid=1,csrgid=360,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 507 receivers in composite shot 360 to synthetic traces file
+    (Slave8;CSRef366;SrcID366) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 9 (srcid=49,blkid=1,csrgid=49,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 49 to synthetic traces file
+    (Slave9;CSRef44;SrcID44) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=505) from slave id 1 (srcid=361,blkid=1,csrgid=361,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 505 receivers in composite shot 361 to synthetic traces file
+    (Slave1;CSRef367;SrcID367) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=503) from slave id 10 (srcid=362,blkid=1,csrgid=362,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 503 receivers in composite shot 362 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 11 (srcid=48,blkid=1,csrgid=48,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 48 to synthetic traces file
+    (Slave10;CSRef43;SrcID43) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave11;CSRef368;SrcID368) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=501) from slave id 7 (srcid=363,blkid=1,csrgid=363,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 501 receivers in composite shot 363 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 5 (srcid=47,blkid=1,csrgid=47,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 47 to synthetic traces file
+    (Slave7;CSRef42;SrcID42) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave5;CSRef369;SrcID369) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=497) from slave id 4 (srcid=365,blkid=1,csrgid=365,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 497 receivers in composite shot 365 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 2 (srcid=45,blkid=1,csrgid=45,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 45 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=499) from slave id 3 (srcid=364,blkid=1,csrgid=364,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 499 receivers in composite shot 364 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 6 (srcid=46,blkid=1,csrgid=46,obscnt=1)
+    (Slave2;CSRef41;SrcID41) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 46 to synthetic traces file
+    (Slave3;CSRef371;SrcID371) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=495) from slave id 8 (srcid=366,blkid=1,csrgid=366,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 495 receivers in composite shot 366 to synthetic traces file
+    (Slave4;CSRef370;SrcID370) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave6;CSRef40;SrcID40) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave8;CSRef372;SrcID372) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 9 (srcid=44,blkid=1,csrgid=44,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 44 to synthetic traces file
+    (Slave9;CSRef39;SrcID39) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=493) from slave id 1 (srcid=367,blkid=1,csrgid=367,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 493 receivers in composite shot 367 to synthetic traces file
+    (Slave1;CSRef373;SrcID373) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=491) from slave id 11 (srcid=368,blkid=1,csrgid=368,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 491 receivers in composite shot 368 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 10 (srcid=43,blkid=1,csrgid=43,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 43 to synthetic traces file
+    (Slave11;CSRef38;SrcID38) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave10;CSRef374;SrcID374) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=489) from slave id 5 (srcid=369,blkid=1,csrgid=369,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 489 receivers in composite shot 369 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 7 (srcid=42,blkid=1,csrgid=42,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 42 to synthetic traces file
+    (Slave5;CSRef375;SrcID375) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave7;CSRef37;SrcID37) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=483) from slave id 8 (srcid=372,blkid=1,csrgid=372,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 483 receivers in composite shot 372 to synthetic traces file
+    (Slave8;CSRef376;SrcID376) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 2 (srcid=41,blkid=1,csrgid=41,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 41 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=485) from slave id 3 (srcid=371,blkid=1,csrgid=371,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 485 receivers in composite shot 371 to synthetic traces file
+    (Slave2;CSRef36;SrcID36) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 9 (srcid=39,blkid=1,csrgid=39,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 39 to synthetic traces file
+    (Slave3;CSRef377;SrcID377) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=487) from slave id 4 (srcid=370,blkid=1,csrgid=370,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 487 receivers in composite shot 370 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 6 (srcid=40,blkid=1,csrgid=40,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 40 to synthetic traces file
+    (Slave4;CSRef378;SrcID378) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave9;CSRef35;SrcID35) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave6;CSRef34;SrcID34) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=479) from slave id 10 (srcid=374,blkid=1,csrgid=374,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 479 receivers in composite shot 374 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=481) from slave id 1 (srcid=373,blkid=1,csrgid=373,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 481 receivers in composite shot 373 to synthetic traces file
+    (Slave10;CSRef379;SrcID379) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 11 (srcid=38,blkid=1,csrgid=38,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 38 to synthetic traces file
+    (Slave1;CSRef380;SrcID380) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave11;CSRef33;SrcID33) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=477) from slave id 5 (srcid=375,blkid=1,csrgid=375,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 477 receivers in composite shot 375 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 7 (srcid=37,blkid=1,csrgid=37,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 37 to synthetic traces file
+    (Slave5;CSRef381;SrcID381) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave7;CSRef32;SrcID32) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=475) from slave id 8 (srcid=376,blkid=1,csrgid=376,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 475 receivers in composite shot 376 to synthetic traces file
+    (Slave8;CSRef382;SrcID382) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 2 (srcid=36,blkid=1,csrgid=36,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 36 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 9 (srcid=35,blkid=1,csrgid=35,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 35 to synthetic traces file
+    (Slave2;CSRef31;SrcID31) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=469) from slave id 10 (srcid=379,blkid=1,csrgid=379,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 469 receivers in composite shot 379 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=473) from slave id 3 (srcid=377,blkid=1,csrgid=377,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 473 receivers in composite shot 377 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 6 (srcid=34,blkid=1,csrgid=34,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 34 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=467) from slave id 1 (srcid=380,blkid=1,csrgid=380,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 467 receivers in composite shot 380 to synthetic traces file
+    (Slave6;CSRef385;SrcID385) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave9;CSRef383;SrcID383) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave10;CSRef30;SrcID30) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 11 (srcid=33,blkid=1,csrgid=33,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 33 to synthetic traces file
+    (Slave1;CSRef29;SrcID29) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave3;CSRef384;SrcID384) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=471) from slave id 4 (srcid=378,blkid=1,csrgid=378,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 471 receivers in composite shot 378 to synthetic traces file
+    (Slave11;CSRef386;SrcID386) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave4;CSRef28;SrcID28) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=463) from slave id 8 (srcid=382,blkid=1,csrgid=382,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 463 receivers in composite shot 382 to synthetic traces file
+    (Slave8;CSRef387;SrcID387) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=465) from slave id 5 (srcid=381,blkid=1,csrgid=381,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 465 receivers in composite shot 381 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 7 (srcid=32,blkid=1,csrgid=32,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 32 to synthetic traces file
+    (Slave5;CSRef27;SrcID27) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave7;CSRef388;SrcID388) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 2 (srcid=31,blkid=1,csrgid=31,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 31 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=461) from slave id 9 (srcid=383,blkid=1,csrgid=383,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 461 receivers in composite shot 383 to synthetic traces file
+    (Slave2;CSRef26;SrcID26) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=455) from slave id 11 (srcid=386,blkid=1,csrgid=386,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 455 receivers in composite shot 386 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=457) from slave id 6 (srcid=385,blkid=1,csrgid=385,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 457 receivers in composite shot 385 to synthetic traces file
+    (Slave9;CSRef389;SrcID389) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 10 (srcid=30,blkid=1,csrgid=30,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 30 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 1 (srcid=29,blkid=1,csrgid=29,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 29 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=459) from slave id 3 (srcid=384,blkid=1,csrgid=384,obscnt=1)
+    (Slave11;CSRef390;SrcID390) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+=== scheduler_writeobserved: appending synthetic data for 459 receivers in composite shot 384 to synthetic traces file
+    (Slave1;CSRef24;SrcID24) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=453) from slave id 8 (srcid=387,blkid=1,csrgid=387,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 453 receivers in composite shot 387 to synthetic traces file
+    (Slave3;CSRef392;SrcID392) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 4 (srcid=28,blkid=1,csrgid=28,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 28 to synthetic traces file
+    (Slave6;CSRef25;SrcID25) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=451) from slave id 7 (srcid=388,blkid=1,csrgid=388,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 451 receivers in composite shot 388 to synthetic traces file
+    (Slave10;CSRef391;SrcID391) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave4;CSRef393;SrcID393) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 5 (srcid=27,blkid=1,csrgid=27,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 27 to synthetic traces file
+    (Slave7;CSRef22;SrcID22) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave8;CSRef23;SrcID23) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave5;CSRef394;SrcID394) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=449) from slave id 9 (srcid=389,blkid=1,csrgid=389,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 449 receivers in composite shot 389 to synthetic traces file
+    (Slave9;CSRef21;SrcID21) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 2 (srcid=26,blkid=1,csrgid=26,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 26 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=447) from slave id 11 (srcid=390,blkid=1,csrgid=390,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 447 receivers in composite shot 390 to synthetic traces file
+    (Slave2;CSRef395;SrcID395) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave11;CSRef20;SrcID20) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 1 (srcid=24,blkid=1,csrgid=24,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 24 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=445) from slave id 10 (srcid=391,blkid=1,csrgid=391,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 445 receivers in composite shot 391 to synthetic traces file
+    (Slave1;CSRef396;SrcID396) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 8 (srcid=23,blkid=1,csrgid=23,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 23 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=443) from slave id 3 (srcid=392,blkid=1,csrgid=392,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 443 receivers in composite shot 392 to synthetic traces file
+    (Slave10;CSRef397;SrcID397) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave8;CSRef19;SrcID19) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=441) from slave id 4 (srcid=393,blkid=1,csrgid=393,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 441 receivers in composite shot 393 to synthetic traces file
+    (Slave3;CSRef398;SrcID398) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=439) from slave id 5 (srcid=394,blkid=1,csrgid=394,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 439 receivers in composite shot 394 to synthetic traces file
+    (Slave4;CSRef18;SrcID18) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 6 (srcid=25,blkid=1,csrgid=25,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 25 to synthetic traces file
+    (Slave5;CSRef399;SrcID399) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 7 (srcid=22,blkid=1,csrgid=22,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 22 to synthetic traces file
+    (Slave6;CSRef17;SrcID17) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave7;CSRef400;SrcID400) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 9 (srcid=21,blkid=1,csrgid=21,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 21 to synthetic traces file
+    (Slave9;CSRef16;SrcID16) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 11 (srcid=20,blkid=1,csrgid=20,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 20 to synthetic traces file
+    (Slave11;CSRef401;SrcID401) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=437) from slave id 2 (srcid=395,blkid=1,csrgid=395,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 437 receivers in composite shot 395 to synthetic traces file
+    (Slave2;CSRef15;SrcID15) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=433) from slave id 10 (srcid=397,blkid=1,csrgid=397,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 433 receivers in composite shot 397 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=435) from slave id 1 (srcid=396,blkid=1,csrgid=396,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 435 receivers in composite shot 396 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 8 (srcid=19,blkid=1,csrgid=19,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 19 to synthetic traces file
+    (Slave1;CSRef14;SrcID14) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave10;CSRef402;SrcID402) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave8;CSRef403;SrcID403) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=431) from slave id 3 (srcid=398,blkid=1,csrgid=398,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 431 receivers in composite shot 398 to synthetic traces file
+    (Slave3;CSRef404;SrcID404) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 4 (srcid=18,blkid=1,csrgid=18,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 18 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=429) from slave id 5 (srcid=399,blkid=1,csrgid=399,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 429 receivers in composite shot 399 to synthetic traces file
+    (Slave4;CSRef13;SrcID13) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave5;CSRef405;SrcID405) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=427) from slave id 7 (srcid=400,blkid=1,csrgid=400,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 427 receivers in composite shot 400 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 6 (srcid=17,blkid=1,csrgid=17,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 17 to synthetic traces file
+    (Slave7;CSRef12;SrcID12) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave6;CSRef406;SrcID406) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 9 (srcid=16,blkid=1,csrgid=16,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 16 to synthetic traces file
+    (Slave9;CSRef11;SrcID11) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=425) from slave id 11 (srcid=401,blkid=1,csrgid=401,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 425 receivers in composite shot 401 to synthetic traces file
+    (Slave11;CSRef407;SrcID407) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 2 (srcid=15,blkid=1,csrgid=15,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 15 to synthetic traces file
+    (Slave2;CSRef10;SrcID10) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=421) from slave id 8 (srcid=403,blkid=1,csrgid=403,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 421 receivers in composite shot 403 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=423) from slave id 10 (srcid=402,blkid=1,csrgid=402,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 423 receivers in composite shot 402 to synthetic traces file
+    (Slave8;CSRef408;SrcID408) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave10;CSRef9;SrcID9) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 1 (srcid=14,blkid=1,csrgid=14,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 14 to synthetic traces file
+    (Slave1;CSRef409;SrcID409) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=419) from slave id 3 (srcid=404,blkid=1,csrgid=404,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 419 receivers in composite shot 404 to synthetic traces file
+    (Slave3;CSRef410;SrcID410) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=417) from slave id 5 (srcid=405,blkid=1,csrgid=405,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 417 receivers in composite shot 405 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 4 (srcid=13,blkid=1,csrgid=13,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 13 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 9 (srcid=11,blkid=1,csrgid=11,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 11 to synthetic traces file
+    (Slave4;CSRef411;SrcID411) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 7 (srcid=12,blkid=1,csrgid=12,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 12 to synthetic traces file
+    (Slave5;CSRef8;SrcID8) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=415) from slave id 6 (srcid=406,blkid=1,csrgid=406,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 415 receivers in composite shot 406 to synthetic traces file
+    (Slave7;CSRef412;SrcID412) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave9;CSRef7;SrcID7) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=413) from slave id 11 (srcid=407,blkid=1,csrgid=407,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 413 receivers in composite shot 407 to synthetic traces file
+    (Slave6;CSRef6;SrcID6) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave11;CSRef413;SrcID413) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=411) from slave id 8 (srcid=408,blkid=1,csrgid=408,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 411 receivers in composite shot 408 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 10 (srcid=9,blkid=1,csrgid=9,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 9 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 2 (srcid=10,blkid=1,csrgid=10,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 10 to synthetic traces file
+    (Slave10;CSRef414;SrcID414) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave8;CSRef5;SrcID5) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave2;CSRef4;SrcID4) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=409) from slave id 1 (srcid=409,blkid=1,csrgid=409,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 409 receivers in composite shot 409 to synthetic traces file
+    (Slave1;CSRef415;SrcID415) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=407) from slave id 3 (srcid=410,blkid=1,csrgid=410,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 407 receivers in composite shot 410 to synthetic traces file
+    (Slave3;CSRef3;SrcID3) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=405) from slave id 4 (srcid=411,blkid=1,csrgid=411,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 405 receivers in composite shot 411 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 9 (srcid=7,blkid=1,csrgid=7,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 7 to synthetic traces file
+    (Slave4;CSRef416;SrcID416) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=401) from slave id 11 (srcid=413,blkid=1,csrgid=413,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 401 receivers in composite shot 413 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 5 (srcid=8,blkid=1,csrgid=8,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 8 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 6 (srcid=6,blkid=1,csrgid=6,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 6 to synthetic traces file
+    (Slave11;CSRef2;SrcID2) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave5;CSRef418;SrcID418) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=403) from slave id 7 (srcid=412,blkid=1,csrgid=412,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 403 receivers in composite shot 412 to synthetic traces file
+    (Slave6;CSRef1;SrcID1) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave9;CSRef417;SrcID417) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave7;CSRef419;SrcID419) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=399) from slave id 10 (srcid=414,blkid=1,csrgid=414,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 399 receivers in composite shot 414 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 8 (srcid=5,blkid=1,csrgid=5,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 5 to synthetic traces file
+    (Slave10;CSRef420;SrcID420) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave8;CSRef421;SrcID421) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 2 (srcid=4,blkid=1,csrgid=4,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 4 to synthetic traces file
+    (Slave2;CSRef422;SrcID422) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=397) from slave id 1 (srcid=415,blkid=1,csrgid=415,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 397 receivers in composite shot 415 to synthetic traces file
+    (Slave1;CSRef423;SrcID423) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 3 (srcid=3,blkid=1,csrgid=3,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 3 to synthetic traces file
+    (Slave3;CSRef424;SrcID424) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=395) from slave id 4 (srcid=416,blkid=1,csrgid=416,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 395 receivers in composite shot 416 to synthetic traces file
+    (Slave4;CSRef425;SrcID425) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 11 (srcid=2,blkid=1,csrgid=2,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 2 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=393) from slave id 9 (srcid=417,blkid=1,csrgid=417,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 393 receivers in composite shot 417 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=391) from slave id 5 (srcid=418,blkid=1,csrgid=418,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 391 receivers in composite shot 418 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=389) from slave id 7 (srcid=419,blkid=1,csrgid=419,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 389 receivers in composite shot 419 to synthetic traces file
+    (Slave5;CSRef428;SrcID428) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 6 (srcid=1,blkid=1,csrgid=1,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 1 to synthetic traces file
+    (Slave9;CSRef427;SrcID427) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave11;CSRef426;SrcID426) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave7;CSRef429;SrcID429) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave6;CSRef430;SrcID430) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=385) from slave id 8 (srcid=421,blkid=1,csrgid=421,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 385 receivers in composite shot 421 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=387) from slave id 10 (srcid=420,blkid=1,csrgid=420,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 387 receivers in composite shot 420 to synthetic traces file
+    (Slave8;CSRef431;SrcID431) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave10;CSRef432;SrcID432) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=383) from slave id 2 (srcid=422,blkid=1,csrgid=422,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 383 receivers in composite shot 422 to synthetic traces file
+    (Slave2;CSRef433;SrcID433) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=381) from slave id 1 (srcid=423,blkid=1,csrgid=423,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 381 receivers in composite shot 423 to synthetic traces file
+    (Slave1;CSRef434;SrcID434) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=379) from slave id 3 (srcid=424,blkid=1,csrgid=424,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 379 receivers in composite shot 424 to synthetic traces file
+    (Slave3;CSRef435;SrcID435) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=377) from slave id 4 (srcid=425,blkid=1,csrgid=425,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 377 receivers in composite shot 425 to synthetic traces file
+    (Slave4;CSRef436;SrcID436) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=375) from slave id 11 (srcid=426,blkid=1,csrgid=426,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 375 receivers in composite shot 426 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=373) from slave id 9 (srcid=427,blkid=1,csrgid=427,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 373 receivers in composite shot 427 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=371) from slave id 5 (srcid=428,blkid=1,csrgid=428,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 371 receivers in composite shot 428 to synthetic traces file
+    (Slave9;CSRef438;SrcID438) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave11;CSRef437;SrcID437) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave5;CSRef439;SrcID439) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=365) from slave id 8 (srcid=431,blkid=1,csrgid=431,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 365 receivers in composite shot 431 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=367) from slave id 6 (srcid=430,blkid=1,csrgid=430,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 367 receivers in composite shot 430 to synthetic traces file
+    (Slave8;CSRef440;SrcID440) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=363) from slave id 10 (srcid=432,blkid=1,csrgid=432,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 363 receivers in composite shot 432 to synthetic traces file
+    (Slave6;CSRef441;SrcID441) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=369) from slave id 7 (srcid=429,blkid=1,csrgid=429,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 369 receivers in composite shot 429 to synthetic traces file
+    (Slave10;CSRef442;SrcID442) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave7;CSRef443;SrcID443) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=361) from slave id 2 (srcid=433,blkid=1,csrgid=433,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 361 receivers in composite shot 433 to synthetic traces file
+    (Slave2;CSRef444;SrcID444) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=359) from slave id 1 (srcid=434,blkid=1,csrgid=434,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 359 receivers in composite shot 434 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=357) from slave id 3 (srcid=435,blkid=1,csrgid=435,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 357 receivers in composite shot 435 to synthetic traces file
+    (Slave1;CSRef445;SrcID445) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave3;CSRef446;SrcID446) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=355) from slave id 4 (srcid=436,blkid=1,csrgid=436,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 355 receivers in composite shot 436 to synthetic traces file
+    (Slave4;CSRef447;SrcID447) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=353) from slave id 11 (srcid=437,blkid=1,csrgid=437,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 353 receivers in composite shot 437 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=351) from slave id 9 (srcid=438,blkid=1,csrgid=438,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 351 receivers in composite shot 438 to synthetic traces file
+    (Slave11;CSRef448;SrcID448) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave9;CSRef449;SrcID449) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=347) from slave id 8 (srcid=440,blkid=1,csrgid=440,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 347 receivers in composite shot 440 to synthetic traces file
+    (Slave8;CSRef450;SrcID450) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=349) from slave id 5 (srcid=439,blkid=1,csrgid=439,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 349 receivers in composite shot 439 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=343) from slave id 10 (srcid=442,blkid=1,csrgid=442,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 343 receivers in composite shot 442 to synthetic traces file
+    (Slave5;CSRef451;SrcID451) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave10;CSRef452;SrcID452) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=345) from slave id 6 (srcid=441,blkid=1,csrgid=441,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 345 receivers in composite shot 441 to synthetic traces file
+    (Slave6;CSRef453;SrcID453) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=341) from slave id 7 (srcid=443,blkid=1,csrgid=443,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 341 receivers in composite shot 443 to synthetic traces file
+    (Slave7;CSRef454;SrcID454) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=339) from slave id 2 (srcid=444,blkid=1,csrgid=444,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 339 receivers in composite shot 444 to synthetic traces file
+    (Slave2;CSRef455;SrcID455) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=335) from slave id 3 (srcid=446,blkid=1,csrgid=446,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 335 receivers in composite shot 446 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=337) from slave id 1 (srcid=445,blkid=1,csrgid=445,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 337 receivers in composite shot 445 to synthetic traces file
+    (Slave3;CSRef456;SrcID456) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave1;CSRef457;SrcID457) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=333) from slave id 4 (srcid=447,blkid=1,csrgid=447,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 333 receivers in composite shot 447 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=331) from slave id 11 (srcid=448,blkid=1,csrgid=448,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 331 receivers in composite shot 448 to synthetic traces file
+    (Slave4;CSRef458;SrcID458) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=329) from slave id 9 (srcid=449,blkid=1,csrgid=449,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 329 receivers in composite shot 449 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=327) from slave id 8 (srcid=450,blkid=1,csrgid=450,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 327 receivers in composite shot 450 to synthetic traces file
+    (Slave9;CSRef460;SrcID460) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave11;CSRef459;SrcID459) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave8;CSRef461;SrcID461) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=323) from slave id 10 (srcid=452,blkid=1,csrgid=452,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 323 receivers in composite shot 452 to synthetic traces file
+    (Slave10;CSRef462;SrcID462) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=325) from slave id 5 (srcid=451,blkid=1,csrgid=451,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 325 receivers in composite shot 451 to synthetic traces file
+    (Slave5;CSRef463;SrcID463) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=321) from slave id 6 (srcid=453,blkid=1,csrgid=453,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 321 receivers in composite shot 453 to synthetic traces file
+    (Slave6;CSRef464;SrcID464) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=319) from slave id 7 (srcid=454,blkid=1,csrgid=454,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 319 receivers in composite shot 454 to synthetic traces file
+    (Slave7;CSRef465;SrcID465) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=317) from slave id 2 (srcid=455,blkid=1,csrgid=455,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 317 receivers in composite shot 455 to synthetic traces file
+    (Slave2;CSRef466;SrcID466) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=315) from slave id 3 (srcid=456,blkid=1,csrgid=456,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 315 receivers in composite shot 456 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=313) from slave id 1 (srcid=457,blkid=1,csrgid=457,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 313 receivers in composite shot 457 to synthetic traces file
+    (Slave3;CSRef467;SrcID467) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave1;CSRef468;SrcID468) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=305) from slave id 8 (srcid=461,blkid=1,csrgid=461,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 305 receivers in composite shot 461 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=307) from slave id 9 (srcid=460,blkid=1,csrgid=460,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 307 receivers in composite shot 460 to synthetic traces file
+    (Slave8;CSRef469;SrcID469) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=309) from slave id 11 (srcid=459,blkid=1,csrgid=459,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 309 receivers in composite shot 459 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=311) from slave id 4 (srcid=458,blkid=1,csrgid=458,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 311 receivers in composite shot 458 to synthetic traces file
+    (Slave9;CSRef470;SrcID470) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=303) from slave id 10 (srcid=462,blkid=1,csrgid=462,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 303 receivers in composite shot 462 to synthetic traces file
+    (Slave4;CSRef472;SrcID472) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave11;CSRef471;SrcID471) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave10;CSRef473;SrcID473) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=301) from slave id 5 (srcid=463,blkid=1,csrgid=463,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 301 receivers in composite shot 463 to synthetic traces file
+    (Slave5;CSRef474;SrcID474) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=299) from slave id 6 (srcid=464,blkid=1,csrgid=464,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 299 receivers in composite shot 464 to synthetic traces file
+    (Slave6;CSRef475;SrcID475) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=297) from slave id 7 (srcid=465,blkid=1,csrgid=465,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 297 receivers in composite shot 465 to synthetic traces file
+    (Slave7;CSRef476;SrcID476) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=295) from slave id 2 (srcid=466,blkid=1,csrgid=466,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 295 receivers in composite shot 466 to synthetic traces file
+    (Slave2;CSRef477;SrcID477) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=289) from slave id 8 (srcid=469,blkid=1,csrgid=469,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 289 receivers in composite shot 469 to synthetic traces file
+    (Slave8;CSRef478;SrcID478) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=287) from slave id 9 (srcid=470,blkid=1,csrgid=470,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 287 receivers in composite shot 470 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=291) from slave id 1 (srcid=468,blkid=1,csrgid=468,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 291 receivers in composite shot 468 to synthetic traces file
+    (Slave9;CSRef479;SrcID479) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=281) from slave id 10 (srcid=473,blkid=1,csrgid=473,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 281 receivers in composite shot 473 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=293) from slave id 3 (srcid=467,blkid=1,csrgid=467,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 293 receivers in composite shot 467 to synthetic traces file
+    (Slave1;CSRef480;SrcID480) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave10;CSRef481;SrcID481) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=285) from slave id 11 (srcid=471,blkid=1,csrgid=471,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 285 receivers in composite shot 471 to synthetic traces file
+    (Slave11;CSRef483;SrcID483) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave3;CSRef482;SrcID482) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=283) from slave id 4 (srcid=472,blkid=1,csrgid=472,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 283 receivers in composite shot 472 to synthetic traces file
+    (Slave4;CSRef484;SrcID484) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=279) from slave id 5 (srcid=474,blkid=1,csrgid=474,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 279 receivers in composite shot 474 to synthetic traces file
+    (Slave5;CSRef485;SrcID485) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=277) from slave id 6 (srcid=475,blkid=1,csrgid=475,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 277 receivers in composite shot 475 to synthetic traces file
+    (Slave6;CSRef486;SrcID486) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=275) from slave id 7 (srcid=476,blkid=1,csrgid=476,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 275 receivers in composite shot 476 to synthetic traces file
+    (Slave7;CSRef487;SrcID487) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=273) from slave id 2 (srcid=477,blkid=1,csrgid=477,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 273 receivers in composite shot 477 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=271) from slave id 8 (srcid=478,blkid=1,csrgid=478,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 271 receivers in composite shot 478 to synthetic traces file
+    (Slave8;CSRef489;SrcID489) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave2;CSRef488;SrcID488) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=269) from slave id 9 (srcid=479,blkid=1,csrgid=479,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 269 receivers in composite shot 479 to synthetic traces file
+    (Slave9;CSRef490;SrcID490) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=261) from slave id 11 (srcid=483,blkid=1,csrgid=483,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 261 receivers in composite shot 483 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=265) from slave id 10 (srcid=481,blkid=1,csrgid=481,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 265 receivers in composite shot 481 to synthetic traces file
+    (Slave11;CSRef491;SrcID491) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave10;CSRef492;SrcID492) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=267) from slave id 1 (srcid=480,blkid=1,csrgid=480,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 267 receivers in composite shot 480 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=263) from slave id 3 (srcid=482,blkid=1,csrgid=482,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 263 receivers in composite shot 482 to synthetic traces file
+    (Slave3;CSRef494;SrcID494) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave1;CSRef493;SrcID493) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=259) from slave id 4 (srcid=484,blkid=1,csrgid=484,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 259 receivers in composite shot 484 to synthetic traces file
+    (Slave4;CSRef495;SrcID495) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=257) from slave id 5 (srcid=485,blkid=1,csrgid=485,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 257 receivers in composite shot 485 to synthetic traces file
+    (Slave5;CSRef496;SrcID496) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=255) from slave id 6 (srcid=486,blkid=1,csrgid=486,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 255 receivers in composite shot 486 to synthetic traces file
+    (Slave6;CSRef497;SrcID497) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=253) from slave id 7 (srcid=487,blkid=1,csrgid=487,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 253 receivers in composite shot 487 to synthetic traces file
+    (Slave7;CSRef498;SrcID498) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=249) from slave id 8 (srcid=489,blkid=1,csrgid=489,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 249 receivers in composite shot 489 to synthetic traces file
+    (Slave8;CSRef499;SrcID499) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=247) from slave id 9 (srcid=490,blkid=1,csrgid=490,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 247 receivers in composite shot 490 to synthetic traces file
+    (Slave9;CSRef500;SrcID500) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=251) from slave id 2 (srcid=488,blkid=1,csrgid=488,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 251 receivers in composite shot 488 to synthetic traces file
+    (Slave2;CSRef501;SrcID501) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=245) from slave id 11 (srcid=491,blkid=1,csrgid=491,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 245 receivers in composite shot 491 to synthetic traces file
+    (Slave11;CSRef502;SrcID502) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=243) from slave id 10 (srcid=492,blkid=1,csrgid=492,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 243 receivers in composite shot 492 to synthetic traces file
+    (Slave10;CSRef503;SrcID503) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=239) from slave id 3 (srcid=494,blkid=1,csrgid=494,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 239 receivers in composite shot 494 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=241) from slave id 1 (srcid=493,blkid=1,csrgid=493,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 241 receivers in composite shot 493 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=237) from slave id 4 (srcid=495,blkid=1,csrgid=495,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 237 receivers in composite shot 495 to synthetic traces file
+    (Slave3;CSRef504;SrcID504) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave4;CSRef506;SrcID506) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave1;CSRef505;SrcID505) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=235) from slave id 5 (srcid=496,blkid=1,csrgid=496,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 235 receivers in composite shot 496 to synthetic traces file
+    (Slave5;CSRef507;SrcID507) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=233) from slave id 6 (srcid=497,blkid=1,csrgid=497,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 233 receivers in composite shot 497 to synthetic traces file
+    (Slave6;CSRef508;SrcID508) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=231) from slave id 7 (srcid=498,blkid=1,csrgid=498,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 231 receivers in composite shot 498 to synthetic traces file
+    (Slave7;CSRef509;SrcID509) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=229) from slave id 8 (srcid=499,blkid=1,csrgid=499,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 229 receivers in composite shot 499 to synthetic traces file
+    (Slave8;CSRef510;SrcID510) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=227) from slave id 9 (srcid=500,blkid=1,csrgid=500,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 227 receivers in composite shot 500 to synthetic traces file
+    (Slave9;CSRef511;SrcID511) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=223) from slave id 11 (srcid=502,blkid=1,csrgid=502,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 223 receivers in composite shot 502 to synthetic traces file
+    (Slave11;CSRef512;SrcID512) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=221) from slave id 10 (srcid=503,blkid=1,csrgid=503,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 221 receivers in composite shot 503 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=225) from slave id 2 (srcid=501,blkid=1,csrgid=501,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 225 receivers in composite shot 501 to synthetic traces file
+    (Slave10;CSRef513;SrcID513) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave2;CSRef514;SrcID514) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=215) from slave id 4 (srcid=506,blkid=1,csrgid=506,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 215 receivers in composite shot 506 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=217) from slave id 1 (srcid=505,blkid=1,csrgid=505,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 217 receivers in composite shot 505 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=219) from slave id 3 (srcid=504,blkid=1,csrgid=504,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 219 receivers in composite shot 504 to synthetic traces file
+    (Slave4;CSRef515;SrcID515) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave3;CSRef517;SrcID517) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave1;CSRef516;SrcID516) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=213) from slave id 5 (srcid=507,blkid=1,csrgid=507,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 213 receivers in composite shot 507 to synthetic traces file
+    (Slave5;CSRef518;SrcID518) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=211) from slave id 6 (srcid=508,blkid=1,csrgid=508,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 211 receivers in composite shot 508 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=209) from slave id 7 (srcid=509,blkid=1,csrgid=509,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 209 receivers in composite shot 509 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=207) from slave id 8 (srcid=510,blkid=1,csrgid=510,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 207 receivers in composite shot 510 to synthetic traces file
+    (Slave6;CSRef519;SrcID519) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave8;CSRef521;SrcID521) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    (Slave7;CSRef520;SrcID520) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,134,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=205) from slave id 9 (srcid=511,blkid=1,csrgid=511,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 205 receivers in composite shot 511 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=203) from slave id 11 (srcid=512,blkid=1,csrgid=512,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 203 receivers in composite shot 512 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=201) from slave id 10 (srcid=513,blkid=1,csrgid=513,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 201 receivers in composite shot 513 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=199) from slave id 2 (srcid=514,blkid=1,csrgid=514,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 199 receivers in composite shot 514 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=193) from slave id 3 (srcid=517,blkid=1,csrgid=517,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 193 receivers in composite shot 517 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=195) from slave id 1 (srcid=516,blkid=1,csrgid=516,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 195 receivers in composite shot 516 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=197) from slave id 4 (srcid=515,blkid=1,csrgid=515,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 197 receivers in composite shot 515 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=185) from slave id 8 (srcid=521,blkid=1,csrgid=521,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 185 receivers in composite shot 521 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=191) from slave id 5 (srcid=518,blkid=1,csrgid=518,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 191 receivers in composite shot 518 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=189) from slave id 6 (srcid=519,blkid=1,csrgid=519,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 189 receivers in composite shot 519 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=187) from slave id 7 (srcid=520,blkid=1,csrgid=520,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 187 receivers in composite shot 520 to synthetic traces file
+    scheduler_run: no need to wait for final data to be written
+---=== Ending run on 2019/07/22, 12:52:30 ===---

@@ -1,0 +1,29 @@
+---=== Starting run (host: gbepabz-x16931) on 2019/08/13, 10:04:23 ===---
+executable: fullwave3D.exe, version: unknown, release date: 2019-06-19
+=== scheduler_getprojargs: Project name (command-line argument): "TEST"
+=== scheduler_getprojargs: Checkpoint number (command-line argument): -1
++++ ReadParms: WARNING: Runfile said there should be 1 iteration blocks/freqs, but only found info for 0 actual blocks/freqs in Runfile - truncating to lower value...
++++ ReadParms: finished Runfile with no "Anisotropy" keyword given - assuming isotropic...
++++ ReadParms: finished Runfile" with no "Kernel" keyword given - assuming low-order...
+=== setup_probtype: Equation: "acoustic", Anisotropy: "none", Domain: "time", Kernel: "low"
+    read_runfile: number of iteration blocks in "TEST-Runfile.key": 1
++++ update_runfile: No total time given in "TEST-Runfile.key" - will attempt to work out from other data files
+    scheduler_readinput: Grid dimensions (Length x Width x Depth): 861x1x451 cells
+    read_modelprop: Got Vp model from "TEST-TrueVp.sgy"
+    scheduler_readinput: Initial min/max Vp (m/s): 1500.00, 3187.64
+    scheduler_readinput: Initial min/max Qp: 0.00, 0.00
+    scheduler_readinput: Max. reliable pressure wave propagation frequency on this grid is about 12.00Hz
++++ getall: Runfile did not have TotalTime - using maximum trace length from data: 6.0020003 seconds
+    getall: Time-step: 2.0000E-03, maximum trace-length: 6.0020E+00
+    getall: number of composite shots found in "TEST-Signature.sgy": 2
+    GetShotPointSourceWaveletsInfo: number of composite shots found in "TEST-Template.sgy": 2
+---=== Scheduler initialisation complete. Ready for slaves on 2019/08/13, 10:04:23 ===---
+    scheduler_run: tasks left for synthetic problem: 2 (out of 2)
+    (Slave1;CSRef2;SrcID2) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,100,100 weipar:0.000,0.000)
+    (Slave7;CSRef1;SrcID1) slave_timesolve: starting 3001 time-steps with 16 threads (bnds:100,100,-1,-1,100,100 weipar:0.000,0.000)
+    scheduler_slavesynd: got observed data (no=801) from slave id 7 (srcid=1,blkid=1,csrgid=1,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 1 to synthetic traces file
+    scheduler_slavesynd: got observed data (no=801) from slave id 1 (srcid=2,blkid=1,csrgid=2,obscnt=1)
+=== scheduler_writeobserved: appending synthetic data for 801 receivers in composite shot 2 to synthetic traces file
+    scheduler_run: no need to wait for final data to be written
+---=== Ending run on 2019/08/13, 10:05:13 ===---
