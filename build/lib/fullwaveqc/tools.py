@@ -185,6 +185,7 @@ def load(filepath, model, name=None, scale=1, verbose=1):
         return segy
 
     else:
+        print("HELLOOOO")
         # Create model object
         model = Model(filepath, name)
 

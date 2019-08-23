@@ -10,7 +10,6 @@ import sys
 from scipy.ndimage import gaussian_filter
 from scipy.signal import butter, lfilter
 from scipy.signal import freqz
-import os
 
 
 class SegyData:
@@ -151,7 +150,7 @@ def load(filepath, model, name=None, scale=1, verbose=1):
         # Get source numbers and positions
         segy.src_pos = np.unique(src_all)                    # position of each source w.r.t to origin
         segy.nsrc = len(segy.src_pos)                        # number of sources/shots
-        verbose_print("\n" + str(datetime.datetime.now()) + " \t %g shots found. Loading headers..." % segy.nsrc)
+        verbose_print("\n" + str(datetime.datetime.now()) + " \t {} shots found. Loading headers...".format(segy.nsrc))
 
         # Collecting and splitting receiver locations and data
         # segy.rec_pos and segy.data should be a list of arrays, each array corresponding to a source
@@ -324,6 +323,14 @@ def ddwi(MonObs, BaseObs, BasePred, normalise=True, name=None, mon_filepath=None
     the monitor SEG-Y headers and traces.
     """
 
+    # check datasets are correct type
+    for i in [MonObs, BaseObs, BasePred]:
+        try:
+            if i._type != "data":
+                raise TypeError(i.name + " must be a fullwaveqc.tools.SegyData object")
+        except AttributeError:
+            raise TypeError("Data format of MonObs, BaseObs and/or BasePred is invalid")
+
     # Set verbose level
     verbose_print = set_verbose(verbose)
 
@@ -337,59 +344,52 @@ def ddwi(MonObs, BaseObs, BasePred, normalise=True, name=None, mon_filepath=None
     MonDiff = copy.deepcopy(MonObs)
     for i, d in enumerate(MonDiff.data):
         MonDiff.data[i] = BasePred.data[i] + (MonObs.data[i] - BaseObs.data[i])
+
     verbose_print("\n" + str(datetime.datetime.now()) + " \t Double difference dataset calculated successfully!")
 
     # Assign new name to object
-    if name is None:
+    if not isinstance(name, str):
         MonDiff.name = "DDWI-DATASET"
     else:
         MonDiff.name = name
-    
+
     # Saving file
     if save:
-        # Check destination path is valid for writing
-        dstpath = save_path + name + ".sgy"
+        dstpath = save_path + MonDiff.name + ".sgy"
         try:
-            with open(dstpath, 'w'):
-                MonDiff.filepath = dstpath
-        except IOError as x:
-            raise IOError('error ', x.errno, ',', x.strerror, ", save_path invalid")
+            with segyio.open(mon_filepath, ignore_geometry=True) as src:
+                verbose_print("\n" + str(datetime.datetime.now()) + " \t Reading file %s..." % mon_filepath)
+                spec = segyio.spec()
+                spec.sorting = src.sorting
+                spec.format = src.format
+                spec.samples = src.samples
+                spec.ilines = src.ilines
+                spec.xlines = src.xlines
+                spec.sorting = src.sorting
+                spec.tracecount = src.tracecount
 
-        # Check of mon_filepath is exists
-        if mon_filepath is None:
-            raise TypeError("mon_filepath must be given along with the save option")
-        elif not os.path.isfile(mon_filepath):
-            raise IOError("mon_pathfile invalid")
+                # Create new file and copy all but trace data
+                verbose_print("\n" + str(datetime.datetime.now()) + " \t Creating new file  at %s..." % dstpath)
+                try:
+                    with segyio.create(dstpath, spec) as dst:
+                        dst.text[0] = src.text[0]
+                        dst.bin = src.bin
+                        dst.header = src.header
 
-        with segyio.open(mon_filepath, ignore_geometry=True) as src:
-            verbose_print("\n" + str(datetime.datetime.now()) + " \t Reading file %s..." % mon_filepath)
-            spec = segyio.spec()
-            spec.sorting = src.sorting
-            spec.format = src.format
-            spec.samples = src.samples
-            spec.ilines = src.ilines
-            spec.xlines = src.xlines
-            spec.sorting = src.sorting
-            spec.tracecount = src.tracecount
+                        # Stack data
+                        verbose_print("\n" + str(datetime.datetime.now()) + " \t Stacking data ...")
+                        data = copy.deepcopy(MonDiff.data[0])
+                        for i in range(1, len(MonDiff.data)):
+                            data = np.vstack((data, MonDiff.data[i]))
 
-            # Create new file and copy all but trace data
-            verbose_print("\n" + str(datetime.datetime.now()) + " \t Creating new file  at %s..." % dstpath)
-            with segyio.create(dstpath, spec) as dst:
-                dst.text[0] = src.text[0]
-                dst.bin = src.bin
-                dst.header = src.header
-
-                # Stack data
-                verbose_print("\n" + str(datetime.datetime.now()) + " \t Stacking data ...")
-                data = copy.deepcopy(MonDiff.data[0])
-                for i in range(1, len(MonDiff.data)):
-                    data = np.vstack((data, MonDiff.data[i]))
-
-                # Update traces
-                verbose_print("\n" + str(datetime.datetime.now()) + " \t Updating traces ...")
-                dst.trace[:] = data
+                        # Update traces
+                        verbose_print("\n" + str(datetime.datetime.now()) + " \t Updating traces ...")
+                        dst.trace[:] = data
+                except (FileNotFoundError, OSError):
+                    raise Exception("save_path {} is an invalid directory".format(save_path))
+        except (FileNotFoundError, OSError):
+            raise Exception("mon_filepath {} is invalid".format(mon_filepath))
         verbose_print("\n" + str(datetime.datetime.now()) + " \t Double difference dataset saved!")
-
     return MonDiff
 
 
@@ -464,17 +464,30 @@ def ampnorm(Obs, Pred, ref_trace=0, verbose=1):
     PredNorm: fullwaveqc.tools.SegyData
         Object outputted from fullwaveqc.tools.load function with the normalise predicted data
     """
+    for i in [Obs, Pred]:
+        try:
+            if i._type != "data":
+                raise TypeError(i.name + " must be a fullwaveqc.tools.SegyData object")
+        except AttributeError:
+            raise TypeError("Data format of Obs and/or Pred is invalid")
+
+    if not isinstance(ref_trace, int):
+        raise TypeError("ref_trace must be an integer")
 
     # Set verbose
     verbose_print = set_verbose(verbose)
 
     # Copy original dataset and modify each trace of each shot
     PredNorm = copy.deepcopy(Pred)
-    for i, d in enumerate(PredNorm.data):
-        ratio = np.max(Obs.data[i][ref_trace]) / np.max(Pred.data[i][ref_trace])
-        for j, trace in enumerate(d):
-            PredNorm.data[i][j] = (PredNorm.data[i][j] * ratio)
-        verbose_print(str(datetime.datetime.now()) + " \t Normalising shot %g\r" % i)
+    try:
+        for i, d in enumerate(PredNorm.data):
+            ratio = np.max(Obs.data[i][ref_trace]) / np.max(Pred.data[i][ref_trace])
+            for j, trace in enumerate(d):
+                PredNorm.data[i][j] = (PredNorm.data[i][j] * ratio)
+            verbose_print(str(datetime.datetime.now()) + " \t Normalising shot %g\r" % i)
+    except IndexError:
+        raise Exception("Datasets must be of same size.")
+
     sys.stdout.write(str(datetime.datetime.now()) + " \t All shots normalised")
     return PredNorm
 
@@ -514,11 +527,18 @@ def smooth_model(Model, strength=[1, 1], w=[None, None, None, None], slowness=Tr
 
     """
 
+    try:
+        if Model._type != "model":
+            raise TypeError(Model.name + " must be a fullwaveqc.tools.Model object")
+    except AttributeError:
+        raise TypeError("Data format of Model is invalid")
+
     # Set verbose
     verbose_print = set_verbose(verbose)
 
     # make copy and edit model
     SmoothModel = copy.deepcopy(Model)
+    SmoothModel._filepath = None
     if slowness:
         SmoothModel.data = 1. / SmoothModel.data
     # flip data so that windows make sense
@@ -531,42 +551,47 @@ def smooth_model(Model, strength=[1, 1], w=[None, None, None, None], slowness=Tr
     if slowness:
         SmoothModel.data = 1. / SmoothModel.data
 
-    if name is None:
+    if not isinstance(name, str):
         SmoothModel.name = SmoothModel.name + "-smooth"
     else:
         SmoothModel.name = name
 
     if save:
         dstpath = save_path + SmoothModel.name + ".sgy"
+        try:
+            with segyio.open(Model._filepath, ignore_geometry=True) as src:
+                verbose_print("\n" + str(datetime.datetime.now()) + " \t Reading file %s..." % Model._filepath)
+                spec = segyio.spec()
+                spec.sorting = src.sorting
+                spec.format = src.format
+                spec.samples = src.samples
+                spec.ilines = src.ilines
+                spec.xlines = src.xlines
+                spec.sorting = src.sorting
+                spec.tracecount = src.tracecount
 
-        with segyio.open(Model.filepath, ignore_geometry=True) as src:
-            verbose_print("\n" + str(datetime.datetime.now()) + " \t Reading file %s..." % Model.filepath)
-            spec = segyio.spec()
-            spec.sorting = src.sorting
-            spec.format = src.format
-            spec.samples = src.samples
-            spec.ilines = src.ilines
-            spec.xlines = src.xlines
-            spec.sorting = src.sorting
-            spec.tracecount = src.tracecount
+                # Create new file and copy all but trace data
+                verbose_print("\n" + str(datetime.datetime.now()) + " \t Creating new file  at %s..." % dstpath)
+                try:
+                    with segyio.create(dstpath, spec) as dst:
+                        SmoothModel._filepath = dstpath
+                        dst.text[0] = src.text[0]
+                        dst.bin = src.bin
+                        dst.header = src.header
 
-            # Create new file and copy all but trace data
-            verbose_print("\n" + str(datetime.datetime.now()) + " \t Creating new file  at %s..." % dstpath)
-            with segyio.create(dstpath, spec) as dst:
-                dst.text[0] = src.text[0]
-                dst.bin = src.bin
-                dst.header = src.header
+                        # Stack data
+                        verbose_print("\n" + str(datetime.datetime.now()) + " \t Stacking data ...")
+                        data = copy.deepcopy(SmoothModel.data[0])
+                        for i in range(1, len(SmoothModel.data)):
+                            data = np.vstack((data, SmoothModel.data[i]))
+                        data = np.fliplr(data.T)
 
-                # Stack data
-                verbose_print("\n" + str(datetime.datetime.now()) + " \t Stacking data ...")
-                data = copy.deepcopy(SmoothModel.data[0])
-                for i in range(1, len(SmoothModel.data)):
-                    data = np.vstack((data, SmoothModel.data[i]))
-                data = np.fliplr(data.T)
-
-                # Update traces
-                verbose_print("\n" + str(datetime.datetime.now()) + " \t Updating model ...")
-                dst.trace[:] = data
+                        # Update traces
+                        verbose_print("\n" + str(datetime.datetime.now()) + " \t Updating model ...")
+                        dst.trace[:] = data
+                except (FileNotFoundError, OSError):
+                    raise Exception("save_path {} is an invalid directory".format(save_path))
+        except (FileNotFoundError, OSError):
+            raise Exception("Model has an invalid filepath {}".format(Model._filepath))
         verbose_print("\n" + str(datetime.datetime.now()) + " \t Smoothed model saved!")
-
     return SmoothModel

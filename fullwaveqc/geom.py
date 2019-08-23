@@ -82,6 +82,7 @@ def surveygeom(rcvgeopath, srcgeopath, src_list=[], plot=False, verbose=0):
     # Store source positions
     verbose_print(str(datetime.datetime.now()) + " \t Reading source locations ...\r")
     srcx, srcy = [], []
+
     with open(srcgeopath) as srcgeo:
         for i, line in enumerate(srcgeo):
             if i != 0:
