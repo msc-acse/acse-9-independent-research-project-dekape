@@ -30,7 +30,7 @@ To install FullwaveQC, including source code, tests and examples notebooks do in
 
 
 ## Examples
-Full examples of package and proposed Fullwave3D + FullwaveQC workflow examples can be found in the 'examples' folder.
+Full examples of package and proposed Fullwave3D + FullwaveQC workflow can be found in the 'examples' folder.
 Full documentation can be found as an html file in 'docs/_build/html/index.html'.
 Some basic usages of FullwaveQC include:
 
