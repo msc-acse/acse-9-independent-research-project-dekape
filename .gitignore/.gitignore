@@ -1,3 +1,4 @@
-./build/*
-./dist/*
-./fullwaveqc.egg-info/*
+../build/*
+../dist/*
+../fullwaveqc.egg-info/*
+../dir.txt

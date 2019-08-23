@@ -22,8 +22,8 @@ To install FullwaveQC, including source code, tests and examples notebooks do in
     # install requirements in python environment
     pip install -r requirements.txt
     
-    # install fullwaveqc in python environment
-    python setup.py install
+    # install fullwaveqc in python environment, dir.txt has the location of where the package has been installed
+    python setup.py install --record dir.txt
     
     # in a python script or Jupyter Notebook import FullwaveQC as
     from fullwaveqc import tools, geom, visual, siganalysis, inversion
