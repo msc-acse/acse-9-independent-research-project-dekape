@@ -1,0 +1,1 @@
+/users/l0552797/anaconda3/lib/python3.7/site-packages/fullwaveqc-1.0.0-py3.7.egg
