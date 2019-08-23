@@ -110,11 +110,11 @@ def amplitude(SegyData, shot=1, cap=0., levels=50, vmin=None, vmax=None, cmap=pl
     None
 
     """
-    if save:
-        if save_path[-1] != "/":
-            save_path = save_path + "/"
-        if not os.path.isdir(save_path):
-            raise Exception("Save path is invalid")
+    try:
+        if SegyData._type != "data":
+            raise TypeError(SegyData.name + " must be a fullwaveqc.tools.SegyData object")
+    except AttributeError:
+        raise TypeError("Data format of SegyData is invalid")
 
     try:
         # Get dt from SegyData object
@@ -231,7 +231,7 @@ def interamp(SegyData1, SegyData2, shot=1, shot2=None, n_blocks=2, cap=0., level
 
     """
     if not (isinstance(SegyData1, tools.SegyData) and isinstance(SegyData2, tools.SegyData)):
-        raise AttributeError("SegyData must be a fullwaveqc.tools.SegyData instance.")
+        raise TypeError("SegyData must be a fullwaveqc.tools.SegyData instance.")
 
     data1 = SegyData1.data[shot-1]
     if shot2 is not None:
@@ -297,6 +297,8 @@ def wiggle(SegyData, shot=1, scale=5, skip_trace=20, skip_time=0, wstart=0., wen
     -------
     None
     """
+    if not isinstance(SegyData, tools.SegyData):
+        raise TypeError("SegyData must be a fullwaveqc.tools.SegyData instance.")
 
     # Get data from SegyData object
     data = SegyData.data[shot-1]
@@ -390,14 +392,22 @@ def interwiggle(SegyData1, SegyData2, shot=1, shot2=None, overlay=0, scale=5, sk
     -------
     None
     """
+    for i in [SegyData1, SegyData2]:
+        try:
+            if i._type != "data":
+                raise TypeError(i.name + " must be a fullwaveqc.tools.SegyData object")
+        except AttributeError:
+            raise TypeError("Data format of SegyData1 and/or SegyData2 is invalid")
 
+    # Get shot for each dataset
     data1 = SegyData1.data[shot-1]
     if shot2 is not None:
         data2 = SegyData2.data[shot2-1]
     else:
         data2 = SegyData2.data[shot-1]
 
-    assert (data1.shape == data2.shape)
+    if data1.shape != data2.shape:
+        raise TypeError("SegyData1 and SegyData2 require same number of samples, sampling interval, shots and receiver")
 
     # Stack delay to data
     delay = np.zeros((data1.shape[0], delay_samples))
@@ -492,6 +502,12 @@ def vpmodel(Model, cap=0., levels=200, vmin=None, vmax=None, cmap=plt.cm.jet, un
     None
     """
 
+    try:
+        if Model._type != "model":
+            raise TypeError(Model.name + " must be a fullwaveqc.tools.Model object")
+    except AttributeError:
+        raise TypeError("Data format of Model is invalid")
+
     # Get data from Model
     data = Model.data
     dx = Model.dx
@@ -553,12 +569,22 @@ def vpwell(Model, pos_x, TrueModel=None,  plot=True):
         Only if TrueModel is given. RMS errors between true well and predicted well values.
 
     """
+    try:
+        if Model._type != "model":
+            raise TypeError(Model.name + " must be a fullwaveqc.tools.Model object")
+    except AttributeError:
+        raise TypeError("Data format of Model is invalid")
 
     # Get model data
     pred = np.flipud(Model.data)
 
     # Get true model
     if TrueModel is not None:
+        try:
+            if TrueModel._type != "model":
+                raise TypeError(TrueModel.name + " must be a fullwaveqc.tools.Model object")
+        except AttributeError:
+            raise TypeError("Data format of TrueModel is invalid")
         obs = np.flipud(TrueModel.data)
     else:
         obs = None
