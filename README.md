@@ -6,7 +6,7 @@ FullwaveQC is a diagnostic package to assist FWI inversions and timelapse implem
 The tools provided by FullwaveQC consist of a series of visualisation and signal processing functions that can be used
 to analyse and quality-check the inversion inputs and outputs of Fullwave3D.
 
-Contact dp4018@ic.ac.uk for issues or questions.
+Contact the developer Deborah Pelacani Cruz at dp4018@ic.ac.uk for issues or questions.
 
 
 ## Installation
