@@ -11,7 +11,7 @@ to analyse and quality-check the inversion inputs and outputs of Fullwave3D.
 It is recommended that FullwaveQC is installed using the Conda package manager for the software dependcies. Conda can be
 obtained by installing [Anaconda](https://www.anaconda.com/distribution/) for the Python 3.7 version.
 
-FullwaveQC is best used in .py scripts or Jupyter Notebooks and does not support command-line interface.
+FullwaveQC best used in .py scripts or Jupyter Notebooks and does not support command-line interface.
 To install FullwaveQC, including source code, tests and examples notebooks do in the command line:
    
  
